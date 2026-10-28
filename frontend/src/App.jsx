@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <Navbar wishlistCount={wishlistCount} />
-      <main className="main-content">
+      <main className="">
         <HomePage onWishlistUpdate={setWishlistCount} />
       </main>
       <Footer />
