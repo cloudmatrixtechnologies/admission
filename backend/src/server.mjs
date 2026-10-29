@@ -7,6 +7,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 import authRoutes from "./modules/auth/authRoutes.mjs";
+import studentRoutes from "./modules/students/studentRoutes.mjs";
 
 import connectDB from "./config/db.js";
 
@@ -82,7 +83,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 app.use("/api/auth", authRoutes);
-
+app.use("/api/students", studentRoutes);
 // Handle unknown routes.
 app.use((req, res) => {
   res.status(404).json({
