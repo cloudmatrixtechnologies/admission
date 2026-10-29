@@ -39,13 +39,15 @@ export async function consumeVerificationGrant({
   token,
   session,
 }) {
-  mobile = normalizeMobile(mobile);
-
   validateGrantInput({ mobile, purpose, token });
+
+  mobile = normalizeMobile(mobile);
 
   if (!session || !session.inTransaction()) {
     throw new Error("VERIFICATION_GRANT_REQUIRES_TRANSACTION");
   }
+
+  // Keep the existing token-consumption logic below.
 
   const now = new Date();
   const tokenHash = createTokenHash(token);
