@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 // src/App.jsx
 import React, { useState } from 'react';
 import Navbar from './components/common/Navbar';
@@ -23,4 +23,4 @@ export default function App() {
 }
 =======
 <h1>hello, World!</h1>
->>>>>>> Stashed changes
+
