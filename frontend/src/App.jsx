@@ -21,6 +21,6 @@ export default function App() {
   //demo check
   <h1>demo</h1>
 }
-=======
+
 <h1>hello, World!</h1>
 
