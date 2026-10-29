@@ -18,9 +18,8 @@ export default function App() {
       <Footer />
     </div>
   );
-  //demo check
-  <h1>demo</h1>
+
 }
 
-<h1>hello, World!</h1>
+
 
