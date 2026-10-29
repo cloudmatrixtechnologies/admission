@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 
-// 5 Admin Roles Dummy Credentials (Email or Username work aagum)
+// 5 Admin Roles Dummy Credentials
 const MOCK_CREDENTIALS = [
-  { username: 'superadmin', email: 'superadmin@admission.com', password: 'SuperAdmin@123', role: 'SUPER_ADMIN' },
-  { username: 'manageradmin', email: 'manager@admission.com', password: 'Manager@123', role: 'MANAGER_ADMIN' },
-  { username: 'keerthana01', email: 'telecaller01@admission.com', password: 'Telecaller@123', role: 'TELECALLER' },
-  { username: 'ramesh_col', email: 'collegeadmin@abc.edu', password: 'College@123', role: 'COLLEGE_ADMIN' },
-  { username: 'priya_cons', email: 'consultant@career.com', password: 'Consult@123', role: 'CONSULTATION_ADMIN' },
+  { username: 'superadmin', email: 'superadmin@admission.com', password: '1234', role: 'SUPER_ADMIN' },
+  { username: 'manageradmin', email: 'manager@admission.com', password: '1234', role: 'MANAGER_ADMIN' },
+  { username: 'keerthana01', email: 'telecaller01@admission.com', password: '1234', role: 'TELECALLER' },
+  { username: 'ramesh_col', email: 'collegeadmin@abc.edu', password: '1234', role: 'COLLEGE_ADMIN' },
+  { username: 'priya_cons', email: 'consultant@career.com', password: '1234', role: 'CONSULTATION_ADMIN' },
 ];
 
 export default function AdminLoginPage({ onLoginSuccess }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +30,7 @@ export default function AdminLoginPage({ onLoginSuccess }) {
       return;
     }
 
-    // Check against mock credentials
+    // Check credentials
     const foundUser = MOCK_CREDENTIALS.find(
       (acc) =>
         (acc.username.toLowerCase() === trimmedUser.toLowerCase() ||
@@ -39,8 +41,13 @@ export default function AdminLoginPage({ onLoginSuccess }) {
     if (foundUser) {
       if (onLoginSuccess) {
         onLoginSuccess(foundUser);
+      }
+
+      // Role-based Navigation
+      if (foundUser.role === 'SUPER_ADMIN') {
+        navigate('/superadmin');
       } else {
-        alert(`Login Success: ${foundUser.role}`);
+        alert(`Logged in as ${foundUser.role}`);
       }
     } else {
       setErrorMsg('Invalid Username / Email or Password!');
@@ -50,7 +57,7 @@ export default function AdminLoginPage({ onLoginSuccess }) {
   return (
     <div className="login-viewport">
       <div className="login-card">
-        {/* Top Royal Blue Squircle Badge with Graduation Cap Icon */}
+        {/* Top Royal Blue Squircle Badge */}
         <div className="login-badge">
           <svg
             width="34"
@@ -79,7 +86,6 @@ export default function AdminLoginPage({ onLoginSuccess }) {
 
         {/* Form Fields */}
         <form onSubmit={handleSubmit} className="login-form">
-          {/* Username / Email Field */}
           <div className="login-field">
             <label className="login-label">Username / Email</label>
             <div className="login-input-wrapper">
@@ -109,7 +115,6 @@ export default function AdminLoginPage({ onLoginSuccess }) {
             </div>
           </div>
 
-          {/* Password Field */}
           <div className="login-field">
             <label className="login-label">Password</label>
             <div className="login-input-wrapper">
@@ -178,7 +183,6 @@ export default function AdminLoginPage({ onLoginSuccess }) {
             </div>
           </div>
 
-          {/* Forgot Password */}
           <div className="login-forgot-wrapper">
             <a
               href="#forgot"
@@ -192,7 +196,6 @@ export default function AdminLoginPage({ onLoginSuccess }) {
             </a>
           </div>
 
-          {/* Submit Button */}
           <button type="submit" className="login-submit-btn">
             <span>Login</span>
             <svg
