@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './AdminAccounts.css';
 
-export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
+export default function AdminAccountsPage({ setActivePage, onViewDetails, accounts = [] }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
 
-  // Backend nunchi data vache varaku empty list handling
   const safeAccounts = Array.isArray(accounts) ? accounts : [];
 
   const filtered = safeAccounts.filter((acc) => {
@@ -46,7 +45,7 @@ export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
         </button>
       </div>
 
-      {/* Filter Row matching Screenshot */}
+      {/* Filter Row */}
       <div className="aa-filter-card">
         <div className="aa-search-box">
           <svg className="aa-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -101,7 +100,7 @@ export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
         </button>
       </div>
 
-      {/* Table Container Card */}
+      {/* Accounts Table Container */}
       <div className="aa-table-card">
         <table className="aa-table">
           <thead>
@@ -150,8 +149,12 @@ export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
                   </td>
                   <td style={{ padding: '14px 18px', color: '#64748b' }}>{acc.created}</td>
                   <td style={{ padding: '14px 18px', textAlign: 'right', paddingRight: '24px' }}>
-                    <button style={{ padding: '4px 10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '11px', fontWeight: 700, color: '#0066ff' }}>
-                      Edit
+                    <button
+                      type="button"
+                      onClick={() => onViewDetails && onViewDetails(acc)}
+                      style={{ padding: '5px 12px', borderRadius: '8px', border: '1px solid #0066ff', background: '#eff6ff', cursor: 'pointer', fontSize: '11px', fontWeight: 700, color: '#0066ff' }}
+                    >
+                      View Details
                     </button>
                   </td>
                 </tr>
@@ -159,7 +162,6 @@ export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
             ) : (
               <tr>
                 <td colSpan="8">
-                  {/* Empty Placeholder Card for Backend Integration */}
                   <div className="aa-empty-box">
                     <div className="aa-empty-circle">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -173,6 +175,14 @@ export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
                     <p className="aa-empty-desc">
                       College Admin and Consultation Admin accounts will appear here once created or loaded from the backend APIs.
                     </p>
+                    {/* Test link to view Ramesh Kumar sample details */}
+                    <button
+                      type="button"
+                      onClick={() => onViewDetails && onViewDetails(null)}
+                      style={{ marginTop: '8px', padding: '6px 14px', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff', fontSize: '11px', fontWeight: 700, color: '#0066ff', cursor: 'pointer' }}
+                    >
+                      Preview Sample Account Details
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -180,7 +190,6 @@ export default function AdminAccountsPage({ setActivePage, accounts = [] }) {
           </tbody>
         </table>
 
-        {/* Pagination Details */}
         <div className="aa-pagination">
           <span>Showing {filtered.length} to {filtered.length} of {safeAccounts.length} accounts</span>
         </div>

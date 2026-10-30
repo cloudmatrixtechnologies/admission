@@ -46,7 +46,10 @@ export default function AdminLoginPage({ onLoginSuccess }) {
       // Role-based Navigation
       if (foundUser.role === 'SUPER_ADMIN') {
         navigate('/superadmin');
-      } else {
+      }
+      else if (foundUser.role === 'MANAGER_ADMIN') {
+  navigate('/manager');
+} else {
         alert(`Logged in as ${foundUser.role}`);
       }
     } else {
