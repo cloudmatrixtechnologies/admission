@@ -1,0 +1,242 @@
+/* src/components/home/StreamCategories.css */
+/* src/components/home/StreamCategories.css */
+
+.stream-section {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 44px 24px 20px 24px;
+  box-sizing: border-box;
+}
+
+.section-title-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.stream-section-heading {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 3px;
+}
+
+.stream-section-sub {
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.section-view-all {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.section-view-all:hover {
+  color: #1d4ed8;
+}
+
+.stream-tile-grid,
+.stream-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stream-tile-card,
+.stream-type-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Hover State: Soft Lavender Wash + Vibrant Dark Lavender Border
+   ========================================================================== */
+.stream-tile-card:hover,
+.stream-type-card:hover {
+  transform: translateY(-2px);
+  background-color: #baaef3 !important;
+  border-color: #7138f5 !important;
+  box-shadow: 0 8px 22px rgba(139, 92, 246, 0.16) !important;
+}
+
+.stream-tile-card:hover .stream-tile-name,
+.stream-type-card:hover .stream-type-name {
+  color: #020202 !important;
+}
+
+.stream-tile-card:hover .stream-tile-subtext,
+.stream-type-card:hover .stream-type-subtext {
+  color: #424142 !important;
+}
+
+.stream-tile-card:hover .stream-tile-link-text,
+.stream-type-card:hover .stream-tile-link-text {
+  color: #000000 !important;
+}
+
+.stream-tile-card:hover .stream-tile-arrow,
+.stream-type-card:hover .stream-tile-arrow {
+  color: #8b5cf6 !important;
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Active / Selected State: Solid Royal Blue
+   ========================================================================== */
+.stream-tile-card.active,
+.stream-type-card.selected {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25) !important;
+  transform: translateY(-2px);
+}
+
+.stream-tile-icon-wrap,
+.stream-type-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+  font-size: 20px;
+  transition: all 0.2s ease;
+}
+
+/* Individual Data-Stream Accent Colors */
+.stream-type-card[data-stream="Engineering"] .stream-type-icon {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+.stream-type-card[data-stream="Medical"] .stream-type-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.stream-type-card[data-stream="Arts & Science"] .stream-type-icon {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+.stream-type-card[data-stream="Diploma"] .stream-type-icon {
+  background: #ede9fe;
+  color: #4f46e5;
+}
+.stream-type-card[data-stream="ITI"] .stream-type-icon {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.stream-tile-card.active .stream-tile-icon-wrap,
+.stream-type-card.selected .stream-type-icon {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.stream-tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 14px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.stream-tile-name,
+.stream-type-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.18s ease;
+}
+
+.stream-tile-card.active .stream-tile-name,
+.stream-type-card.selected .stream-type-name {
+  color: #ffffff !important;
+}
+
+.stream-tile-subtext {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.18s ease;
+}
+
+.stream-tile-card.active .stream-tile-subtext {
+  color: #dbeafe !important;
+}
+
+.stream-tile-footer {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+  transition: border-color 0.18s ease;
+}
+
+.stream-tile-card.active .stream-tile-footer {
+  border-top-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.stream-tile-link-text {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+  transition: color 0.18s ease;
+}
+
+.stream-tile-arrow {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.18s ease;
+}
+
+.stream-tile-card.active .stream-tile-link-text,
+.stream-tile-card.active .stream-tile-arrow {
+  color: #ffffff !important;
+}
+
+@media (max-width: 1100px) {
+  .stream-tile-grid, .stream-cards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .stream-tile-grid, .stream-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

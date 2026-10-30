@@ -1,0 +1,328 @@
+/* src/components/common/Navbar.css */
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.navbar-content {
+  width: 100%;
+  max-width: 100% !important;
+  margin: 0;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-icon-tile {
+  width: 42px;
+  height: 42px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(90deg, #9a3412 0%, #c2410c 42%, #ea580c 68%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 2px;
+}
+
+.nav-pill-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 26px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  padding: 8px 26px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link,
+.nav-pill-link {
+  position: relative;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  padding: 3px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: color 0.18s ease;
+  user-select: none;
+}
+
+.nav-link:hover,
+.nav-pill-link:hover {
+  color: #2563eb;
+}
+
+.nav-link.active,
+.nav-pill-link.active {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.nav-pill-indicator {
+  position: absolute;
+  bottom: -4px;
+  width: 18px;
+  height: 2.5px;
+  background: #2563eb;
+  border-radius: 999px;
+  box-shadow: 0 1px 6px rgba(37, 99, 235, 0.45);
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Wishlist Button */
+.wishlist-btn-animated,
+.wishlist-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  height: 40px;
+  border-radius: 9px;
+  background: #ffffff;
+  border: 1.5px solid rgba(226, 232, 240, 0.95);
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.wishlist-btn-animated:hover,
+.wishlist-trigger:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(13, 39, 107, 0.09);
+  transform: translateY(-1px);
+}
+
+.flaticon-bookmark-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.always-unfolded-ribbon {
+  transform-origin: 48px 14px;
+  transform: scaleY(1) translateY(0);
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wishlist-btn-animated:hover .always-unfolded-ribbon {
+  transform: scaleY(1.22) translateY(2px);
+}
+
+.bookmark-star-coin {
+  transform-origin: 68px 46px;
+  transform: scale(1) rotate(0deg);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wishlist-btn-animated:hover .bookmark-star-coin {
+  transform: scale(1.14) rotate(7deg);
+}
+
+.wishlist-text-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.wishlist-pill-animated,
+.wishlist-pill {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-number {
+  position: relative;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.35);
+}
+
+.pill-ping {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background-color: #ef4444;
+  opacity: 0.7;
+  animation: pingAnimation 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pingAnimation {
+  75%, 100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Auth Capsule: Unified Login + Sign Up (Prevents Side Overflow)
+   ========================================================================== */
+
+.auth-capsule-container {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid rgba(226, 232, 240, 0.95);
+  border-radius: 9px;
+  padding: 3px;
+  gap: 3px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  box-sizing: border-box;
+}
+
+/* 1. Login Ghost Button */
+.capsule-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  height: 34px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  text-decoration: none;
+  border-radius: 7px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.auth-user-svg {
+  flex-shrink: 0;
+  color: #2563eb;
+}
+
+.capsule-login-btn:hover {
+  color: #2563eb;
+  background: #f1f5f9;
+}
+
+/* 2. Sign Up Primary Action Button */
+.capsule-signup-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  height: 34px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  text-decoration: none;
+  border-radius: 7px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s ease;
+}
+
+.signup-arrow-svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.capsule-signup-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+  transform: translateY(-0.5px);
+}
+
+.capsule-signup-btn:hover .signup-arrow-svg {
+  transform: translateX(2.5px);
+}
