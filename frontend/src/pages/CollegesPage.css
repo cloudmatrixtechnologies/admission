@@ -1,0 +1,698 @@
+/* src/pages/CollegesPage.css */
+
+.colleges-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   1. Banner with colleges-page.jpeg Campus Architecture Slant
+   ========================================================================== */
+
+.colleges-top-banner {
+  position: relative;
+  width: 100%;
+  min-height: 230px;
+  background: linear-gradient(108deg, #0a1f44 0%, #0f3473 45%, #1d4ed8 72%);
+  color: #ffffff;
+  padding: 85px 36px 38px 36px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Slanted Campus Building Architecture on Right Side */
+.colleges-top-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48%;
+  height: 100%;
+  background: 
+    linear-gradient(to right, rgba(10, 31, 68, 0.98) 0%, rgba(15, 52, 115, 0.55) 35%, rgba(15, 52, 115, 0.25) 100%),
+    url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1400&q=80');
+  background-size: cover;
+  background-position: center 30%;
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0% 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.banner-fluid-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.banner-left-content {
+  max-width: 780px;
+}
+
+/* ==========================================================================
+   Breadcrumb: Clean, un-boxed text as in colleges-page.jpeg
+   ========================================================================== */
+
+.catalog-breadcrumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.crumb-link {
+  color: #93c5fd;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s ease;
+}
+
+.crumb-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.crumb-slash {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+  user-select: none;
+}
+
+.crumb-current {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.banner-title {
+  font-size: 38px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  margin: 0 0 10px 0;
+}
+
+.banner-subtitle {
+  font-size: 14.5px;
+  color: #e2e8f0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==========================================================================
+   2. Horizontal Top Stream Strip
+   ========================================================================== */
+
+.colleges-stream-strip-section {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 14px 36px;
+  box-sizing: border-box;
+}
+
+.stream-strip-inner {
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stream-strip-pill {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.stream-strip-pill:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.stream-strip-pill.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.14);
+}
+
+.stream-pill-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.stream-pill-text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.stream-pill-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.stream-pill-count {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.stream-strip-pill.active .stream-pill-title {
+  color: #1d4ed8;
+}
+
+/* ==========================================================================
+   3. Main Workspace Layout
+   ========================================================================== */
+
+.catalog-fluid-layout {
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 28px 36px 60px 36px;
+  display: flex;
+  gap: 28px;
+  box-sizing: border-box;
+}
+
+/* Left Sidebar */
+.catalog-sidebar {
+  width: 290px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 22px;
+  height: fit-content;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  box-sizing: border-box;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 18px;
+}
+
+.sidebar-header h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.btn-reset {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-group {
+  margin-bottom: 22px;
+}
+
+.filter-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.search-field-wrap input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.search-field-wrap input:focus {
+  border-color: #2563eb;
+}
+
+.typo-suggestion-box {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typo-suggestion-box button {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #334155;
+  cursor: pointer;
+}
+
+.checkbox-item input {
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+.fee-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.fee-val-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.fee-slider {
+  width: 100%;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.fee-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* Apply Filters Button */
+.filter-bottom-actions {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1.5px solid #f1f5f9;
+}
+
+.btn-apply-filters {
+  width: 100%;
+  height: 42px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-apply-filters:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   4. Toolbar & Custom Dropdown Styling
+   ========================================================================== */
+
+.catalog-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.02);
+}
+
+.view-mode-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.view-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.view-toggle-capsule {
+  display: inline-flex;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.btn-view-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-view-toggle:hover {
+  color: #1e293b;
+}
+
+.btn-view-toggle.active {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+/* Custom Dropdown Container */
+.custom-sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.custom-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Custom Button Trigger */
+.custom-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.custom-dropdown-trigger:hover,
+.custom-dropdown-trigger.open {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.sort-filter-icon {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.selected-sort-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sort-chevron {
+  color: #64748b;
+  transition: transform 0.2s ease;
+}
+
+.sort-chevron.rotate {
+  transform: rotate(180deg);
+}
+
+/* Custom Floating Menu Card (No Native Blue OS Select) */
+.custom-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+  z-index: 100;
+  animation: dropdownPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownPop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.custom-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.custom-dropdown-item:hover {
+  background-color: #f1f5f9;
+  color: #2563eb;
+}
+
+.custom-dropdown-item.selected {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.item-check {
+  font-size: 12px;
+  color: #2563eb;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   5. College Cards Grid & List View
+   ========================================================================== */
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.catalog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.catalog-list .college-card {
+  display: flex;
+  flex-direction: row;
+  min-height: 200px;
+  width: 100%;
+}
+
+.catalog-list .card-top-media {
+  width: 280px;
+  min-width: 280px;
+  height: 100%;
+}
+
+.catalog-list .card-content-body {
+  flex: 1;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.catalog-list .card-button-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 190px;
+  min-width: 190px;
+  padding: 18px;
+  border-left: 1px solid #f1f5f9;
+  gap: 10px;
+}
+
+.catalog-list .btn-card-details,
+.catalog-list .btn-card-courses {
+  width: 100%;
+}
+
+/* ==========================================================================
+   6. Bottom Pagination
+   ========================================================================== */
+
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.btn-page {
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-page:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-page:not(:disabled):hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 6px;
+}
+
+.page-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-num.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.page-num:not(.active):hover {
+  background: #f1f5f9;
+}
+
+/* Responsive Adaptations */
+@media (max-width: 1200px) {
+  .colleges-top-banner::after {
+    width: 38%;
+  }
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .colleges-top-banner::after {
+    display: none;
+  }
+  .catalog-fluid-layout {
+    flex-direction: column;
+    padding: 20px 16px;
+  }
+  .catalog-sidebar {
+    width: 100%;
+  }
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+  .catalog-list .college-card {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .catalog-list .card-top-media {
+    width: 100%;
+    height: 180px;
+  }
+  .catalog-list .card-button-actions {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #f1f5f9;
+    flex-direction: row;
+  }
+}

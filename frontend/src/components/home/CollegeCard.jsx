@@ -1,7 +1,10 @@
 // src/components/home/CollegeCard.jsx
 import React from 'react';
 
-export default function CollegeCard({ college, onToggleWishlist }) {
+const DEFAULT_CAMPUS_IMAGE =
+  'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80';
+
+export default function CollegeCard({ college = {}, onToggleWishlist }) {
   const {
     collegeId,
     collegeName = 'Unnamed Institution',
@@ -18,25 +21,37 @@ export default function CollegeCard({ college, onToggleWishlist }) {
     featuredBadge,
   } = college;
 
-  const displayImage = thumbnailImage || 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80';
+  const displayImage = thumbnailImage || DEFAULT_CAMPUS_IMAGE;
 
   return (
     <div className="college-card">
+      {/* Top Media: Image, Badge, and Wishlist Toggle */}
       <div className="card-top-media">
-        <img src={displayImage} alt={collegeName} loading="lazy" />
+        <img
+          src={displayImage}
+          alt={collegeName}
+          loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null; // Prevents infinite loop if fallback fails
+            e.currentTarget.src = DEFAULT_CAMPUS_IMAGE;
+          }}
+        />
+
         {featuredBadge && (
           <span className="card-featured-pill">★ {featuredBadge}</span>
         )}
+
         <button
           type="button"
           aria-label="Wishlist toggle"
           className="card-wishlist-toggle"
-          onClick={() => onToggleWishlist(collegeId)}
+          onClick={() => onToggleWishlist && onToggleWishlist(collegeId)}
         >
           {isWishlisted ? '❤️' : '🤍'}
         </button>
       </div>
 
+      {/* Card Body */}
       <div className="card-content-body">
         <div className="card-location-meta">
           📍 {city}, {state}
@@ -53,29 +68,40 @@ export default function CollegeCard({ college, onToggleWishlist }) {
         </div>
 
         <div className="card-badges-list">
-          {accreditations && accreditations.map((badge, idx) => (
-            <span key={idx} className="accreditation-pill">{badge}</span>
-          ))}
+          {accreditations &&
+            accreditations.map((badge, idx) => (
+              <span key={idx} className="accreditation-pill">
+                {badge}
+              </span>
+            ))}
         </div>
 
+        {/* Specs: Annual Fee and Seats */}
         <div className="card-specs-footer">
           <div>
             <span className="specs-label">ANNUAL FEE</span>
             <span className="specs-val">
-              {feeRange?.minFee ? `₹${feeRange.minFee.toLocaleString()}` : 'N/A'} 
+              {feeRange?.minFee ? `₹${feeRange.minFee.toLocaleString()}` : 'N/A'}
               {feeRange?.maxFee ? ` - ₹${feeRange.maxFee.toLocaleString()}` : ''}
             </span>
           </div>
           <div className="specs-right">
             <span className="specs-label">SEATS</span>
-            <span className="specs-val">{totalSeats ? `${totalSeats}+` : 'Available'}</span>
+            <span className="specs-val">
+              {totalSeats ? `${totalSeats}+` : 'Available'}
+            </span>
           </div>
         </div>
       </div>
 
+      {/* Bottom Action Buttons */}
       <div className="card-button-actions">
-        <a href={`/colleges/${collegeId}`} className="btn-card-details">View Details</a>
-        <a href={`/colleges/${collegeId}/courses`} className="btn-card-courses">View Courses</a>
+        <a href={`/colleges/${collegeId}`} className="btn-card-details">
+          View Details
+        </a>
+        <a href={`/colleges/${collegeId}/courses`} className="btn-card-courses">
+          View Courses
+        </a>
       </div>
     </div>
   );

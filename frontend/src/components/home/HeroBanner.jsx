@@ -1,5 +1,6 @@
 // src/components/home/HeroBanner.jsx
 import React from 'react';
+import './HeroBanner.css';
 
 const POPULAR_SEARCHES = ['Engineering', 'Arts & Science', 'Diploma', 'ITI', 'Medical'];
 

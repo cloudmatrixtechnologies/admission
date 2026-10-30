@@ -1,5 +1,6 @@
 // src/components/home/PlatformHighlights.jsx
 import React from 'react';
+import './PlatformHighlights.css';
 
 const HIGHLIGHTS_DATA = [
   {

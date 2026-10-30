@@ -2,6 +2,7 @@
 import React from 'react';
 import CollegeCard from './CollegeCard';
 import CollegeCardSlot from './CollegeCardSlot';
+import './FeaturedColleges.css';
 
 export default function FeaturedColleges({ 
   colleges = [], 

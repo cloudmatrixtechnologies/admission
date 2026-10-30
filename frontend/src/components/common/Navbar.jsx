@@ -1,5 +1,7 @@
 // src/components/common/Navbar.jsx
-import React, { useState } from 'react';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import './Navbar.css';
 
 const NAV_ITEMS = [
   { id: 'home', label: 'Home', path: '/' },
@@ -10,52 +12,46 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar({ wishlistCount = 0 }) {
-  const [activeTab, setActiveTab] = useState('Home');
+  const location = useLocation();
 
   return (
     <header className="navbar-container">
       <div className="navbar-content">
-
-        {/* Far-Left: Brand with Matching Dual-Tone Title */}
-        <a href="/" className="navbar-brand">
+        {/* Left: Brand Logo & Title */}
+        <Link to="/" className="navbar-brand">
           <div className="brand-icon-tile">
             <span className="brand-icon">🎓</span>
           </div>
           <div className="brand-text">
-            <span className="brand-title">
-              <span className="title-admission">Admission </span>
-              <span className="title-panel">Panel</span>
-            </span>
+            <span className="brand-title">Admission Panel</span>
             <span className="brand-subtitle">Find Your Right College</span>
           </div>
-        </a>
+        </Link>
 
-        {/* Center: Frosted Glass Capsule Pill */}
+        {/* Center: Active Route Aware Pill Navigation */}
         <nav className="nav-pill-capsule" aria-label="Main Navigation">
           {NAV_ITEMS.map((item) => {
-            const isActive = activeTab === item.label;
+            const isActive =
+              item.path === '/'
+                ? location.pathname === '/'
+                : location.pathname.startsWith(item.path);
+
             return (
-              <a
+              <Link
                 key={item.id}
-                href={item.path}
+                to={item.path}
                 className={`nav-pill-link ${isActive ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab(item.label);
-                }}
               >
                 <span>{item.label}</span>
                 {isActive && <span className="nav-pill-indicator" />}
-              </a>
+              </Link>
             );
           })}
         </nav>
 
-        {/* Far-Right: Unrolling Wishlist + Unified Single Auth Field */}
+        {/* Right: Wishlist + Auth Capsule */}
         <div className="nav-controls">
-
-          {/* Animated Wishlist Button (Downward Unrolling Ribbon) */}
-          <a href="/wishlist" className="wishlist-btn-animated" title="View Saved Colleges">
+          <Link to="/wishlist" className="wishlist-btn-animated" title="View Wishlist">
             <div className="flaticon-bookmark-wrapper">
               <svg
                 className="flaticon-bookmark-svg"
@@ -68,93 +64,62 @@ export default function Navbar({ wishlistCount = 0 }) {
                     <path d="M 26 14 H 62 C 67 14 70 17 70 22 V 96 L 48 87 L 26 96 V 32 H 16 C 13 32 11 30 11 27 V 23 C 11 17 16 14 22 14 Z" />
                   </clipPath>
                 </defs>
-
-                {/* Downward Unrolling Ribbon */}
                 <g className="always-unfolded-ribbon">
                   <path
                     d="M 26 14 H 62 C 67 14 70 17 70 22 V 76 L 48 68 L 26 76 V 32 H 16 C 13 32 11 30 11 27 V 23 C 11 17 16 14 22 14 Z"
-                    fill="#38bdf8"
-                    stroke="#0f172a"
-                    strokeWidth="5"
+                    fill="#52cde2"
+                    stroke="#0d276b"
+                    strokeWidth="6"
                     strokeLinejoin="round"
                     strokeLinecap="round"
                   />
-                  <circle
-                    cx="68"
-                    cy="46"
-                    r="24"
-                    fill="#0284c7"
-                    clipPath="url(#unfoldedRibbonClip)"
-                  />
+                  <circle cx="68" cy="46" r="24" fill="#38abbd" clipPath="url(#unfoldedRibbonClip)" />
                 </g>
-
                 <path
                   d="M 26 20 H 22 C 18 20 16 22 16 25.5 V 32 H 26 Z"
                   fill="#ffffff"
-                  stroke="#0f172a"
-                  strokeWidth="4"
+                  stroke="#0d276b"
+                  strokeWidth="5"
                   strokeLinejoin="round"
                 />
-
                 <g className="bookmark-star-coin">
-                  <circle
-                    cx="68"
-                    cy="46"
-                    r="21"
-                    fill="#f59e0b"
-                    stroke="#0f172a"
-                    strokeWidth="5"
-                  />
+                  <circle cx="68" cy="46" r="21" fill="#ff8800" stroke="#0d276b" strokeWidth="6" />
                   <path
                     d="M 68 35.5 L 71.5 42.8 L 79.5 44 L 73.7 49.7 L 75.1 57.6 L 68 53.8 L 60.9 57.6 L 62.3 49.7 L 56.5 44 L 64.5 42.8 Z"
-                    fill="#fef08a"
-                    stroke="#fef08a"
-                    strokeWidth="1.5"
+                    fill="#ffd152"
+                    stroke="#ffd152"
+                    strokeWidth="2.8"
                     strokeLinejoin="round"
                     strokeLinecap="round"
                   />
                 </g>
               </svg>
             </div>
-
             <span className="wishlist-text-label">Wishlist</span>
-
             {wishlistCount > 0 && (
               <span className="wishlist-pill-animated">
                 <span className="pill-ping"></span>
                 <span className="pill-number">{wishlistCount}</span>
               </span>
             )}
-          </a>
+          </Link>
 
-          {/* Unified Single Auth Field: Both Sign In & Sign Up inside One Capsule */}
-          <div className="auth-single-field">
-            <a href="/login" className="field-signin-btn">
-              <svg
-                className="auth-user-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+          <div className="auth-capsule-container">
+            <Link to="/login" className="capsule-login-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-              <span>Sign In</span>
-            </a>
-
-            {/* Sharp Sign Up with Diagonal Sliding Glare & Arrow Motion */}
-            <a href="/register" className="field-signup-btn">
-              <span className="sliding-glare"></span>
+              <span>Login</span>
+            </Link>
+            <Link to="/register" className="capsule-signup-btn">
               <span>Sign Up</span>
-              <span className="signup-chevron">›</span>
-            </a>
+              <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </Link>
           </div>
-
         </div>
-
       </div>
     </header>
   );

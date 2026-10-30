@@ -1,5 +1,6 @@
 // src/components/home/StreamCategories.jsx
 import React from 'react';
+import './StreamCategories.css';
 
 const CATEGORIES = [
   {
@@ -77,10 +78,7 @@ export default function StreamCategories({ selectedStream = '', onSelectStream }
           <h2 className="stream-section-heading">Explore by College Type</h2>
           <p className="stream-section-sub">Select a category to filter institutions across Tamil Nadu</p>
         </div>
-        <a href="/colleges" className="section-view-all">
-          View All Colleges →
-        </a>
-      </div>
+        </div>
 
       <div className="stream-tile-grid">
         {CATEGORIES.map((cat) => {
