@@ -1,6 +1,7 @@
 
 import mongoose from "mongoose";
 
+// Academic details for an individual student.
 const academicSchema = new mongoose.Schema(
   {
     currentClass: {
@@ -27,7 +28,10 @@ const academicSchema = new mongoose.Schema(
       max: 100,
     },
   },
-  { _id: false, strict: "throw" }
+  {
+    _id: false,
+    strict: "throw",
+  }
 );
 
 const studentSchema = new mongoose.Schema(
@@ -48,13 +52,22 @@ const studentSchema = new mongoose.Schema(
       default: null,
     },
 
-    // Required during signup in BOTH cases.
+    // Verified student mobile number.
+    // Optional temporarily for compatibility with existing records.
+    studentMobile: {
+      type: String,
+      trim: true,
+      immutable: true,
+    },
+
+    // Student personal details.
     fullName: {
       type: String,
       required: true,
       trim: true,
       maxlength: 100,
     },
+
     email: {
       type: String,
       required: true,
@@ -111,11 +124,13 @@ const studentSchema = new mongoose.Schema(
       enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
     },
 
+    // Academic information.
     academic: {
       type: academicSchema,
       default: () => ({}),
     },
 
+    // Student profile status.
     status: {
       type: String,
       enum: ["active", "inactive"],
@@ -128,7 +143,11 @@ const studentSchema = new mongoose.Schema(
   }
 );
 
-studentSchema.index({ parentUser: 1, createdAt: -1 });
+// Efficiently retrieve a parent's student profiles.
+studentSchema.index({
+  parentUser: 1,
+  createdAt: -1,
+});
 
 // Prevent one student login from being linked to multiple profiles.
 studentSchema.index(
@@ -137,6 +156,18 @@ studentSchema.index(
     unique: true,
     partialFilterExpression: {
       studentUser: { $type: "objectId" },
+    },
+  }
+);
+
+// Prevent duplicate student mobile numbers.
+// Existing records without studentMobile are excluded.
+studentSchema.index(
+  { studentMobile: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      studentMobile: { $type: "string" },
     },
   }
 );
