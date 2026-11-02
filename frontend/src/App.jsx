@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
@@ -6,6 +7,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import HomePage from './pages/HomePage';
 import CollegesPage from './pages/CollegesPage';
+import CollegeDetailsPage from './pages/CollegeDetailsPage'; // <-- Integrated College Details View
 
 // 2. Dhanush: Admin Auth Component
 import AdminLoginPage from './pages/auth/AdminLoginPage';
@@ -13,7 +15,10 @@ import AdminLoginPage from './pages/auth/AdminLoginPage';
 // 3. Dhanush: Admin Dashboards & Role Pages
 import SuperAdminDashboard from './pages/super-admin/SuperAdminDashboard';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
+<<<<<<< Updated upstream
 import TelecallerDashboard from './pages/telecaller/TelecallerDashboard'; // <--- Line Import
+=======
+>>>>>>> Stashed changes
 
 // ==========================================
 // Role Wrappers with Router Logout Handlers
@@ -69,6 +74,20 @@ export default function App() {
           }
         />
 
+        {/* Dynamic Detail Route: Matches "/colleges/:id" from CollegeCard buttons */}
+        <Route
+          path="/colleges/:id"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <CollegeDetailsPage onWishlistUpdate={setWishlistCount} />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+
         {/* ======================================================== */}
         {/* 2. Dhanush: Admin Authentication (Login Viewport)        */}
         {/* ======================================================== */}
@@ -88,12 +107,15 @@ export default function App() {
         {/* ======================================================== */}
         <Route path="/manager" element={<ManagerAdminWrapper />} />
         <Route path="/admin/manager" element={<ManagerAdminWrapper />} />
+<<<<<<< Updated upstream
 
         {/* ======================================================== */}
         {/* 5. Dhanush: Telecaller Portal Routes                     */}
         {/* ======================================================== */}
         <Route path="/telecaller" element={<TelecallerWrapper />} />
         <Route path="/telecaller/dashboard" element={<TelecallerWrapper />} />
+=======
+>>>>>>> Stashed changes
 
         {/* Fallback route */}
         <Route path="*" element={<AdminLoginPage />} />
