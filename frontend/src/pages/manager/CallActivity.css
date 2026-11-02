@@ -1,0 +1,291 @@
+.ca-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.ca-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.4px;
+  margin: 0;
+}
+
+.ca-breadcrumb {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin: 4px 0 0 0;
+}
+
+/* 4 Metrics Stat Grid */
+.ca-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 1024px) {
+  .ca-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.ca-metric-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.ca-metric-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0;
+}
+
+.ca-metric-val {
+  font-size: 30px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 4px 0 0 0;
+  line-height: 1.1;
+}
+
+.ca-metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Filter Card */
+.ca-filter-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.ca-search-box {
+  flex: 1;
+  min-width: 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ca-search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.ca-search-input {
+  width: 100%;
+  padding: 9px 12px 9px 36px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 12px;
+  outline: none;
+  color: #1e293b;
+  box-sizing: border-box;
+}
+
+.ca-search-input:focus {
+  border-color: #0066ff;
+}
+
+.ca-select {
+  padding: 9px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+}
+
+.ca-date-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.ca-btn-reset {
+  background-color: #ffffff;
+  color: #475569;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Table Card */
+.ca-table-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ca-table-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ca-table-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ca-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0066ff;
+  cursor: pointer;
+}
+
+.ca-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.ca-table thead {
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ca-table th {
+  padding: 14px 18px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+.ca-table tbody tr {
+  border-bottom: 1px solid #f8fafc;
+  transition: background-color 0.15s ease;
+}
+
+.ca-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.ca-table td {
+  padding: 13px 18px;
+  color: #334155;
+  vertical-align: middle;
+}
+
+/* Outcome Badges */
+.ca-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ca-badge.connected {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.ca-badge.follow-up {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.ca-badge.rejected {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.ca-badge.busy {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+/* Pagination Bar */
+.ca-pagination {
+  padding: 14px 24px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.ca-page-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ca-page-btn.active {
+  background: #0066ff;
+  color: #ffffff;
+  border-color: #0066ff;
+}

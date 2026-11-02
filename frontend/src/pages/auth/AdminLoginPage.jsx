@@ -30,7 +30,7 @@ export default function AdminLoginPage({ onLoginSuccess }) {
       return;
     }
 
-    // Check credentials
+    // Check credentials (case-insensitive username/email match)
     const foundUser = MOCK_CREDENTIALS.find(
       (acc) =>
         (acc.username.toLowerCase() === trimmedUser.toLowerCase() ||
@@ -46,10 +46,11 @@ export default function AdminLoginPage({ onLoginSuccess }) {
       // Role-based Navigation
       if (foundUser.role === 'SUPER_ADMIN') {
         navigate('/superadmin');
-      }
-      else if (foundUser.role === 'MANAGER_ADMIN') {
-  navigate('/manager');
-} else {
+      } else if (foundUser.role === 'MANAGER_ADMIN') {
+        navigate('/manager');
+      } else if (foundUser.role === 'TELECALLER') {
+        navigate('/telecaller/dashboard'); // <--- Telecaller direct dashboard navigation
+      } else {
         alert(`Logged in as ${foundUser.role}`);
       }
     } else {

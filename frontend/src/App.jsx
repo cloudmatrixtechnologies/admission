@@ -13,7 +13,7 @@ import AdminLoginPage from './pages/auth/AdminLoginPage';
 // 3. Dhanush: Admin Dashboards & Role Pages
 import SuperAdminDashboard from './pages/super-admin/SuperAdminDashboard';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
-
+import TelecallerDashboard from './pages/telecaller/TelecallerDashboard'; // <--- Line Import
 
 // ==========================================
 // Role Wrappers with Router Logout Handlers
@@ -26,6 +26,12 @@ function SuperAdminWrapper() {
 function ManagerAdminWrapper() {
   const navigate = useNavigate();
   return <ManagerDashboard onLogout={() => navigate('/login')} />;
+}
+
+// Telecaller Logout Wrapper
+function TelecallerWrapper() {
+  const navigate = useNavigate();
+  return <TelecallerDashboard onLogout={() => navigate('/login')} />;
 }
 
 export default function App() {
@@ -82,8 +88,12 @@ export default function App() {
         {/* ======================================================== */}
         <Route path="/manager" element={<ManagerAdminWrapper />} />
         <Route path="/admin/manager" element={<ManagerAdminWrapper />} />
-    
 
+        {/* ======================================================== */}
+        {/* 5. Dhanush: Telecaller Portal Routes                     */}
+        {/* ======================================================== */}
+        <Route path="/telecaller" element={<TelecallerWrapper />} />
+        <Route path="/telecaller/dashboard" element={<TelecallerWrapper />} />
 
         {/* Fallback route */}
         <Route path="*" element={<AdminLoginPage />} />

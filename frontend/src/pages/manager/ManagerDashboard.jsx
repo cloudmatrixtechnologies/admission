@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './ManagerDashboard.css';
 import CreateTelecallerPage from './CreateTelecallerPage';
 import ManageTelecallersPage from './ManageTelecallersPage';
+import AllLeadsPage from './AllLeadsPage'; 
+import AssignLeadsPage from './AssignLeadsPage';
+import FollowUpsPage from './FollowUpsPage';
+import CallActivityPage from './CallActivityPage';
 
-// Manager Admin Initial Mock Data matching Source 7 & 9
 const MOCK_METRICS = {
   totalTelecallers: 8,
   assignedLeads: 448,
@@ -37,9 +40,9 @@ const MOCK_FOLLOWUP_SUMMARY = [
 
 export default function ManagerDashboard({ onLogout }) {
   const [activeMenu, setActiveMenu] = useState('m-dashboard');
-  const [metrics, setMetrics] = useState(MOCK_METRICS);
-  const [leads, setLeads] = useState(MOCK_RECENT_LEADS);
-  const [telecallers, setTelecallers] = useState(MOCK_TELECALLERS_ACTIVITY);
+  const [metrics] = useState(MOCK_METRICS);
+  const [leads] = useState(MOCK_RECENT_LEADS);
+  const [telecallers] = useState(MOCK_TELECALLERS_ACTIVITY);
 
   const menuItems = [
     { id: 'm-dashboard', label: 'Dashboard' },
@@ -52,44 +55,18 @@ export default function ManagerDashboard({ onLogout }) {
     { id: 'm-reports', label: 'Reports' },
   ];
 
-  // =========================================================================
-  // BACKEND API INTEGRATION (Auto-connects when Shreya/Dilep API is ready)
-  // =========================================================================
-  useEffect(() => {
-    const fetchManagerDashboardData = async () => {
-      try {
-        const res = await fetch('/api/admin/manager/dashboard-summary');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.metrics) setMetrics(data.metrics);
-          if (Array.isArray(data.recentLeads)) setLeads(data.recentLeads);
-          if (Array.isArray(data.telecallers)) setTelecallers(data.telecallers);
-        }
-      } catch (err) {
-        // Fallback gracefully to mock data
-        console.warn('Backend not reachable, serving initial mock data.');
-      }
-    };
-    fetchManagerDashboardData();
-  }, []);
-
   const getStatusClass = (status) => {
     switch (status) {
-      case 'In Progress':
-        return 'in-progress';
-      case 'Accepted':
-      case 'Converted':
-        return 'accepted';
-      case 'Rejected':
-        return 'rejected';
-      default:
-        return 'pending';
+      case 'In Progress': return 'in-progress';
+      case 'Accepted': return 'accepted';
+      case 'Rejected': return 'rejected';
+      default: return 'pending';
     }
   };
 
   return (
     <div className="md-container">
-      {/* ================= LEFT SIDEBAR (EXACT BLUE GRADIENT) ================= */}
+      {/* Sidebar */}
       <aside className="md-sidebar">
         <div>
           <div className="md-sidebar-header">
@@ -101,7 +78,7 @@ export default function ManagerDashboard({ onLogout }) {
             </div>
             <div>
               <h2 className="md-sidebar-title">Admission Panel</h2>
-              <p className="md-sidebar-sub">Manager Admin[cite: 7]</p>
+              <p className="md-sidebar-sub">Manager Admin</p>
             </div>
           </div>
 
@@ -122,13 +99,12 @@ export default function ManagerDashboard({ onLogout }) {
 
         <div className="md-role-card">
           <p className="md-role-title">Manager Admin Access</p>
-          <p className="md-role-desc">Central operational controller to allocate leads and manage telecallers[cite: 7].</p>
+          <p className="md-role-desc">Central operational controller to allocate leads and manage telecallers.</p>
         </div>
       </aside>
 
-      {/* ================= RIGHT WORKSPACE ================= */}
+      {/* Main Content */}
       <div className="md-main">
-        {/* Top Header */}
         <header className="md-header">
           <div className="md-date-pill">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0066ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -166,7 +142,6 @@ export default function ManagerDashboard({ onLogout }) {
           </button>
         </header>
 
-        {/* Dynamic Body */}
         <main className="md-body">
           {/* VIEW 1: DASHBOARD */}
           {activeMenu === 'm-dashboard' && (
@@ -176,7 +151,7 @@ export default function ManagerDashboard({ onLogout }) {
                 <p className="md-breadcrumb">Admission Panel / Manager Admin / Dashboard</p>
               </div>
 
-              {/* Top 4 Metrics (Exact counts matching Source 7 & 9) */}
+              {/* 4 Metrics */}
               <div className="md-metrics-grid">
                 <div className="md-metric-card">
                   <div>
@@ -232,9 +207,8 @@ export default function ManagerDashboard({ onLogout }) {
                 </div>
               </div>
 
-              {/* 2-Column Balanced Dashboard Layout */}
+              {/* 2-Column Grid */}
               <div className="md-dashboard-layout">
-                {/* Left Side: Recent Leads Table */}
                 <div className="md-card">
                   <div className="md-card-header">
                     <h2 className="md-card-title">Recent Leads</h2>
@@ -282,9 +256,7 @@ export default function ManagerDashboard({ onLogout }) {
                   </div>
                 </div>
 
-                {/* Right Side: Telecaller Activity & Follow-up Summary Stacked */}
                 <div className="md-side-stack">
-                  {/* Telecaller Activity Card */}
                   <div className="md-card">
                     <div className="md-card-header">
                       <h2 className="md-card-title">Telecaller Activity</h2>
@@ -302,7 +274,7 @@ export default function ManagerDashboard({ onLogout }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {telecallers.slice(0, 5).map((t, idx) => (
+                        {telecallers.map((t, idx) => (
                           <tr key={idx}>
                             <td style={{ paddingLeft: '20px', fontWeight: 700, color: '#0f172a' }}>{t.name}</td>
                             <td style={{ textAlign: 'center', fontWeight: 600 }}>{t.assigned}</td>
@@ -314,7 +286,6 @@ export default function ManagerDashboard({ onLogout }) {
                     </table>
                   </div>
 
-                  {/* Follow-up Summary Card */}
                   <div className="md-card">
                     <div className="md-card-header">
                       <h2 className="md-card-title">Follow-up Summary</h2>
@@ -341,23 +312,37 @@ export default function ManagerDashboard({ onLogout }) {
           {/* VIEW 2: CREATE TELECALLER */}
           {activeMenu === 'm-create-telecaller' && <CreateTelecallerPage />}
 
-          {/* VIEW 3: MANAGE TELECALLERS (IMPORTED & CONNECTED) */}
+          {/* VIEW 3: MANAGE TELECALLERS */}
           {activeMenu === 'm-manage-telecallers' && (
-            <ManageTelecallersPage
-              onNavigateCreate={() => setActiveMenu('m-create-telecaller')}
-            />
+            <ManageTelecallersPage onNavigateCreate={() => setActiveMenu('m-create-telecaller')} />
           )}
 
-          {/* OTHER SUB-VIEWS */}
+          {/* VIEW 4: ALL LEADS WITH DUMMY DATA (FIXED HERE) */}
+          {activeMenu === 'm-all-leads' && <AllLeadsPage />}
+
+          {/* VIEW 5: ASSIGN LEADS (ADD THIS LINE) */}
+          {activeMenu === 'm-assign-leads' && <AssignLeadsPage />}
+
+          {/* VIEW 6: FOLLOW-UPS (ADD THIS LINE) */}
+          {activeMenu === 'm-follow-ups' && <FollowUpsPage />}
+
+          {/* VIEW 7: CALL ACTIVITY (ADD THIS LINE) */}
+          {activeMenu === 'm-call-activity' && <CallActivityPage />}
+
+          {/* FALLBACK */}
           {activeMenu !== 'm-dashboard' &&
             activeMenu !== 'm-create-telecaller' &&
-            activeMenu !== 'm-manage-telecallers' && (
+            activeMenu !== 'm-manage-telecallers' &&
+            activeMenu !== 'm-all-leads' && 
+            activeMenu !== 'm-assign-leads' &&
+            activeMenu !== 'm-follow-ups' &&
+            activeMenu !== 'm-call-activity' &&(
               <div className="md-card" style={{ padding: '32px' }}>
                 <h2 className="md-title" style={{ textTransform: 'capitalize', fontSize: '18px' }}>
                   {activeMenu.replace('m-', '').replace('-', ' ')}
                 </h2>
                 <p style={{ fontSize: '12px', color: '#64748b', marginTop: '6px' }}>
-                  This section is ready for backend integration[cite: 7]. Click <strong>Dashboard</strong> or <strong>Manage Telecallers</strong> to return.
+                  This section is ready for backend integration.
                 </p>
               </div>
             )}
