@@ -4,9 +4,9 @@ import './AdminLogin.css';
 
 // 5 Admin Roles Dummy Credentials
 const MOCK_CREDENTIALS = [
-  { username: 'superadmin', email: 'superadmin@admission.com', password: '1234', role: 'SUPER_ADMIN' },
-  { username: 'manageradmin', email: 'manager@admission.com', password: '1234', role: 'MANAGER_ADMIN' },
-  { username: 'keerthana01', email: 'telecaller01@admission.com', password: '1234', role: 'TELECALLER' },
+  { username: 'sa', email: 'superadmin@admission.com', password: '1234', role: 'SUPER_ADMIN' },
+  { username: 'ma', email: 'manager@admission.com', password: '1234', role: 'MANAGER_ADMIN' },
+  { username: 'tc', email: 'telecaller01@admission.com', password: '1234', role: 'TELECALLER' },
   { username: 'ramesh_col', email: 'collegeadmin@abc.edu', password: '1234', role: 'COLLEGE_ADMIN' },
   { username: 'priya_cons', email: 'consultant@career.com', password: '1234', role: 'CONSULTATION_ADMIN' },
 ];
