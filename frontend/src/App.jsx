@@ -15,10 +15,7 @@ import AdminLoginPage from './pages/auth/AdminLoginPage';
 // 3. Dhanush: Admin Dashboards & Role Pages
 import SuperAdminDashboard from './pages/super-admin/SuperAdminDashboard';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
-<<<<<<< Updated upstream
-import TelecallerDashboard from './pages/telecaller/TelecallerDashboard'; // <--- Line Import
-=======
->>>>>>> Stashed changes
+import TelecallerDashboard from './pages/telecaller/TelecallerDashboard'; // <--- Line Impor
 
 // ==========================================
 // Role Wrappers with Router Logout Handlers
@@ -107,15 +104,13 @@ export default function App() {
         {/* ======================================================== */}
         <Route path="/manager" element={<ManagerAdminWrapper />} />
         <Route path="/admin/manager" element={<ManagerAdminWrapper />} />
-<<<<<<< Updated upstream
+
 
         {/* ======================================================== */}
         {/* 5. Dhanush: Telecaller Portal Routes                     */}
         {/* ======================================================== */}
         <Route path="/telecaller" element={<TelecallerWrapper />} />
         <Route path="/telecaller/dashboard" element={<TelecallerWrapper />} />
-=======
->>>>>>> Stashed changes
 
         {/* Fallback route */}
         <Route path="*" element={<AdminLoginPage />} />
