@@ -8,18 +8,26 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import HomePage from './pages/HomePage';
 import CollegesPage from './pages/CollegesPage';
+
 import CollegeDetailsPage from './pages/CollegeDetailsPage'; // <-- Integrated College Details View
 import CollegeCoursesPage from './pages/CollegeCoursesPage';
 import WishlistPage from './pages/WishlistPage';
 import StudentSignInPage from './pages/auth/StudentSignInPage'; // <-- Added Student Sign-In Page
 
-// 2. Dhanush: Admin Auth Component
+import CollegeDetailsPage from './pages/CollegeDetailsPage';
+
+
+// 2. Dhanush: Admin Auth Components
 import AdminLoginPage from './pages/auth/AdminLoginPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 
 // 3. Dhanush: Admin Dashboards & Role Pages
 import SuperAdminDashboard from './pages/super-admin/SuperAdminDashboard';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
 import TelecallerDashboard from './pages/telecaller/TelecallerDashboard';
+
+
+import CollegeAdminDashboard from './pages/college-admin/CollegeAdminDashboard'; // <--- College Admin Import
 
 
 // ==========================================
@@ -39,6 +47,12 @@ function ManagerAdminWrapper() {
 function TelecallerWrapper() {
   const navigate = useNavigate();
   return <TelecallerDashboard onLogout={() => navigate('/login')} />;
+}
+
+// College Admin Logout Wrapper
+function CollegeAdminWrapper() {
+  const navigate = useNavigate();
+  return <CollegeAdminDashboard onLogout={() => navigate('/login')} />; // <--- College Admin Wrapper
 }
 
 export default function App() {
@@ -76,7 +90,7 @@ export default function App() {
           }
         />
 
-        {/* Dynamic Detail Route: Matches "/colleges/:id" from CollegeCard buttons */}
+        {/* Dynamic Detail Route */}
         <Route
           path="/colleges/:id"
           element={
@@ -131,10 +145,11 @@ export default function App() {
 />
 
         {/* ======================================================== */}
-        {/* 2. Dhanush: Admin Authentication (Login Viewport)        */}
+        {/* 2. Dhanush: Admin Authentication (Login & Recovery)      */}
         {/* ======================================================== */}
         <Route path="/login" element={<AdminLoginPage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
         {/* ======================================================== */}
         {/* 3. Dhanush: Super Admin Portal Routes                    */}
@@ -155,6 +170,12 @@ export default function App() {
         {/* ======================================================== */}
         <Route path="/telecaller" element={<TelecallerWrapper />} />
         <Route path="/telecaller/dashboard" element={<TelecallerWrapper />} />
+
+        {/* ======================================================== */}
+        {/* 6. Dhanush: College Admin Portal Routes                  */}
+        {/* ======================================================== */}
+        <Route path="/college-admin" element={<CollegeAdminWrapper />} />
+        <Route path="/college-admin/dashboard" element={<CollegeAdminWrapper />} />
 
         {/* Fallback route */}
         <Route path="*" element={<AdminLoginPage />} />

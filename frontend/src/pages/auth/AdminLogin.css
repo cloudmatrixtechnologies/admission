@@ -43,7 +43,7 @@
 /* Title */
 .login-title {
   font-size: 25px;
-  font-weight: 800;
+  font-weight: 770;
   color: #0b192c;
   margin: 0 0 28px 0;
   letter-spacing: -0.4px;
@@ -66,9 +66,9 @@
 }
 
 .login-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: #334155;
+  font-size: 13px;
+  font-weight: 750;
+  color: #3d369b;
   margin-bottom: 7px;
   margin-left: 2px;
 }
