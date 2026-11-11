@@ -1,169 +1,192 @@
-/* src/components/common/Navbar.css */
+/* ==========================================================================
+   src/components/common/Navbar.css
+   Glassmorphic Floating Header with Full Visual Fidelity
+   ========================================================================== */
+
+/* 1. Translucent Floating Glass Header */
 .navbar-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 72px;
-  z-index: 1000;
+  height: 74px;
+  z-index: 100;
+  /* Low-opacity white lets the sky and green trees show through clearly */
   background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .navbar-content {
+  position: relative;
   width: 100%;
-  max-width: 100% !important;
-  margin: 0;
-  padding: 0 32px;
+  max-width: 100%;
+  padding: 0 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
 }
 
-.navbar-brand {
-  display: flex;
+/* 2. Brand Identity: Mortarboard Tile + ADMIZAN Text */
+.navbar-brand,
+.navbar-brand:link,
+.navbar-brand:visited {
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  text-decoration: none;
+  text-decoration: none !important;
+  user-select: none;
+  cursor: pointer;
   flex-shrink: 0;
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+  transform: translateY(-1px);
 }
 
 .brand-icon-tile {
-  width: 42px;
-  height: 42px;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
   flex-shrink: 0;
 }
 
-.brand-icon {
-  font-size: 26px;
+.brand-mortarboard {
+  font-size: 22px;
   line-height: 1;
 }
 
-.brand-text {
+.brand-text-group {
   display: flex;
   flex-direction: column;
 }
 
 .brand-title {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 900;
+  color: #0e2a76;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  display: inline-flex;
-  align-items: center;
-  background: linear-gradient(90deg, #042760 0%, #2746b4 42%, #18a1ec 68%, #50c6f4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+}
+
+.brand-logo-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  background: transparent;
 }
 
 .brand-subtitle {
-  font-size: 11px;
-  font-weight: 600;
-  color: #101010;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #040508;
   margin-top: 2px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  user-select: none;
 }
 
+/* 3. Center: Mathematically Centered Frosted Glass Capsule */
 .nav-pill-capsule {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   gap: 26px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.62);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
   padding: 8px 26px;
   border-radius: 9999px;
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  z-index: 10;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.nav-link,
-.nav-pill-link {
+.nav-capsule-link,
+.nav-capsule-link:link,
+.nav-capsule-link:visited {
   position: relative;
-  text-decoration: none;
-  font-size: 14px;
+  text-decoration: none !important;
+  font-size: 14.5px;
   font-weight: 600;
-  color: #1e293b;
+  color: #334155 !important;
   padding: 3px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: color 0.18s ease;
   user-select: none;
+  cursor: pointer;
 }
 
-.nav-link:hover,
-.nav-pill-link:hover {
-  color: #2563eb;
+.nav-capsule-link:hover {
+  color: #1d4ed8 !important;
 }
 
-.nav-link.active,
-.nav-pill-link.active {
-  color: #2563eb;
+.nav-capsule-link.active {
+  color: #2563eb !important;
   font-weight: 700;
 }
 
-.nav-pill-indicator {
+.nav-active-bar {
   position: absolute;
   bottom: -4px;
   width: 18px;
-  height: 2.5px;
+  height: 2.8px;
   background: #2563eb;
-  border-radius: 999px;
-  box-shadow: 0 1px 6px rgba(37, 99, 235, 0.45);
+  border-radius: 99px;
+  box-shadow: 0 1px 6px rgba(37, 99, 235, 0.55);
 }
 
+/* 4. Controls Section */
 .nav-controls {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  z-index: 10;
 }
 
-/* Wishlist Button */
+/* 5. Wishlist Animated Button */
 .wishlist-btn-animated,
-.wishlist-trigger {
+.wishlist-btn-animated:link,
+.wishlist-btn-animated:visited {
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
   padding: 6px 14px 6px 10px;
   height: 40px;
-  border-radius: 9px;
-  background: #ffffff;
-  border: 1.5px solid rgba(226, 232, 240, 0.95);
-  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 9999px;
+  text-decoration: none !important;
   cursor: pointer;
-  flex-shrink: 0;
-  box-sizing: border-box;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 
-.wishlist-btn-animated:hover,
-.wishlist-trigger:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 14px rgba(13, 39, 107, 0.09);
+.wishlist-btn-animated:hover {
+  background: #ffffff;
+  border-color: #bfdbfe;
+  box-shadow: 0 4px 14px rgba(13, 39, 107, 0.12);
   transform: translateY(-1px);
 }
 
@@ -177,6 +200,13 @@
   overflow: visible;
 }
 
+.flaticon-bookmark-svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  overflow: visible;
+}
+
 .always-unfolded-ribbon {
   transform-origin: 48px 14px;
   transform: scaleY(1) translateY(0);
@@ -184,7 +214,7 @@
 }
 
 .wishlist-btn-animated:hover .always-unfolded-ribbon {
-  transform: scaleY(1.22) translateY(2px);
+  transform: scaleY(1.22) translateY(2.5px);
 }
 
 .bookmark-star-coin {
@@ -194,19 +224,18 @@
 }
 
 .wishlist-btn-animated:hover .bookmark-star-coin {
-  transform: scale(1.14) rotate(7deg);
+  transform: scale(1.14) rotate(12deg);
 }
 
 .wishlist-text-label {
   font-size: 13.5px;
   font-weight: 600;
-  color: #1e293b;
+  color: #1e293b !important;
   letter-spacing: -0.01em;
   user-select: none;
 }
 
-.wishlist-pill-animated,
-.wishlist-pill {
+.wishlist-pill-animated {
   position: absolute;
   top: -5px;
   right: -5px;
@@ -249,80 +278,111 @@
   }
 }
 
-/* ==========================================================================
-   Auth Capsule: Unified Login + Sign Up (Prevents Side Overflow)
-   ========================================================================== */
-
-.auth-capsule-container {
+/* 6. Single Enclosed Auth Capsule */
+.auth-capsule {
   display: inline-flex;
   align-items: center;
-  background: #ffffff;
-  border: 1.5px solid rgba(226, 232, 240, 0.95);
-  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 9999px;
   padding: 3px;
   gap: 3px;
-  flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
   box-sizing: border-box;
 }
 
-/* 1. Login Ghost Button */
-.capsule-login-btn {
+/* Neutralize Browser Default Visited Purple & Underline */
+.btn-auth-login,
+.btn-auth-login:link,
+.btn-auth-login:visited,
+a[href*="/student/login"].btn-auth-login,
+a[href*="/student/login"].btn-auth-login:visited {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  background: transparent !important;
+  border: none !important;
   padding: 6px 14px;
-  height: 34px;
+  height: 32px;
   font-size: 13px;
   font-weight: 700;
-  color: #334155;
-  text-decoration: none;
-  border-radius: 7px;
+  color: #334155 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
   white-space: nowrap;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
 }
 
-.auth-user-svg {
-  flex-shrink: 0;
+.btn-auth-login:hover {
+  background: #f1f5f9 !important;
+  color: #2563eb !important;
+  transform: translateY(-0.5px);
+  text-decoration: none !important;
+}
+
+.auth-icon-user {
+  color: #475569;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-auth-login:hover .auth-icon-user {
   color: #2563eb;
+  transform: scale(1.15);
 }
 
-.capsule-login-btn:hover {
-  color: #2563eb;
-  background: #f1f5f9;
-}
-
-/* 2. Sign Up Primary Action Button */
-.capsule-signup-btn {
+/* Register Solid Accent Pill */
+.btn-auth-register,
+.btn-auth-register:link,
+.btn-auth-register:visited,
+a[href*="/student/login"].btn-auth-register,
+a[href*="/student/login"].btn-auth-register:visited {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  height: 34px;
-  font-size: 13px;
-  font-weight: 700;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  border: none !important;
   color: #ffffff !important;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  text-decoration: none;
-  border-radius: 7px;
-  white-space: nowrap;
-  box-sizing: border-box;
+  text-decoration: none !important;
+  padding: 6px 16px;
+  height: 32px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
   box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  white-space: nowrap;
 }
 
-.signup-arrow-svg {
-  flex-shrink: 0;
+.btn-auth-register:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  transform: translateY(-0.5px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.4);
+  color: #ffffff !important;
+}
+
+.register-arrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
   transition: transform 0.2s ease;
 }
 
-.capsule-signup-btn:hover {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-  transform: translateY(-0.5px);
+.btn-auth-register:hover .register-arrow {
+  transform: translateX(3px);
 }
 
-.capsule-signup-btn:hover .signup-arrow-svg {
-  transform: translateX(2.5px);
+/* 7. Responsive Breakpoint */
+@media (max-width: 960px) {
+  .navbar-content {
+    padding: 0 16px;
+  }
+  .nav-pill-capsule {
+    display: none;
+  }
 }

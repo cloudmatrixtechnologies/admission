@@ -1,102 +1,85 @@
-// src/components/common/Footer.jsx
 import React from 'react';
 import './Footer.css';
 
 export default function Footer() {
+  const handleUnbuiltLink = (e, name) => {
+    e.preventDefault();
+    // Keeps the page on the student layout without navigating to admin login
+    console.log(`${name} page is coming soon.`);
+  };
+
   return (
-    <footer className="footer-container">
-      <div className="footer-content">
-        
-        {/* Brand & Overview */}
-        <div className="footer-brand-box">
-          <div className="footer-title">
-            <span className="footer-logo-icon">🎓</span>
-            <span>Admission Panel</span>
+    <footer className="portal-footer">
+      <div className="footer-container">
+        <div className="footer-main-row">
+          {/* Brand Info Column */}
+          <div className="footer-brand-column">
+            <div className="footer-logo">
+              <span style={{ fontSize: '26px' }}>🎓</span>
+              <span className="footer-brand-name">Admizan</span>
+            </div>
+            <p className="footer-tagline">
+              Your trusted companion for discovering colleges, comparing courses and
+              planning your future.
+            </p>
+            <div className="footer-location-chip">
+              <span className="location-pin">📍</span>
+              <span>Student Support • Tamil Nadu, India</span>
+            </div>
           </div>
-          <p className="footer-tagline">
-            An integrated admission guidance portal assisting students and parents across Tamil Nadu with authentic institutional data, transparent fee structures, and verified course details.
+
+          {/* Links Grid */}
+          <div className="footer-nav-grid">
+            {/* 1. Explore (Routes directly to your existing /colleges page) */}
+            <div className="footer-nav-column">
+              <h4 className="footer-column-title">Explore</h4>
+              <ul className="footer-links-list">
+                <li><a href="/colleges">Engineering Colleges</a></li>
+                <li><a href="/colleges">Arts & Science Colleges</a></li>
+                <li><a href="/colleges">Medical & Allied Health</a></li>
+                <li><a href="/colleges">Polytechnic</a></li>
+              </ul>
+            </div>
+
+            {/* 2. Student Resources */}
+            <div className="footer-nav-column">
+              <h4 className="footer-column-title">Student Resources</h4>
+              <ul className="footer-links-list">
+                <li><a href="/colleges">College Directory</a></li>
+                <li><a href="#eligibility" onClick={(e) => handleUnbuiltLink(e, 'Eligibility Guide')}>Eligibility Guide</a></li>
+                <li><a href="#application-help" onClick={(e) => handleUnbuiltLink(e, 'Application Help')}>Application Help</a></li>
+                <li><a href="#faqs" onClick={(e) => handleUnbuiltLink(e, 'FAQs')}>FAQs</a></li>
+              </ul>
+            </div>
+
+            {/* 3. Discover */}
+            <div className="footer-nav-column">
+              <h4 className="footer-column-title">Discover</h4>
+              <ul className="footer-links-list">
+                <li><a href="/colleges">Browse Colleges</a></li>
+                <li><a href="#courses" onClick={(e) => handleUnbuiltLink(e, 'Compare Courses')}>Compare Courses</a></li>
+                <li><a href="#updates" onClick={(e) => handleUnbuiltLink(e, 'Admission Updates')}>Admission Updates</a></li>
+                <li><a href="#scholarships" onClick={(e) => handleUnbuiltLink(e, 'Scholarships')}>Scholarships</a></li>
+              </ul>
+            </div>
+
+            {/* 4. Support */}
+            <div className="footer-nav-column">
+              <h4 className="footer-column-title">Support</h4>
+              <ul className="footer-links-list">
+                <li><a href="#about" onClick={(e) => handleUnbuiltLink(e, 'About Us')}>About Us</a></li>
+                <li><a href="#contact" onClick={(e) => handleUnbuiltLink(e, 'Contact Support')}>Contact Support</a></li>
+                <li><a href="#privacy" onClick={(e) => handleUnbuiltLink(e, 'Privacy Policy')}>Privacy Policy</a></li>
+                <li><a href="#terms" onClick={(e) => handleUnbuiltLink(e, 'Terms & Conditions')}>Terms & Conditions</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom-bar">
+          <p className="footer-copyright-text">
+            © 2026 Admizan. All rights reserved.
           </p>
-          <div className="footer-meta-info">
-            <div className="footer-meta-item">
-              <span className="meta-icon">📍</span>
-              <span>Central Helpdesk: Tamil Nadu, India</span>
-            </div>
-            <div className="footer-meta-item">
-              <span className="meta-icon">✉️</span>
-              <span>support@admissionpanel.org</span>
-            </div>
-            <div className="footer-meta-item">
-              <span className="meta-icon">🕒</span>
-              <span>Mon – Sat: 9:00 AM – 6:00 PM</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Academic Streams */}
-        <div className="footer-links-col">
-          <h4>Program Streams</h4>
-          <ul>
-            <li><a href="/colleges?stream=engineering">Engineering Colleges</a></li>
-            <li><a href="/colleges?stream=arts_science">Arts & Science Colleges</a></li>
-            <li><a href="/colleges?stream=medical">Medical & Allied Health</a></li>
-            <li><a href="/colleges?stream=diploma">Polytechnic / Diploma</a></li>
-            <li><a href="/colleges?stream=iti">ITI Vocational Institutes</a></li>
-            <li><a href="/courses">Course Curriculum Directory</a></li>
-          </ul>
-        </div>
-
-        {/* Guidance Resources */}
-        <div className="footer-links-col">
-          <h4>Student Resources</h4>
-          <ul>
-            <li><a href="/colleges">College Directory</a></li>
-            <li><a href="/about">Eligibility Guidelines</a></li>
-            <li><a href="/wishlist">Saved Wishlist</a></li>
-            <li><a href="/contact">Counselling Helpdesk</a></li>
-            <li><a href="/about">Scholarship Guidance</a></li>
-            <li><a href="/contact">Document Checklists</a></li>
-          </ul>
-        </div>
-
-        {/* Major District Hubs */}
-        <div className="footer-links-col">
-          <h4>Colleges by District</h4>
-          <ul>
-            <li><a href="/colleges?district=chennai">Chennai Region</a></li>
-            <li><a href="/colleges?district=coimbatore">Coimbatore Zone</a></li>
-            <li><a href="/colleges?district=madurai">Madurai Zone</a></li>
-            <li><a href="/colleges?district=trichy">Tiruchirappalli</a></li>
-            <li><a href="/colleges?district=erode">Erode & Kongu Belt</a></li>
-            <li><a href="/colleges?district=tirunelveli">Southern Districts</a></li>
-          </ul>
-        </div>
-
-        {/* Legal & Governance */}
-        <div className="footer-links-col">
-          <h4>Support & Legal</h4>
-          <ul>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact Support</a></li>
-            <li><a href="/privacy">Privacy Policy</a></li>
-            <li><a href="/terms">Terms & Conditions</a></li>
-            <li><a href="/contact">Institution Partnerships</a></li>
-            <li><a href="/about">Grievance Desk</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="footer-bottom">
-        <div className="footer-bottom-inner">
-          <p>© Admission Panel. All rights reserved.</p>
-          <div className="footer-trust-notes">
-            <span>Official Council Verified</span>
-            <span className="dot-divider">•</span>
-            <span>Transparent Student Guidance</span>
-            <span className="dot-divider">•</span>
-            <span>Real-time Data Synchronized</span>
-          </div>
         </div>
       </div>
     </footer>

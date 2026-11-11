@@ -75,7 +75,7 @@
 .stream-tile-card:hover,
 .stream-type-card:hover {
   transform: translateY(-2px);
-  background-color: #baaef3 !important;
+  background-color: #b9aef0 !important;
   border-color: #7138f5 !important;
   box-shadow: 0 8px 22px rgba(139, 92, 246, 0.16) !important;
 }

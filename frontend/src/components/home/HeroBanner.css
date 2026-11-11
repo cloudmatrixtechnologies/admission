@@ -1,13 +1,15 @@
 /* src/components/home/HeroBanner.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700;1,800&display=swap');
+
 .hero-banner {
   position: relative;
   width: 100%;
-  min-height: 580px;
+  min-height: 540px;
   background-image: 
     linear-gradient(
       180deg,
-      rgba(15, 23, 42, 0.42) 0%,
-      rgba(15, 23, 42, 0.20) 40%,
+      rgba(15, 23, 42, 0.32) 0%,
+      rgba(15, 23, 42, 0.16) 42%,
       rgba(15, 23, 42, 0.10) 70%,
       rgba(15, 23, 42, 0.40) 100%
     ),
@@ -16,43 +18,53 @@
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
+  color: #ffffff;
+  padding: 125px 24px 70px 24px; /* Clearance for floating translucent navbar */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 110px 24px 60px 24px;
   box-sizing: border-box;
 }
 
 .hero-inner {
   width: 100%;
-  max-width: 860px;
+  max-width: 880px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Category Badge */
 .hero-badge {
   display: inline-block;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(15, 23, 42, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.38);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 5px 16px;
   border-radius: 9999px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.2px;
   color: #ffffff;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
+/* Playfair Italic Serif Headline */
 .hero-heading {
   font-family: 'Playfair Display', Georgia, Cambria, serif !important;
   font-style: italic !important;
   font-weight: 800 !important;
-  font-size: 46px;
-  line-height: 1.24;
+  font-size: 48px;
+  line-height: 1.22;
   letter-spacing: -0.015em;
+  margin-bottom: 28px;
   color: #ffffff;
-  margin-bottom: 24px;
   text-shadow: 
     0 2px 14px rgba(0, 0, 0, 0.7),
     0 1px 3px rgba(0, 0, 0, 0.9);
@@ -60,50 +72,63 @@
 
 .hero-heading-gold {
   color: #fbbf24 !important;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 24px rgba(251, 191, 36, 0.4);
+  font-style: italic !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 24px rgba(251, 191, 36, 0.45);
 }
 
+/* Single-Line High-Elevation Search Pill */
 .hero-search-form {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   width: 100%;
-  max-width: 640px;
+  max-width: 660px;
   height: 52px;
   margin: 0 auto;
   background: #ffffff;
   padding: 4px 6px 4px 18px;
   border-radius: 9999px;
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.22), 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid #ffffff;
   box-sizing: border-box;
 }
 
 .search-input-group {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-right: 8px;
 }
 
 .search-icon-svg {
   flex-shrink: 0;
-  color: #2563eb;
 }
 
 .search-input-group input {
-  width: 100%;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 14px;
+  width: 100% !important;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  font-size: 14.5px;
   font-weight: 500;
   margin-left: 10px;
   color: #0f172a;
 }
 
+.search-input-group input::placeholder {
+  color: #64748b;
+}
+
 .hero-btn-submit {
+  flex-shrink: 0 !important;
   height: 42px;
-  padding: 0 26px;
+  padding: 0 28px;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: #ffffff;
   border: none;
@@ -112,15 +137,23 @@
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s ease;
 }
 
 .hero-btn-submit:hover {
   background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
 }
 
+.hero-btn-submit:active {
+  transform: translateY(0);
+}
+
+/* Popular Quick Chips */
 .hero-popular-searches {
-  margin-top: 18px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,15 +162,17 @@
 }
 
 .popular-label {
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
   color: #ffffff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .popular-chip {
+  display: inline-flex;
+  align-items: center;
   background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   color: #1e293b;
   padding: 5px 14px;
   border-radius: 9999px;
@@ -145,33 +180,42 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .popular-chip:hover {
   background: #ffffff;
   transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .hero-banner {
     min-height: 480px;
     padding: 100px 16px 50px 16px;
   }
+
   .hero-heading {
     font-size: 32px;
+    margin-bottom: 22px;
   }
+
   .hero-search-form {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-    border-radius: 16px;
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
   }
+
   .search-input-group {
-    width: 100%;
-    margin-bottom: 8px;
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 8px !important;
   }
+
   .hero-btn-submit {
-    width: 100%;
-    border-radius: 12px;
+    width: 100% !important;
+    border-radius: 12px !important;
   }
 }
