@@ -7,8 +7,8 @@ const MOCK_CREDENTIALS = [
   { username: 'sa', email: 'superadmin@admission.com', password: '1234', role: 'SUPER_ADMIN' },
   { username: 'ma', email: 'manager@admission.com', password: '1234', role: 'MANAGER_ADMIN' },
   { username: 'tc', email: 'telecaller01@admission.com', password: '1234', role: 'TELECALLER' },
-  { username: 'ramesh_col', email: 'collegeadmin@abc.edu', password: '1234', role: 'COLLEGE_ADMIN' },
-  { username: 'priya_cons', email: 'consultant@career.com', password: '1234', role: 'CONSULTATION_ADMIN' },
+  { username: 'college', email: 'collegeadmin@abc.edu', password: '1234', role: 'COLLEGE_ADMIN' },
+  { username: 'cons', email: 'consultant@career.com', password: '1234', role: 'CONSULTATION_ADMIN' },
 ];
 
 export default function AdminLoginPage({ onLoginSuccess }) {
@@ -49,8 +49,10 @@ export default function AdminLoginPage({ onLoginSuccess }) {
       } else if (foundUser.role === 'MANAGER_ADMIN') {
         navigate('/manager');
       } else if (foundUser.role === 'TELECALLER') {
-        navigate('/telecaller/dashboard'); // <--- Telecaller direct dashboard navigation
-      } else {
+        navigate('/telecaller/dashboard');
+      } else if (foundUser.role === 'COLLEGE_ADMIN') {
+        navigate('/college-admin/dashboard'); 
+      }else {
         alert(`Logged in as ${foundUser.role}`);
       }
     } else {
@@ -79,11 +81,11 @@ export default function AdminLoginPage({ onLoginSuccess }) {
         </div>
 
         {/* Title */}
-        <h1 className="login-title">Admission Panel</h1>
+        <h1 className="login-title">Admizan Panel</h1>
 
         {/* Error message */}
         {errorMsg && (
-          <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', marginBottom: '12px', textAlign: 'center' }}>
+          <div style={{ color: '#448eef', fontSize: '11px', fontWeight: 'bold', marginBottom: '12px', textAlign: 'center' }}>
             {errorMsg}
           </div>
         )}
@@ -192,7 +194,7 @@ export default function AdminLoginPage({ onLoginSuccess }) {
               href="#forgot"
               onClick={(e) => {
                 e.preventDefault();
-                alert('Forgot Password clicked');
+                navigate('/forgot-password');
               }}
               className="login-forgot-link"
             >

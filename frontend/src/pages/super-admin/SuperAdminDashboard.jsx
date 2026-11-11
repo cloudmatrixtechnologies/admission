@@ -62,7 +62,7 @@ export default function SuperAdminDashboard({ onLogout }) {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'Accepted':
-        return { bg: '#dcfce7', color: '#15803d' };
+        return { bg: '#dcfce7', color: '#351580' };
       case 'Rejected':
         return { bg: '#fee2e2', color: '#b91c1c' };
       case 'Active':
@@ -87,7 +87,7 @@ export default function SuperAdminDashboard({ onLogout }) {
               </svg>
             </div>
             <div>
-              <h2 className="sa-sidebar-title">Admission Panel</h2>
+              <h2 className="sa-sidebar-title">Admizan Panel</h2>
               <p className="sa-sidebar-sub">Super Admin</p>
             </div>
           </div>

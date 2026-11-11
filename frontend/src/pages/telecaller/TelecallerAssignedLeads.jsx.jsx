@@ -17,18 +17,10 @@ export default function TelecallerAssignedLeads() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [collegeFilter, setCollegeFilter] = useState('All Colleges');
 
-  const handleStatusChange = (id) => {
+  // Direct status change handler via Actions dropdown
+  const handleStatusChange = (id, newStatus) => {
     setLeads((prev) =>
-      prev.map((lead) => {
-        if (lead.id === id) {
-          let nextStatus = 'Pending';
-          if (lead.status === 'Pending') nextStatus = 'Follow-up';
-          else if (lead.status === 'Follow-up') nextStatus = 'Connected';
-          else if (lead.status === 'Connected') nextStatus = 'Pending';
-          return { ...lead, status: nextStatus };
-        }
-        return lead;
-      })
+      prev.map((lead) => (lead.id === id ? { ...lead, status: newStatus } : lead))
     );
   };
 
@@ -44,7 +36,7 @@ export default function TelecallerAssignedLeads() {
     return matchesSearch && matchesStatus && matchesCollege;
   });
 
-  const getBadgeClass = (status) => {
+  const getStatusClass = (status) => {
     switch (status) {
       case 'Connected':
         return 'connected';
@@ -193,11 +185,12 @@ export default function TelecallerAssignedLeads() {
                 <td className="tal-td marks-col">{lead.tenth}% / {lead.twelfth}%</td>
                 <td className="tal-td mobile-col">{lead.mobile}</td>
                 <td className="tal-td">
-                  <span className={`tal-badge ${getBadgeClass(lead.status)}`}>
+                  <span className={`tal-badge ${getStatusClass(lead.status)}`}>
                     {lead.status}
                   </span>
                 </td>
                 <td className="tal-td action-col">
+                  {/* Dial Action */}
                   <button
                     type="button"
                     onClick={() => alert(`Calling ${lead.name} (${lead.mobile})... Opening Requirement Capture screen.`)}
@@ -208,14 +201,18 @@ export default function TelecallerAssignedLeads() {
                     </svg>
                     <span>Dial</span>
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => handleStatusChange(lead.id)}
-                    className="tal-status-btn"
-                    title="Update status"
+
+                  {/* Actions keezha ulla Status Dropdown Select */}
+                  <select
+                    value={lead.status}
+                    onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                    className="tal-action-status-select"
+                    title="Change status"
                   >
-                    Status
-                  </button>
+                    <option value="Connected">Connected</option>
+                    <option value="Follow-up">Follow-ups</option>
+                    <option value="Pending">Pending</option>
+                  </select>
                 </td>
               </tr>
             ))}
