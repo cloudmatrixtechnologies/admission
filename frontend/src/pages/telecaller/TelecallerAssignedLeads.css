@@ -56,21 +56,10 @@
   margin: 4px 0 0 0;
 }
 
-.tal-metric-val.blue {
-  color: #0066ff;
-}
-
-.tal-metric-val.amber {
-  color: #f59e0b;
-}
-
-.tal-metric-val.green {
-  color: #10b981;
-}
-
-.tal-metric-val.purple {
-  color: #8b5cf6;
-}
+.tal-metric-val.blue { color: #0066ff; }
+.tal-metric-val.amber { color: #f59e0b; }
+.tal-metric-val.green { color: #10b981; }
+.tal-metric-val.purple { color: #8b5cf6; }
 
 .tal-metric-icon {
   width: 48px;
@@ -81,25 +70,10 @@
   justify-content: center;
 }
 
-.tal-metric-icon.blue {
-  background-color: #eff6ff;
-  color: #0066ff;
-}
-
-.tal-metric-icon.amber {
-  background-color: #fffbeb;
-  color: #f59e0b;
-}
-
-.tal-metric-icon.green {
-  background-color: #ecfdf5;
-  color: #10b981;
-}
-
-.tal-metric-icon.purple {
-  background-color: #f5f3ff;
-  color: #8b5cf6;
-}
+.tal-metric-icon.blue { background-color: #eff6ff; color: #0066ff; }
+.tal-metric-icon.amber { background-color: #fffbeb; color: #f59e0b; }
+.tal-metric-icon.green { background-color: #ecfdf5; color: #10b981; }
+.tal-metric-icon.purple { background-color: #f5f3ff; color: #8b5cf6; }
 
 /* Filter Row */
 .tal-filter-row {
@@ -187,14 +161,8 @@
   color: #64748b;
 }
 
-.tal-th.id-col {
-  padding-left: 24px;
-}
-
-.tal-th.action-col {
-  text-align: right;
-  padding-right: 24px;
-}
+.tal-th.id-col { padding-left: 24px; }
+.tal-th.action-col { text-align: right; padding-right: 24px; }
 
 .tal-tr {
   border-bottom: 1px solid #f8fafc;
@@ -215,28 +183,17 @@
   color: #1e293b;
 }
 
-.tal-td.college-col {
-  color: #64748b;
-}
-
-.tal-td.course-col {
-  font-weight: 600;
-  color: #334155;
-}
-
-.tal-td.marks-col {
-  color: #334155;
-}
-
-.tal-td.mobile-col {
-  font-family: monospace;
-}
-
+.tal-td.college-col { color: #64748b; }
+.tal-td.course-col { font-weight: 600; color: #334155; }
+.tal-td.marks-col { color: #334155; }
+.tal-td.mobile-col { font-family: monospace; }
 .tal-td.action-col {
   text-align: right;
   padding-right: 24px;
+  white-space: nowrap;
 }
 
+/* Static Status Badge in Table */
 .tal-badge {
   display: inline-block;
   padding: 4px 10px;
@@ -260,6 +217,7 @@
   color: #b45309;
 }
 
+/* Dial Button */
 .tal-dial-btn {
   padding: 5px 12px;
   border: none;
@@ -272,16 +230,34 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-.tal-status-btn {
+.tal-dial-btn:hover {
+  background-color: #0052cc;
+}
+
+/* Actions Column Status Select Dropdown */
+.tal-action-status-select {
   padding: 5px 10px;
   border: 1px solid #cbd5e1;
   background-color: #ffffff;
-  color: #475569;
+  color: #334155;
   border-radius: 8px;
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;
   margin-left: 6px;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.tal-action-status-select:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.tal-action-status-select:focus {
+  border-color: #0066ff;
+  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.15);
 }
