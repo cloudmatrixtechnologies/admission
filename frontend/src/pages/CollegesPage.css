@@ -696,3 +696,91 @@
     flex-direction: row;
   }
 }
+/* Sidebar Search Input & Button Integration */
+.search-field-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.search-field-wrap input {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 38px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-search-trigger:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.btn-search-trigger:active {
+  transform: translateY(0);
+}
+/* Empty State Box (Replaces disabled placeholders) */
+.no-colleges-found-box {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.no-colleges-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.no-colleges-found-box h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.no-colleges-found-box p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 18px;
+}
+
+.btn-reset-search {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-search:hover {
+  background: #2563eb;
+  color: #ffffff;
+}

@@ -82,7 +82,6 @@ const TEMPORARY_COLLEGES = [
   {
     collegeId: 'col_002',
     collegeName: 'Sona College of Technology',
-    // Verified working architectural campus image
     thumbnailImage: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
     collegeType: 'Engineering',
     institutionType: 'Private',
@@ -191,7 +190,6 @@ const TEMPORARY_COLLEGES = [
   {
     collegeId: 'col_008',
     collegeName: 'PSG College of Technology',
-    // Verified working engineering campus facade
     thumbnailImage: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=800&q=80',
     collegeType: 'Engineering',
     institutionType: 'Government-Aided',
@@ -286,14 +284,14 @@ const ITEMS_PER_PAGE = 9;
 export default function CollegesPage({ onWishlistUpdate }) {
   const [colleges, setColleges] = useState(TEMPORARY_COLLEGES);
 
-  // Staged filter state
+  // Staged filter state (typing doesn't filter colleges immediately)
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestedWord, setSuggestedWord] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [maxFee, setMaxFee] = useState(500000);
 
-  // Active filter state
+  // Active filter state that controls the visible catalog
   const [appliedFilters, setAppliedFilters] = useState({
     search: '',
     types: [],
@@ -336,7 +334,7 @@ export default function CollegesPage({ onWishlistUpdate }) {
     fetchColleges();
   }, [fetchColleges]);
 
-  // Typo spell check
+  // Spell-check suggestion logic
   useEffect(() => {
     const trimmed = searchQuery.trim();
     if (!trimmed || trimmed.length < 3) {
@@ -358,6 +356,32 @@ export default function CollegesPage({ onWishlistUpdate }) {
     setSuggestedWord(bestMatch);
   }, [searchQuery]);
 
+  // Trigger search on button click or Enter key
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    const query = searchQuery.trim();
+    const lowerQuery = query.toLowerCase();
+
+    // If searching specifically for a stream like ITI or Engineering,
+    // ensure conflicting type filters don't block the results
+    const matchingStream = STREAM_ITEMS.find(
+      (s) => s.id.toLowerCase() === lowerQuery
+    );
+
+    let nextTypes = selectedTypes;
+    if (matchingStream) {
+      nextTypes = [matchingStream.id];
+      setSelectedTypes([matchingStream.id]);
+    }
+
+    setAppliedFilters((prev) => ({
+      ...prev,
+      search: query,
+      types: nextTypes,
+    }));
+    setCurrentPage(1);
+  };
+
   const handleApplySuggestion = () => {
     setSearchQuery(suggestedWord);
     setSuggestedWord('');
@@ -366,15 +390,21 @@ export default function CollegesPage({ onWishlistUpdate }) {
   };
 
   const handleTypeToggle = (type) => {
-    setSelectedTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
-    );
+    setSelectedTypes((prev) => {
+      const next = prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type];
+      setAppliedFilters((current) => ({ ...current, types: next }));
+      return next;
+    });
+    setCurrentPage(1);
   };
 
   const handleLevelToggle = (level) => {
-    setSelectedLevels((prev) =>
-      prev.includes(level) ? prev.filter((l) => l !== level) : [...prev, level]
-    );
+    setSelectedLevels((prev) => {
+      const next = prev.includes(level) ? prev.filter((l) => l !== level) : [...prev, level];
+      setAppliedFilters((current) => ({ ...current, levels: next }));
+      return next;
+    });
+    setCurrentPage(1);
   };
 
   const handleQuickStreamClick = (streamId) => {
@@ -417,37 +447,96 @@ export default function CollegesPage({ onWishlistUpdate }) {
     setIsSortOpen(false);
   };
 
-  const handleToggleWishlist = async (collegeId) => {
-    setColleges((prev) =>
-      prev.map((c) =>
-        c.collegeId === collegeId ? { ...c, isWishlisted: !c.isWishlisted } : c
-      )
+  const handleToggleWishlist = (collegeId) => {
+  let currentList = [];
+  try {
+    const raw = localStorage.getItem('admizan_wishlist');
+    currentList = raw ? JSON.parse(raw) : [];
+  } catch {
+    currentList = [];
+  }
+
+  const isAlreadySaved = currentList.some(
+    (item) => (item.collegeId || item.id) === collegeId
+  );
+
+  let updatedList;
+  if (isAlreadySaved) {
+    // Remove if clicked again
+    updatedList = currentList.filter(
+      (item) => (item.collegeId || item.id) !== collegeId
     );
-
-    try {
-      const res = await toggleWishlist(collegeId);
-      if (res?.totalWishlistCount !== undefined && onWishlistUpdate) {
-        onWishlistUpdate(res.totalWishlistCount);
-      }
-    } catch {
-      // Optimistic update retained
+  } else {
+    // Add college with timestamp
+    const target = colleges.find(
+      (item) => (item.collegeId || item.id) === collegeId
+    );
+    if (target) {
+      updatedList = [
+        ...currentList,
+        {
+          ...target,
+          isWishlisted: true,
+          savedAt: new Date().toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          }),
+        },
+      ];
+    } else {
+      updatedList = currentList;
     }
-  };
+  }
 
+  // Save to browser memory
+  try {
+    localStorage.setItem('admizan_wishlist', JSON.stringify(updatedList));
+  } catch (e) {
+    console.error(e);
+  }
+
+  // Update visual heart state in card list
+  setColleges((prev) =>
+    prev.map((c) =>
+      (c.collegeId || c.id) === collegeId
+        ? { ...c, isWishlisted: !isAlreadySaved }
+        : c
+    )
+  );
+
+  // Update navbar badge count
+  if (onWishlistUpdate) {
+    onWishlistUpdate(updatedList.length);
+  }
+};
   const filteredColleges = useMemo(() => {
     return colleges
       .filter((college) => {
+        // Multi-field text search matching (Name, Type, City, Accreditations)
         if (appliedFilters.search) {
           const q = appliedFilters.search.toLowerCase();
-          const matchName = college.collegeName.toLowerCase().includes(q);
-          const matchType = college.collegeType.toLowerCase().includes(q);
-          if (!matchName && !matchType) return false;
+          const matchName = college.collegeName?.toLowerCase().includes(q);
+          const matchType = college.collegeType?.toLowerCase().includes(q);
+          const matchCity = college.city?.toLowerCase().includes(q);
+          const matchAccreditation = college.accreditations?.some((acc) =>
+            acc.toLowerCase().includes(q)
+          );
+          const matchLevel = college.courseLevels?.some((lvl) =>
+            lvl.toLowerCase().includes(q)
+          );
+
+          if (!matchName && !matchType && !matchCity && !matchAccreditation && !matchLevel) {
+            return false;
+          }
         }
 
+        // College Type checkboxes
         if (appliedFilters.types.length > 0) {
           if (!appliedFilters.types.includes(college.collegeType)) return false;
         }
 
+        // Course Level checkboxes
         if (appliedFilters.levels.length > 0) {
           const hasLevel = college.courseLevels?.some((lvl) =>
             appliedFilters.levels.includes(lvl)
@@ -455,6 +544,7 @@ export default function CollegesPage({ onWishlistUpdate }) {
           if (!hasLevel) return false;
         }
 
+        // Fee range slider
         if (college.feeRange?.minFee && college.feeRange.minFee > appliedFilters.fee) {
           return false;
         }
@@ -478,7 +568,7 @@ export default function CollegesPage({ onWishlistUpdate }) {
 
   return (
     <div className="colleges-page-container">
-      {/* Top Banner with exact colleges-page.jpeg Slanted Campus Building */}
+      {/* Top Banner */}
       <section className="colleges-top-banner">
         <div className="banner-fluid-inner">
           <div className="banner-left-content">
@@ -529,18 +619,33 @@ export default function CollegesPage({ onWishlistUpdate }) {
             </button>
           </div>
 
-          {/* Search with Typo Suggestion */}
+          {/* Search Box with Dedicated Search Action Button */}
           <div className="filter-group">
             <label className="filter-title">Search College</label>
-            <div className="search-field-wrap">
+            <form className="search-field-wrap" onSubmit={handleSearchSubmit}>
               <input
                 type="text"
-                placeholder="Search college or keyword..."
+                placeholder="Search college, ITI, course..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleApplyFilters()}
               />
-            </div>
+              <button type="submit" className="btn-search-trigger" title="Search colleges">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <span>Search</span>
+              </button>
+            </form>
             {suggestedWord && (
               <div className="typo-suggestion-box">
                 <span>Did you mean:</span>
@@ -708,9 +813,14 @@ export default function CollegesPage({ onWishlistUpdate }) {
                 />
               ))
             ) : (
-              [...Array(viewMode === 'list' ? 4 : 9)].map((_, idx) => (
-                <CollegeCardSlot key={idx} slotIndex={idx + 1} />
-              ))
+              <div className="no-colleges-found-box">
+                <span className="no-colleges-icon">🔍</span>
+                <h4>No colleges found matching "{appliedFilters.search || 'your filters'}"</h4>
+                <p>Try resetting the filters or searching with a different keyword.</p>
+                <button type="button" className="btn-reset-search" onClick={handleResetFilters}>
+                  Clear All Filters
+                </button>
+              </div>
             )}
           </div>
 
@@ -756,4 +866,4 @@ export default function CollegesPage({ onWishlistUpdate }) {
       </div>
     </div>
   );
-}
+} 

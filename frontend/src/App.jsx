@@ -1,5 +1,6 @@
+
 // src/App.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 // 1. Prabhu: Student Public Website Components
@@ -7,7 +8,14 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import HomePage from './pages/HomePage';
 import CollegesPage from './pages/CollegesPage';
+
+import CollegeDetailsPage from './pages/CollegeDetailsPage'; // <-- Integrated College Details View
+import CollegeCoursesPage from './pages/CollegeCoursesPage';
+import WishlistPage from './pages/WishlistPage';
+import StudentSignInPage from './pages/auth/StudentSignInPage'; // <-- Added Student Sign-In Page
+
 import CollegeDetailsPage from './pages/CollegeDetailsPage';
+
 
 // 2. Dhanush: Admin Auth Components
 import AdminLoginPage from './pages/auth/AdminLoginPage';
@@ -17,7 +25,10 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import SuperAdminDashboard from './pages/super-admin/SuperAdminDashboard';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
 import TelecallerDashboard from './pages/telecaller/TelecallerDashboard';
+
+
 import CollegeAdminDashboard from './pages/college-admin/CollegeAdminDashboard'; // <--- College Admin Import
+
 
 // ==========================================
 // Role Wrappers with Router Logout Handlers
@@ -92,6 +103,46 @@ export default function App() {
             </div>
           }
         />
+
+        {/* Dedicated View Courses Route: Matches "/colleges/:collegeId/courses" */}
+        <Route
+          path="/colleges/:collegeId/courses"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <CollegeCoursesPage />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+
+        {/* Dedicated Student Sign In & Register Page */}
+        <Route
+          path="/student/login"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <StudentSignInPage />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+  path="/wishlist"
+  element={
+    <div className="app-shell">
+      <Navbar wishlistCount={wishlistCount} />
+      <main className="main-content">
+        <WishlistPage onWishlistUpdate={setWishlistCount} />
+      </main>
+      <Footer />
+    </div>
+  }
+/>
 
         {/* ======================================================== */}
         {/* 2. Dhanush: Admin Authentication (Login & Recovery)      */}

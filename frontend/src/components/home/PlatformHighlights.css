@@ -1,127 +1,160 @@
-/* src/components/home/PlatformHighlights.css */
-.highlights-section {
-  width: 100% !important;
-  background: #ffffff !important;
+/* ==========================================================================
+   Platform Section (Why Choose Us - Match platform image.jpeg)
+   ========================================================================== */
+
+.platform-section-container {
+  width: 100%;
+  background: radial-gradient(circle at 50% 0%, #edf4fe 0%, #f8fafc 60%, #ffffff 100%);
+  padding: 68px 24px 76px 24px;
+  box-sizing: border-box;
   border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 64px 24px 72px 24px !important;
-  box-sizing: border-box !important;
 }
 
-.highlights-intro {
-  text-align: center !important;
-  max-width: 720px;
-  margin: 0 auto 44px auto !important;
+.platform-content-wrap {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
 }
 
-.highlights-pill {
-  display: inline-block !important;
-  font-size: 11.5px !important;
-  font-weight: 800 !important;
-  color: #2563eb !important;
-  background: #eff6ff !important;
-  border: 1px solid #dbeafe !important;
-  padding: 5px 16px !important;
-  border-radius: 9999px !important;
-  letter-spacing: 0.9px !important;
-  margin-bottom: 12px !important;
-  text-transform: uppercase !important;
+/* Header Area */
+.platform-intro-block {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 46px auto;
 }
 
-.highlights-intro h2 {
-  font-size: 28px !important;
-  font-weight: 800 !important;
-  color: #0f172a !important;
-  letter-spacing: -0.025em !important;
-  margin-bottom: 8px !important;
+.platform-badge-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
-.highlights-intro p {
-  font-size: 14.5px !important;
-  color: #64748b !important;
-  font-weight: 500 !important;
-  line-height: 1.55 !important;
+.platform-badge-line {
+  width: 32px;
+  height: 1.5px;
+  background-color: #64748b;
+  opacity: 0.5;
 }
 
-.highlights-grid {
-  width: 100% !important;
-  max-width: 1320px !important;
-  margin: 0 auto !important;
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 20px !important;
-  box-sizing: border-box !important;
+.platform-badge-pill {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #1d4ed8;
+  background-color: #dbeafe;
+  border: 1px solid #bfdbfe;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  user-select: none;
 }
 
-.highlight-item-card {
-  background: #f8fafc !important;
-  border: 1.5px solid #e2e8f0 !important;
-  border-radius: 14px !important;
-  padding: 22px 20px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: space-between !important;
-  box-sizing: border-box !important;
-  text-align: left !important;
+.platform-heading {
+  font-size: 34px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.text-royal-blue {
+  color: #2563eb;
+}
+
+.platform-subheading {
+  font-size: 15px;
+  color: #475569;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* 4-Column x 2-Row Card Grid */
+.platform-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Feature Card */
+.platform-feature-card {
+  background: #ffffff;
+  border: 1.5px solid #dbeafe;
+  border-radius: 14px;
+  padding: 22px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.04);
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  min-height: 150px;
+  box-sizing: border-box;
 }
 
-.highlight-item-card:hover {
+.platform-feature-card:hover {
   transform: translateY(-3px);
-  border-color: #cbd5e1 !important;
-  background: #ffffff !important;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  border-color: #93c5fd;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.09);
 }
 
-.highlight-card-header {
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 12px !important;
-  margin-bottom: 10px !important;
+/* Card Header: Icon Bubble + Title inline */
+.card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.highlight-check {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 26px !important;
-  height: 26px !important;
-  min-width: 26px !important;
-  border-radius: 50% !important;
-  background: #ecfdf5 !important;
-  color: #059669 !important;
-  font-weight: 800 !important;
-  font-size: 13.5px !important;
-  flex-shrink: 0 !important;
-  margin-top: 2px !important;
+.card-icon-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.highlight-card-header h3 {
-  font-size: 15.5px !important;
-  font-weight: 700 !important;
-  color: #0f172a !important;
-  letter-spacing: -0.015em !important;
-  line-height: 1.35 !important;
-  margin: 0 !important;
+.card-feature-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 0;
 }
 
-.highlight-item-card p {
-  font-size: 13px !important;
-  color: #64748b !important;
-  line-height: 1.58 !important;
-  font-weight: 500 !important;
-  margin: 0 0 16px 0 !important;
-  flex: 1 !important;
+/* Card Body */
+.card-feature-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.55;
+  font-weight: 500;
+  margin: 0;
 }
 
+/* Responsive Grid */
 @media (max-width: 1200px) {
-  .highlights-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  .platform-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
   }
 }
 
-@media (max-width: 768px) {
-  .highlights-grid {
-    grid-template-columns: 1fr !important;
+@media (max-width: 680px) {
+  .platform-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-heading {
+    font-size: 26px;
+  }
+
+  .platform-subheading {
+    font-size: 14px;
   }
 }

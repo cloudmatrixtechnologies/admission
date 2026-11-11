@@ -152,7 +152,7 @@ export default function CollegeCard({ college = {}, onToggleWishlist }) {
           View Details
         </Link>
         <Link
-          to={`/colleges/${targetId}`}
+          to={`/colleges/${targetId}/courses`}
           state={{ college }}
           className="btn-card-courses"
         >

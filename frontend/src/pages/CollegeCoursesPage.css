@@ -1,0 +1,554 @@
+/* src/pages/CollegeCoursesPage.css */
+
+.college-courses-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   1. Clean Light Header (Replaced Heavy Banner)
+   ========================================================================== */
+
+.courses-clean-header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 94px 36px 20px 36px; /* Increased top padding from 24px to 94px to clear the floating navbar */
+  box-sizing: border-box;
+}
+
+.header-inner-container {
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.breadcrumbs-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.b-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s ease;
+}
+
+.b-link:hover {
+  text-decoration: underline;
+}
+
+.b-sep {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.b-curr {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.header-info-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.header-college-heading {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px 0;
+  line-height: 1.25;
+}
+
+.header-sub-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.inst-badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 700;
+  font-size: 11.5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.dot-sep {
+  color: #cbd5e1;
+}
+
+.count-text {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.btn-back-overview {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #1e3a8a;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-back-overview:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* ==========================================================================
+   2. Interactive Control Bar
+   ========================================================================== */
+
+.courses-controls-strip {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding: 12px 36px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.controls-inner-container {
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.level-filter-pills {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.level-pill-btn {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.level-pill-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.level-pill-btn.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.count-badge {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+.level-pill-btn.active .count-badge {
+  background: #bfdbfe;
+  color: #1e40af;
+}
+
+.search-and-sort-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.course-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 38px;
+}
+
+.course-search-field input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  color: #0f172a;
+  width: 220px;
+}
+
+.course-sort-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.course-sort-select select {
+  height: 38px;
+  padding: 0 10px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+}
+
+.view-mode-toggle {
+  display: flex;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.btn-view-toggle {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn-view-toggle.active {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================================================
+   3. Main Catalog Workspace
+   ========================================================================== */
+
+.courses-main-workspace {
+  width: 100%;
+  padding: 28px 36px 60px 36px;
+  box-sizing: border-box;
+}
+
+.workspace-inner-container {
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.courses-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.course-card-tile {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.course-card-tile:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  transform: translateY(-2px);
+}
+
+.course-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tile-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tier-badge {
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.code-badge {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.seats-indicator {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #059669;
+}
+
+.course-tile-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0 0 12px 0;
+}
+
+.course-meta-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.m-tag {
+  font-size: 11.5px;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.course-info-panel {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.panel-title {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.panel-content {
+  font-size: 12px;
+  color: #334155;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.course-tile-footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fee-stacked {
+  display: flex;
+  flex-direction: column;
+}
+
+.fee-sub {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.fee-val {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.btn-course-inquire {
+  display: inline-flex;
+  align-items: center;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.18s ease;
+}
+
+.btn-course-inquire:hover {
+  background: #1d4ed8;
+}
+
+/* ==========================================================================
+   4. Table View Format
+   ========================================================================== */
+
+.courses-table-container {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.courses-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.courses-data-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  padding: 14px 16px;
+  border-bottom: 1.5px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.courses-data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.col-course-title strong {
+  display: block;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.code-text {
+  font-size: 11px;
+  color: #64748b;
+  font-family: monospace;
+}
+
+.col-fee {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.col-eligibility {
+  max-width: 280px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #475569;
+}
+
+.btn-table-inquire {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-table-inquire:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.courses-empty-alert {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.btn-clear-search {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .courses-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .header-info-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .courses-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .controls-inner-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .search-and-sort-group {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
