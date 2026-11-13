@@ -6,7 +6,7 @@ import {
 
 const SUPPORTED_COUNTRIES = new Set(getCountries());
 
-export function normalizeMobile(input, defaultCountry) {
+export function  normalizeMobile(input, defaultCountry) {
   if (typeof input !== "string" || !input.trim()) {
     throw new Error("INVALID_MOBILE");
   }

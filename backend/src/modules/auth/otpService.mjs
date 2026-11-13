@@ -7,7 +7,7 @@ import VerificationGrant from "./verificationGrantModel.mjs";
 import { normalizeMobile } from "../../utils/normalizeMobile.mjs";
 
 const OTP_TTL_MS = 5 * 60 * 1000;
-const GRANT_TTL_MS = 5 * 60 * 1000;
+const GRANT_TTL_MS = 10 * 60 * 1000;
 const RESEND_COOLDOWN_MS = 60 * 1000;
 const MAX_ATTEMPTS = 5;
 

@@ -45,23 +45,25 @@ export async function addStudentController(req, res, next) {
 
     const data = parsed.data;
 
-    // 3. Normalize the student mobile number.
-    let studentMobile;
+    // 3. Normalize the mobile number only when provided.
+    let studentMobile = null;
 
-    try {
-      studentMobile = normalizeMobile(
-        data.mobile_number,
-        data.mobile_country
-      );
-    } catch {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid student mobile number or country selection.",
-      });
+    if (data.mobileNumber) {
+      try {
+        studentMobile = normalizeMobile(
+          data.mobileNumber,
+          data.mobileCountry
+        );
+      } catch {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid student mobile number or country selection.",
+        });
+      }
     }
 
     const studentDob = new Date(
-      `${data.dob}T00:00:00.000Z`
+      `${data.dateOfBirth}T00:00:00.000Z`
     );
 
     // 4. Start the MongoDB transaction.
@@ -71,57 +73,58 @@ export async function addStudentController(req, res, next) {
 
     try {
       await session.withTransaction(async () => {
-        // 5. Consume the OTP verification grant.
-        // This token must belong to the submitted student mobile.
-        await consumeVerificationGrant({
-          mobile: studentMobile,
-          purpose: "registration",
-          token: data.mobile_verification_token,
-          session,
-        });
+        // 5. Verify the mobile only when one is provided.
+        if (studentMobile) {
+          await consumeVerificationGrant({
+            mobile: studentMobile,
+            purpose: "registration",
+            token: data.mobileVerificationToken,
+            session,
+          });
 
-        // 6. Do not silently link an existing account.
-        // Student mobile numbers must be new.
-        const existingUser = await User.findOne({
-          mobile_number: studentMobile,
-        })
-          .select("_id")
-          .session(session)
-          .lean();
+          // 6. Do not silently link an existing account.
+          const existingUser = await User.findOne({
+            mobileNumber: studentMobile,
+          })
+            .select("_id")
+            .session(session)
+            .lean();
 
-        if (existingUser) {
-          throw new Error("STUDENT_MOBILE_ALREADY_EXISTS");
-        }
+          if (existingUser) {
+            throw new Error("STUDENT_MOBILE_ALREADY_EXISTS");
+          }
 
-        // Also prevent duplicate student profiles.
-        const existingStudent = await Student.findOne({
-          studentMobile,
-        })
-          .select("_id")
-          .session(session)
-          .lean();
+          // Also prevent duplicate student profiles.
+          const existingStudent = await Student.findOne({
+            studentMobile,
+          })
+            .select("_id")
+            .session(session)
+            .lean();
 
-        if (existingStudent) {
-          throw new Error("STUDENT_PROFILE_ALREADY_EXISTS");
+          if (existingStudent) {
+            throw new Error("STUDENT_PROFILE_ALREADY_EXISTS");
+          }
         }
 
         // 7. Create only a student profile.
-        // Do not create another parent or student login account.
+        // No separate User account is created here.
         const studentProfile = new Student({
           parentUser: parentUserId,
           studentUser: null,
 
-          studentMobile,
+          // Undefined when the student has no mobile number.
+          studentMobile: studentMobile || undefined,
 
-          fullName: data.full_name,
+          fullName: data.fullName,
           email: data.email,
           dateOfBirth: studentDob,
           gender: data.gender,
           religion: data.religion,
           caste: data.caste,
           community: data.community,
-          motherTongue: data.mother_tongue,
-          bloodGroup: data.blood_group,
+          motherTongue: data.motherTongue,
+          bloodGroup: data.bloodGroup,
         });
 
         await studentProfile.save({ session });
@@ -131,11 +134,12 @@ export async function addStudentController(req, res, next) {
           success: true,
           message: "Student profile added successfully.",
           student: {
-            id: studentProfile._id,
+            id: studentProfile._id.toString(),
             fullName: studentProfile.fullName,
             email: studentProfile.email,
             dateOfBirth: studentProfile.dateOfBirth,
-            studentMobile: studentProfile.studentMobile,
+            studentMobile: studentProfile.studentMobile ?? null,
+            studentUser: studentProfile.studentUser ?? null,
             status: studentProfile.status,
             createdAt: studentProfile.createdAt,
           },
