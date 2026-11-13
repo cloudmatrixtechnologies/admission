@@ -37,19 +37,19 @@ export async function registerController(req, res, next) {
       });
     }
 
-    // 2. Normalize student A and parent B.
+    // 2. Normalize student and parent mobile numbers.
     let studentMobile;
     let guardianMobile;
 
     try {
       studentMobile = normalizeMobile(
-        data.mobile_number,
-        data.mobile_country
+        data.mobileNumber,
+        data.mobileCountry
       );
 
       guardianMobile = normalizeMobile(
-        data.guardian_mobile,
-        data.guardian_country
+        data.guardianMobile,
+        data.guardianCountry
       );
     } catch {
       return res.status(400).json({
@@ -62,26 +62,20 @@ export async function registerController(req, res, next) {
     const sameNumber = studentMobile === guardianMobile;
 
     // 3. A different parent number must have its own token.
-    if (
-      !sameNumber &&
-      !data.guardian_verification_token
-    ) {
+    if (!sameNumber && !data.guardianVerificationToken) {
       return res.status(400).json({
         success: false,
         message: "Parent mobile verification is required.",
       });
     }
 
-    const studentDob = new Date(
-      `${data.dob}T00:00:00.000Z`
+    const studentDateOfBirth = new Date(
+      `${data.dateOfBirth}T00:00:00.000Z`
     );
 
     // 4. Hash the password before writing account records.
     // Separate accounts get separate password hashes.
-    const parentPasswordHash = await bcrypt.hash(
-      data.password,
-      12
-    );
+    const parentPasswordHash = await bcrypt.hash(data.password, 12);
 
     const studentPasswordHash = sameNumber
       ? null
@@ -98,7 +92,7 @@ export async function registerController(req, res, next) {
         await consumeVerificationGrant({
           mobile: studentMobile,
           purpose: "registration",
-          token: data.mobile_verification_token,
+          token: data.mobileVerificationToken,
           session,
         });
 
@@ -108,7 +102,7 @@ export async function registerController(req, res, next) {
           await consumeVerificationGrant({
             mobile: guardianMobile,
             purpose: "registration",
-            token: data.guardian_verification_token,
+            token: data.guardianVerificationToken,
             session,
           });
         }
@@ -119,15 +113,14 @@ export async function registerController(req, res, next) {
           : [studentMobile, guardianMobile];
 
         const existingUsers = await User.find({
-          mobile_number: { $in: mobileNumbers },
+          mobileNumber: { $in: mobileNumbers },
         })
-          .select("mobile_number")
+          .select("mobileNumber")
           .session(session)
           .lean();
 
         if (existingUsers.length > 0) {
-          const error = new Error("ACCOUNT_ALREADY_EXISTS");
-          throw error;
+          throw new Error("ACCOUNT_ALREADY_EXISTS");
         }
 
         const verifiedAt = new Date();
@@ -135,10 +128,10 @@ export async function registerController(req, res, next) {
         // 7. Create the parent account.
         // Parent name and additional details are collected later.
         const parentUser = new User({
-          mobile_number: guardianMobile,
+          mobileNumber: guardianMobile,
           role: "parent",
-          password_hash: parentPasswordHash,
-          mobile_verified_at: verifiedAt,
+          passwordHash: parentPasswordHash,
+          mobileVerifiedAt: verifiedAt,
           status: "active",
         });
 
@@ -149,11 +142,11 @@ export async function registerController(req, res, next) {
 
         if (!sameNumber) {
           studentUser = new User({
-            mobile_number: studentMobile,
-            full_name: data.full_name,
+            mobileNumber: studentMobile,
+            fullName: data.fullName,
             role: "student",
-            password_hash: studentPasswordHash,
-            mobile_verified_at: verifiedAt,
+            passwordHash: studentPasswordHash,
+            mobileVerifiedAt: verifiedAt,
             status: "active",
           });
 
@@ -165,15 +158,15 @@ export async function registerController(req, res, next) {
           parentUser: parentUser._id,
           studentUser: studentUser?._id ?? null,
 
-          fullName: data.full_name,
+          fullName: data.fullName,
           email: data.email,
-          dateOfBirth: studentDob,
+          dateOfBirth: studentDateOfBirth,
           gender: data.gender,
           religion: data.religion,
           caste: data.caste,
           community: data.community,
-          motherTongue: data.mother_tongue,
-          bloodGroup: data.blood_group,
+          motherTongue: data.motherTongue,
+          bloodGroup: data.bloodGroup,
         });
 
         await studentProfile.save({ session });
@@ -181,11 +174,11 @@ export async function registerController(req, res, next) {
         responseData = {
           success: true,
           message: "Registration completed successfully.",
-          account_type: sameNumber
+          accountType: sameNumber
             ? "parent_only"
             : "parent_and_student",
-          student_account_created: !sameNumber,
-          student_profile_created: true,
+          studentAccountCreated: !sameNumber,
+          studentProfileCreated: true,
         };
       });
     } finally {
@@ -203,9 +196,7 @@ export async function registerController(req, res, next) {
       });
     }
 
-    if (
-      error.message === "VERIFICATION_GRANT_INVALID_OR_EXPIRED"
-    ) {
+    if (error.message === "VERIFICATION_GRANT_INVALID_OR_EXPIRED") {
       return res.status(400).json({
         success: false,
         message:
@@ -230,3 +221,4 @@ export async function registerController(req, res, next) {
     }
   }
 }
+  

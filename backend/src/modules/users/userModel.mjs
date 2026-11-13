@@ -5,14 +5,14 @@ const userSchema = new mongoose.Schema(
   {
     // Optional during basic registration.
     // Parent details will be collected during the application stage.
-    full_name: {
+    fullName: {
       type: String,
       trim: true,
       maxlength: 100,
     },
 
     // Store the normalized mobile number, such as +919876543210.
-    mobile_number: {
+    mobileNumber: {
       type: String,
       required: true,
       unique: true,
@@ -37,13 +37,13 @@ const userSchema = new mongoose.Schema(
     },
 
     // Never store plaintext passwords.
-    password_hash: {
+    passwordHash: {
       type: String,
       required: true,
       select: false,
     },
 
-    mobile_verified_at: {
+    mobileVerifiedAt: {
       type: Date,
       default: null,
     },
@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema(
       default: "pending",
     },
 
-    password_changed_at: {
+    passwordChangedAt: {
       type: Date,
       default: null,
     },

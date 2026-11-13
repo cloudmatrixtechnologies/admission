@@ -123,7 +123,20 @@ const studentSchema = new mongoose.Schema(
       type: String,
       enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
     },
+    // Student profile photo metadata.
+    // The actual image is stored outside MongoDB.
+    photo: {
+      storageKey: {
+        type: String,
+        trim: true,
+        maxlength: 500,
+      },
 
+      format: {
+        type: String,
+        enum: ["jpg", "jpeg", "png", "webp"],
+      },
+    },
     // Academic information.
     academic: {
       type: academicSchema,

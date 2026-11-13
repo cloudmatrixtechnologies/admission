@@ -120,12 +120,26 @@ app.use((err, req, res, next) => {
   }
 
   // Log details on the server, not in the public response.
-console.error("Request error:", err);
+// Respect known client error status codes.
+const statusCode =
+  Number.isInteger(err.statusCode) &&
+  err.statusCode >= 400 &&
+  err.statusCode < 500
+    ? err.statusCode
+    : 500;
 
-  return res.status(500).json({
-    success: false,
-    message: "Internal server error",
-  });
+// Log server errors privately.
+if (statusCode >= 500) {
+  console.error("Request error:", err);
+}
+
+return res.status(statusCode).json({
+  success: false,
+  message:
+    statusCode >= 500
+      ? "Internal server error"
+      : err.message || "Request failed",
+});
 });
 
 

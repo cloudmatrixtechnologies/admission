@@ -18,8 +18,8 @@ const purposeSchema = z.enum([
 
 const mobileInputSchema = z
   .object({
-    mobile_number: z.string().trim().min(1).max(30),
-    country: z.string().trim().length(2).optional(),
+    mobileNumber: z.string().trim().min(1).max(30),
+    mobileCountry: z.string().trim().length(2).optional(),
   })
   .strict();
 
@@ -32,17 +32,17 @@ const verifySchema = mobileInputSchema
 
 function getNormalizedMobile(input) {
   return normalizeMobile(
-    input.mobile_number,
-    input.country?.toUpperCase()
+    input.mobileNumber,
+    input.mobileCountry?.toUpperCase()
   );
 }
 
 export async function requestOtp(req, res, next) {
   try {
     const inputResult = mobileInputSchema.safeParse({
-      mobile_number: req.body?.mobile_number,
-      ...(req.body?.country !== undefined
-        ? { country: req.body.country }
+      mobileNumber: req.body?.mobileNumber,
+      ...(req.body?.mobileCountry !== undefined
+        ? { mobileCountry: req.body.mobileCountry }
         : {}),
     });
 
@@ -161,8 +161,8 @@ export async function verifyOtpController(req, res, next) {
     return res.status(200).json({
       success: true,
       message: "Mobile number verified.",
-      verification_token: result.verificationToken,
-      expires_at: result.expiresAt,
+      verificationToken: result.verificationToken,
+      expiresAt: result.expiresAt,
     });
   } catch (error) {
     return next(error);

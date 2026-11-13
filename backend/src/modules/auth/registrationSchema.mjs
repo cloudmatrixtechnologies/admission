@@ -44,19 +44,20 @@ function isValidPastDate(value) {
 export const registrationSchema = z
   .object({
     // Page 1: student/contact mobile.
-    mobile_number: mobileSchema,
-    mobile_country: countrySchema,
+    mobileNumber: mobileSchema,
+    mobileCountry: countrySchema,
 
     // Page 2: parent/guardian mobile.
-    guardian_mobile: mobileSchema,
-    guardian_country: countrySchema,
+    guardianMobile: mobileSchema,
+    guardianCountry: countrySchema,
 
     // Page 3: student details.
-    full_name: z
+    fullName: z
       .string()
       .trim()
       .min(1, "Student name is required.")
       .max(100, "Student name is too long."),
+
     email: z
       .string()
       .trim()
@@ -64,7 +65,7 @@ export const registrationSchema = z
       .max(254, "Email address is too long.")
       .transform((value) => value.toLowerCase()),
 
-    dob: z.string().refine(isValidPastDate, {
+    dateOfBirth: z.string().refine(isValidPastDate, {
       message: "Enter a valid date of birth in YYYY-MM-DD format.",
     }),
 
@@ -72,26 +73,26 @@ export const registrationSchema = z
     religion: z.string().trim().max(100).optional(),
     caste: z.string().trim().max(100).optional(),
     community: z.enum(["OC", "BC", "MBC", "SC", "ST"]).optional(),
-    mother_tongue: z.string().trim().max(100).optional(),
+    motherTongue: z.string().trim().max(100).optional(),
 
-    blood_group: z
+    bloodGroup: z
       .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
       .optional(),
 
     // Page 4: password.
     password: passwordSchema,
-    confirm_password: z.string(),
+    confirmPassword: z.string(),
 
     // Tokens returned by successful OTP verification.
-    mobile_verification_token: verificationTokenSchema,
-    guardian_verification_token: verificationTokenSchema.optional(),
+    mobileVerificationToken: verificationTokenSchema,
+    guardianVerificationToken: verificationTokenSchema.optional(),
   })
   .strict()
   .superRefine((data, context) => {
-    if (data.password !== data.confirm_password) {
+    if (data.password !== data.confirmPassword) {
       context.addIssue({
         code: "custom",
-        path: ["confirm_password"],
+        path: ["confirmPassword"],
         message: "Passwords do not match.",
       });
     }

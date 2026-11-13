@@ -7,12 +7,21 @@ import { allowRoles } from "../auth/roleMiddleware.mjs";
 import { requireStudentProfileAccess } from "./studentAccessMiddleware.mjs";
 import { addStudentController } from "./addStudentController.mjs";
 
+import { receiveAndValidateStudentPhoto } from "./studentPhotoValidation.mjs";
+
+import {
+  uploadStudentPhotoController,
+} from "./studentPhotoController.mjs";
+
+import {
+  getStudentPhotoController,
+} from "./getStudentPhotoController.mjs";
+
 import Student from "./studentModel.mjs";
 
 const router = Router();
 
-// Add another student profile.
-// Only authenticated parent accounts are allowed.
+// Add a new student profile.
 router.post(
   "/",
   requireAuth,
@@ -20,7 +29,24 @@ router.post(
   addStudentController
 );
 
-// Return only the student profiles linked to the logged-in user.
+// Upload or replace a student photo.
+router.put(
+  "/:studentId/photo",
+  requireAuth,
+  requireStudentProfileAccess,
+  receiveAndValidateStudentPhoto,
+  uploadStudentPhotoController
+);
+
+// View a student photo securely.
+router.get(
+  "/:studentId/photo",
+  requireAuth,
+  requireStudentProfileAccess,
+  getStudentPhotoController
+);
+
+// Retrieve all student profiles belonging to the logged-in user.
 router.get("/", requireAuth, async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -74,7 +100,7 @@ router.get("/", requireAuth, async (req, res, next) => {
   }
 });
 
-// Retrieve one student profile after checking ownership.
+// Retrieve one student profile.
 router.get(
   "/:studentId",
   requireAuth,

@@ -1,11 +1,18 @@
 
 import { z } from "zod";
 
-const mobileSchema = z
-  .string()
-  .trim()
-  .min(1, "Student mobile number is required.")
-  .max(30, "Invalid mobile number.");
+const optionalMobileSchema = z.preprocess(
+  (value) =>
+    typeof value === "string" && !value.trim()
+      ? undefined
+      : value,
+  z
+    .string()
+    .trim()
+    .min(1, "Student mobile number cannot be empty.")
+    .max(30, "Invalid mobile number.")
+    .optional()
+);
 
 const countrySchema = z
   .string()
@@ -14,9 +21,10 @@ const countrySchema = z
   .transform((value) => value.toUpperCase())
   .optional();
 
-const verificationTokenSchema = z
+const optionalVerificationTokenSchema = z
   .string()
-  .regex(/^[A-Za-z0-9_-]{43}$/, "Invalid verification token.");
+  .regex(/^[A-Za-z0-9_-]{43}$/, "Invalid verification token.")
+  .optional();
 
 function isValidPastDate(value) {
   if (
@@ -36,13 +44,11 @@ function isValidPastDate(value) {
 }
 
 export const addStudentSchema = z
-  .object({
-    // Student mobile number.
-    mobile_number: mobileSchema,
-    mobile_country: countrySchema,
+  .strictObject({
+    mobileNumber: optionalMobileSchema,
+    mobileCountry: countrySchema,
 
-    // Student details.
-    full_name: z
+    fullName: z
       .string()
       .trim()
       .min(1, "Student name is required.")
@@ -55,26 +61,37 @@ export const addStudentSchema = z
       .max(254, "Email address is too long.")
       .transform((value) => value.toLowerCase()),
 
-    dob: z.string().refine(isValidPastDate, {
+    dateOfBirth: z.string().refine(isValidPastDate, {
       message: "Enter a valid date of birth in YYYY-MM-DD format.",
     }),
 
     gender: z.enum(["male", "female", "other"]).optional(),
-
     religion: z.string().trim().max(100).optional(),
     caste: z.string().trim().max(100).optional(),
+    community: z.enum(["OC", "BC", "MBC", "SC", "ST"]).optional(),
+    motherTongue: z.string().trim().max(100).optional(),
 
-    community: z
-      .enum(["OC", "BC", "MBC", "SC", "ST"])
-      .optional(),
-
-    mother_tongue: z.string().trim().max(100).optional(),
-
-    blood_group: z
+    bloodGroup: z
       .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
       .optional(),
 
-    // Token returned after successful student mobile OTP verification.
-    mobile_verification_token: verificationTokenSchema,
+    mobileVerificationToken: optionalVerificationTokenSchema,
   })
-  .strict();
+  .superRefine((data, ctx) => {
+    if (data.mobileNumber && !data.mobileVerificationToken) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["mobileVerificationToken"],
+        message: "Verify the student mobile number using OTP.",
+      });
+    }
+
+    if (!data.mobileNumber && data.mobileVerificationToken) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["mobileNumber"],
+        message:
+          "Student mobile number is required when providing a verification token.",
+      });
+    }
+  });
