@@ -9,6 +9,52 @@ const collegeCategories = [
   "Paramedical",
   "Polytechnic",
 ];
+// Placement Company Schema
+const placementCompanySchema = new mongoose.Schema(
+  {
+    companyName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    studentsPlaced: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    placementPercentage: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 100,
+    },
+  },
+  { _id: false }
+);
+
+const placementYearSchema = new mongoose.Schema(
+  {
+    year: {
+      type: Number,
+      required: true,
+      min: 2000,
+    },
+
+    totalEligibleStudents: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    companies: {
+      type: [placementCompanySchema],
+      default: [],
+    },
+  },
+  { _id: false }
+);
 
 const collegeSchema = new mongoose.Schema(
   {
@@ -94,6 +140,28 @@ const collegeSchema = new mongoose.Schema(
       trim: true,
       maxlength: 200,
     },
+
+placementRecords: {
+  type: [placementYearSchema],
+  default: [],
+},
+
+thumbnailImage: {
+  type: String,
+  trim: true,
+  default: null,
+},
+
+coverImage: {
+  type: String,
+  trim: true,
+  default: null,
+},
+
+galleryImages: {
+  type: [String],
+  default: [],
+},
 
     collegeAdmin: {
       type: mongoose.Schema.Types.ObjectId,
