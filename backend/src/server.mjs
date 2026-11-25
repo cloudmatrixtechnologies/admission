@@ -8,6 +8,8 @@ import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 import authRoutes from "./modules/auth/authRoutes.mjs";
 import studentRoutes from "./modules/students/studentRoutes.mjs";
+import { requireTrustedOrigin } from "./middleware/requireTrustedOrigin.mjs";
+
 
 import connectDB from "./config/db.js";
 
@@ -26,11 +28,10 @@ const allowedOrigins = (
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+
 app.use(
   cors({
     origin(origin, callback) {
-      // Requests without an Origin header include server-to-server
-      // requests and command-line tools.
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
@@ -40,6 +41,8 @@ app.use(
     credentials: true,
   })
 );
+// Protect state-changing API requests against CSRF.
+app.use("/api", requireTrustedOrigin);
 
 // Limit request body sizes to reduce resource-exhaustion risk.
 app.use(express.json({ limit: "20kb" }));

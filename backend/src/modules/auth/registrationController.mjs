@@ -157,6 +157,8 @@ export async function registerController(req, res, next) {
         const studentProfile = new Student({
           parentUser: parentUser._id,
           studentUser: studentUser?._id ?? null,
+          // Relationship of the parent account holder to this student.
+          parentRelationship: data.parentRelationship,
 
           fullName: data.fullName,
           email: data.email,
@@ -221,4 +223,3 @@ export async function registerController(req, res, next) {
     }
   }
 }
-  

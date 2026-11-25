@@ -3,99 +3,163 @@ import { Router } from "express";
 import rateLimit from "express-rate-limit";
 
 import {
-  requestOtp,
-  verifyOtpController,
+    requestOtp,
+    verifyOtpController,
 } from "./authController.mjs";
 
+import { resetPasswordController } from "./resetPasswordController.mjs";
 import { registerController } from "./registrationController.mjs";
 import { loginController } from "./loginController.mjs";
 import { refreshController } from "./refreshController.mjs";
 import { requireAuth } from "./authMiddleware.mjs";
+import { changePasswordController } from "./changePasswordController.mjs";
 
 import {
-  revokeSession,
-  updateSessionActivity,
+    requestMobileChangeOtp,
+    verifyMobileChangeOtp,
+    confirmMobileChange,
+} from "./mobileChangeController.mjs";
+
+import {
+    revokeSession,
+    updateSessionActivity,
 } from "./sessionService.mjs";
 
 const router = Router();
 
 const otpRequestLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Too many OTP requests. Please try again later.",
-  },
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many OTP requests. Please try again later.",
+    },
 });
 
 const otpVerifyLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Too many OTP verification attempts. Please try again later.",
-  },
+    windowMs: 15 * 60 * 1000,
+    limit: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many OTP verification attempts. Please try again later.",
+    },
 });
 
 const registrationLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Too many registration attempts. Please try again later.",
-  },
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many registration attempts. Please try again later.",
+    },
 });
 
 const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Too many login attempts. Please try again later.",
-  },
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many login attempts. Please try again later.",
+    },
 });
 
 const refreshLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Too many refresh attempts. Please try again later.",
-  },
+    windowMs: 15 * 60 * 1000,
+    limit: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many refresh attempts. Please try again later.",
+    },
+});
+
+const changePasswordLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many password change attempts. Please try again later.",
+    },
+});
+
+const resetPasswordLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many password reset attempts. Please try again later.",
+    },
+});
+
+// Limit mobile-number change confirmation attempts.
+const mobileChangeConfirmLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many mobile-number change attempts. Please try again later.",
+    },
 });
 
 // Clear both authentication cookies.
 function clearAuthCookies(res) {
-  const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = process.env.NODE_ENV === "production";
 
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: "lax",
-    path: "/",
-  });
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: "lax",
+        path: "/",
+    });
 
-  res.clearCookie("refreshToken", {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: "lax",
-    path: "/api/auth/refresh",
-  });
+    res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: "lax",
+        path: "/api/auth/refresh",
+    });
 }
 
-// OTP routes
+// Public OTP routes
 router.post("/otp/request", otpRequestLimiter, requestOtp);
 router.post("/otp/verify", otpVerifyLimiter, verifyOtpController);
+
+// Authenticated mobile-number change routes
+router.post(
+    "/mobile-change/request",
+    requireAuth,
+    otpRequestLimiter,
+    requestMobileChangeOtp
+);
+
+router.post(
+    "/mobile-change/verify",
+    requireAuth,
+    otpVerifyLimiter,
+    verifyMobileChangeOtp
+);
+
+router.post(
+    "/mobile-change/confirm",
+    requireAuth,
+    mobileChangeConfirmLimiter,
+    confirmMobileChange
+);
 
 // Registration and login
 router.post("/register", registrationLimiter, registerController);
@@ -106,64 +170,80 @@ router.post("/refresh", refreshLimiter, refreshController);
 
 // Authenticated user
 router.get("/me", requireAuth, (req, res) => {
-  return res.status(200).json({
-    success: true,
-    message: "Authenticated user retrieved successfully.",
-    user: req.user,
-  });
+    return res.status(200).json({
+        success: true,
+        message: "Authenticated user retrieved successfully.",
+        user: req.user,
+    });
 });
+
 // Update meaningful activity for the current authenticated session.
 router.post("/activity", requireAuth, async (req, res) => {
-  try {
-    const session = await updateSessionActivity(req.sessionId);
+    try {
+        const session = await updateSessionActivity(req.sessionId);
 
-    // The session may have expired between authentication and this update.
-    if (!session) {
-      await revokeSession(req.sessionId);
+        // The session may have expired between authentication and this update.
+        if (!session) {
+            await revokeSession(req.sessionId);
 
-      clearAuthCookies(res);
+            clearAuthCookies(res);
 
-      return res.status(401).json({
-        success: false,
-        message: "Your session has expired. Please log in again.",
-      });
+            return res.status(401).json({
+                success: false,
+                message: "Your session has expired. Please log in again.",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Session activity updated successfully.",
+        });
+    } catch (error) {
+        console.error("Session activity update failed:", error.message);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to update session activity.",
+        });
     }
-
-    return res.status(200).json({
-      success: true,
-      message: "Session activity updated successfully.",
-    });
-  } catch (error) {
-    console.error("Session activity update failed:", error.message);
-
-    return res.status(500).json({
-      success: false,
-      message: "Unable to update session activity.",
-    });
-  }
 });
+
+// Change password for the authenticated user.
+router.post(
+    "/change-password",
+    requireAuth,
+    changePasswordLimiter,
+    changePasswordController
+);
+
+// Password recovery
+router.post(
+    "/reset-password",
+    resetPasswordLimiter,
+    resetPasswordController
+);
 
 // Secure logout: revoke only the current device's session.
 router.post("/logout", requireAuth, async (req, res) => {
-  try {
-    await revokeSession(req.sessionId);
+    try {
+        await revokeSession(req.sessionId);
 
-    clearAuthCookies(res);
+        clearAuthCookies(res);
 
-    return res.status(200).json({
-      success: true,
-      message: "Logged out successfully.",
-    });
-  } catch (error) {
-    console.error("Logout failed:", error.message);
+        return res.status(200).json({
+            success: true,
+            message: "Logged out successfully.",
+        });
+    } catch (error) {
+        console.error("Logout failed:", error.message);
 
-    clearAuthCookies(res);
+        clearAuthCookies(res);
 
-    return res.status(500).json({
-      success: false,
-      message: "Unable to complete logout. Please try again.",
-    });
-  }
+        return res.status(500).json({
+            success: false,
+            message: "Unable to complete logout. Please try again.",
+        });
+    }
 });
 
 export default router;

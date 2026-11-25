@@ -52,6 +52,12 @@ const studentSchema = new mongoose.Schema(
       default: null,
     },
 
+    // Relationship of the account holder to this student.
+    parentRelationship: {
+      type: String,
+      enum: ["father", "mother", "guardian"],
+    },
+
     // Verified student mobile number.
     // Optional temporarily for compatibility with existing records.
     studentMobile: {

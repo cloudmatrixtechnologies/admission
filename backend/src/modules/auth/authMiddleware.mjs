@@ -13,12 +13,46 @@ import {
 const JWT_ISSUER = "admission-panel-api";
 const JWT_AUDIENCE = "admission-panel-client";
 
+// Clear only the access cookie.
+// Keep the refresh cookie so the frontend can renew the access token.
+function clearAccessCookie(res) {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+
+// Clear both cookies when the database session is no longer valid.
+function clearAuthCookies(res) {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/api/auth/refresh",
+  });
+}
+
 export async function requireAuth(req, res, next) {
   try {
     // 1. Read the access token from the cookie.
     const token = req.cookies?.token;
 
     if (!token) {
+      // Do not clear the refresh cookie here.
+      // The frontend may use it to obtain a new access token.
       return res.status(401).json({
         success: false,
         message: "Authentication required. Please log in.",
@@ -53,6 +87,8 @@ export async function requireAuth(req, res, next) {
       !mongoose.isValidObjectId(payload.sub) ||
       !mongoose.isValidObjectId(payload.sid)
     ) {
+      clearAccessCookie(res);
+
       return res.status(401).json({
         success: false,
         message: "Invalid authentication token. Please log in again.",
@@ -66,6 +102,8 @@ export async function requireAuth(req, res, next) {
     });
 
     if (!session) {
+      clearAuthCookies(res);
+
       return res.status(401).json({
         success: false,
         message: "Your session is invalid. Please log in again.",
@@ -80,6 +118,8 @@ export async function requireAuth(req, res, next) {
       if (expiryReason !== "SESSION_REVOKED") {
         await revokeSession(session._id);
       }
+
+      clearAuthCookies(res);
 
       return res.status(401).json({
         success: false,
@@ -98,6 +138,9 @@ export async function requireAuth(req, res, next) {
       !user.mobileVerifiedAt ||
       user.role !== payload.role
     ) {
+      await revokeSession(session._id);
+      clearAuthCookies(res);
+
       return res.status(401).json({
         success: false,
         message: "Your session is invalid. Please log in again.",
@@ -113,11 +156,7 @@ export async function requireAuth(req, res, next) {
 
     req.sessionId = session._id.toString();
 
-    // IMPORTANT:
-    // This middleware does not update lastActivityAt.
-    // Meaningful activity will be handled by our separate
-    // activity endpoint later.
-
+    // Meaningful activity is handled by the separate activity endpoint.
     return next();
   } catch (error) {
     if (
@@ -125,12 +164,17 @@ export async function requireAuth(req, res, next) {
         error.name
       )
     ) {
+      // The access token is invalid or expired.
+      // Preserve the refresh cookie so a valid session can be refreshed.
+      clearAccessCookie(res);
+
       return res.status(401).json({
         success: false,
         message: "Invalid or expired session. Please log in again.",
       });
     }
 
+    // Database and unexpected server errors go to centralized error handling.
     return next(error);
   }
 }

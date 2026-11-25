@@ -1,5 +1,6 @@
 
 import { z } from "zod";
+import User from "../users/userModel.mjs";
 
 import {
   createOtp,
@@ -13,7 +14,7 @@ import { normalizeMobile } from "../../utils/normalizeMobile.mjs";
 const purposeSchema = z.enum([
   "registration",
   "login",
-  "mobile_change",
+  "passwordReset",
 ]);
 
 const mobileInputSchema = z
@@ -73,8 +74,24 @@ export async function requestOtp(req, res, next) {
       });
     }
 
-    const purpose = purposeResult.data;
-    const result = await createOtp(mobile, purpose);
+   const purpose = purposeResult.data;
+
+// Allow password recovery only for active accounts.
+if (purpose === "passwordReset") {
+  const activeUser = await User.exists({
+    mobileNumber: mobile,
+    status: "active",
+  });
+
+  if (!activeUser) {
+    return res.status(200).json({
+      success: true,
+      message: "If eligible, a verification code will be sent.",
+    });
+  }
+}
+
+const result = await createOtp(mobile, purpose);
 
     try {
       await sendOtpSms(mobile, result.otpForDelivery);
@@ -160,7 +177,10 @@ export async function verifyOtpController(req, res, next) {
 
     return res.status(200).json({
       success: true,
-      message: "Mobile number verified.",
+      message:
+        purpose === "passwordReset"
+          ? "Identity verified successfully."
+          : "Mobile number verified.",
       verificationToken: result.verificationToken,
       expiresAt: result.expiresAt,
     });

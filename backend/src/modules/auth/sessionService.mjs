@@ -52,6 +52,7 @@ export function getSessionExpiryReason(session, now = new Date()) {
 
 // Update meaningful authenticated activity.
 // Never extend the original 8-hour absolute expiry.
+
 export async function updateSessionActivity(sessionId, now = new Date()) {
   const inactivityCutoff = new Date(
     now.getTime() - INACTIVITY_TIMEOUT_MS
@@ -65,7 +66,7 @@ export async function updateSessionActivity(sessionId, now = new Date()) {
       lastActivityAt: { $gt: inactivityCutoff },
     },
     {
-      $set: {
+      $max: {
         lastActivityAt: now,
       },
     },
@@ -74,6 +75,7 @@ export async function updateSessionActivity(sessionId, now = new Date()) {
     }
   );
 }
+
 
 // Revoke a session immediately.
 export async function revokeSession(sessionId) {
@@ -94,5 +96,23 @@ export async function revokeSession(sessionId) {
     {
       returnDocument: "after",
     }
+  );
+}
+export async function revokeAllUserSessions(userId, mongoSession = null) {
+  if (!userId) return null;
+
+  const now = new Date();
+
+  return Session.updateMany(
+    {
+      user: userId,
+      revokedAt: null,
+    },
+    {
+      $set: {
+        revokedAt: now,
+      },
+    },
+    mongoSession ? { session: mongoSession } : {}
   );
 }

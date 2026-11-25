@@ -48,6 +48,13 @@ export const addStudentSchema = z
     mobileNumber: optionalMobileSchema,
     mobileCountry: countrySchema,
 
+    parentRelationship: z.enum(
+      ["father", "mother", "guardian"],
+      {
+        error: "Please select your relationship with the student.",
+      }
+    ),
+
     fullName: z
       .string()
       .trim()

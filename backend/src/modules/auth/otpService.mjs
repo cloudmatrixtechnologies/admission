@@ -14,12 +14,14 @@ const MAX_ATTEMPTS = 5;
 const ALLOWED_PURPOSES = new Set([
   "registration",
   "login",
-  "mobile_change",
+  "mobileChange",
+  "passwordReset",
 ]);
 
 const GRANT_PURPOSES = new Set([
   "registration",
-  "mobile_change",
+  "mobileChange",
+  "passwordReset",
 ]);
 
 function validateInput(mobile, purpose) {
