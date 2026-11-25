@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import User from "../users/userModel.mjs";
 import Student from "./studentModel.mjs";
+import Family from "../family/familyModel.mjs";
 
 import { addStudentSchema } from "./addStudentSchema.mjs";
 import { consumeVerificationGrant } from "../auth/verificationGrantService.mjs";
@@ -45,7 +46,7 @@ export async function addStudentController(req, res, next) {
 
     const data = parsed.data;
 
-    // 3. Normalize the mobile number only when provided.
+    // 3. Normalize the student mobile number only when provided.
     let studentMobile = null;
 
     if (data.mobileNumber) {
@@ -73,7 +74,17 @@ export async function addStudentController(req, res, next) {
 
     try {
       await session.withTransaction(async () => {
-        // 5. Verify the mobile only when one is provided.
+        // 5. Retrieve the parent's registered mobile number.
+        const parentUser = await User.findById(parentUserId)
+          .select("mobileNumber")
+          .session(session)
+          .lean();
+
+        if (!parentUser) {
+          throw new Error("PARENT_ACCOUNT_NOT_FOUND");
+        }
+
+        // 6. Verify the student mobile only when provided.
         if (studentMobile) {
           await consumeVerificationGrant({
             mobile: studentMobile,
@@ -82,7 +93,7 @@ export async function addStudentController(req, res, next) {
             session,
           });
 
-          // 6. Do not silently link an existing account.
+          // Do not silently link an existing account.
           const existingUser = await User.findOne({
             mobileNumber: studentMobile,
           })
@@ -107,13 +118,11 @@ export async function addStudentController(req, res, next) {
           }
         }
 
-        // 7. Create only a student profile.
-        // No separate User account is created here.
+        // 7. Create the student profile.
         const studentProfile = new Student({
           parentUser: parentUserId,
           studentUser: null,
-
-          // Undefined when the student has no mobile number.
+          parentRelationship: data.parentRelationship,
           studentMobile: studentMobile || undefined,
 
           fullName: data.fullName,
@@ -129,13 +138,38 @@ export async function addStudentController(req, res, next) {
 
         await studentProfile.save({ session });
 
-        // 8. Prepare the response.
+        // 8. Put the parent's registered number
+        // into the field matching their relationship.
+        const familyData = {
+          student: studentProfile._id,
+        };
+
+        if (data.parentRelationship === "father") {
+          familyData.father = {
+            mobileNumber: parentUser.mobileNumber,
+          };
+        } else if (data.parentRelationship === "mother") {
+          familyData.mother = {
+            mobileNumber: parentUser.mobileNumber,
+          };
+        } else if (data.parentRelationship === "guardian") {
+          familyData.guardian = {
+            mobileNumber: parentUser.mobileNumber,
+          };
+        }
+
+        const familyProfile = new Family(familyData);
+
+        await familyProfile.save({ session });
+
+        // 9. Prepare the response.
         responseData = {
           success: true,
           message: "Student profile added successfully.",
           student: {
             id: studentProfile._id.toString(),
             fullName: studentProfile.fullName,
+            parentRelationship: studentProfile.parentRelationship,
             email: studentProfile.email,
             dateOfBirth: studentProfile.dateOfBirth,
             studentMobile: studentProfile.studentMobile ?? null,
@@ -152,6 +186,13 @@ export async function addStudentController(req, res, next) {
 
     return res.status(201).json(responseData);
   } catch (error) {
+    if (error.message === "PARENT_ACCOUNT_NOT_FOUND") {
+      return res.status(401).json({
+        success: false,
+        message: "Parent account not found.",
+      });
+    }
+
     if (
       error.message === "STUDENT_MOBILE_ALREADY_EXISTS" ||
       error.message === "STUDENT_PROFILE_ALREADY_EXISTS"

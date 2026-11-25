@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      immutable: true,
+    
     },
 
     // Always assigned and validated by the backend.
@@ -27,11 +27,11 @@ const userSchema = new mongoose.Schema(
       enum: [
         "parent",
         "student",
-        "super_admin",
-        "manager_admin",
+        "superAdmin",
+        "managerAdmin",
         "telecaller",
-        "college_admin",
-        "consultation_admin",
+        "collegeAdmin",
+        "consultationAdmin",
       ],
       immutable: true,
     },

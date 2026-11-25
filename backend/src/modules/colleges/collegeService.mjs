@@ -87,7 +87,7 @@ export const updateCollege = async (
       $set: safeUpdateData,
     },
     {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     }
   );

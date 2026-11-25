@@ -6,7 +6,7 @@ export async function requireStudentProfileAccess(req, res, next) {
   try {
     const studentId = req.params.studentId;
 
-    if (!mongoose.isValidObjectId(studentId)) {
+    if (!mongoose.isObjectIdOrHexString(studentId)) {
       return res.status(400).json({
         success: false,
         message: "Invalid student profile ID.",

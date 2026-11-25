@@ -6,7 +6,8 @@ import { normalizeMobile } from "../../utils/normalizeMobile.mjs";
 
 const ALLOWED_PURPOSES = new Set([
   "registration",
-  "mobile_change",
+  "mobileChange",
+  "passwordReset",
 ]);
 
 function createTokenHash(token) {

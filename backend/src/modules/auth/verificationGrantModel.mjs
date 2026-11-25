@@ -12,7 +12,7 @@ const verificationGrantSchema = new mongoose.Schema(
 
     purpose: {
       type: String,
-      enum: ["registration", "mobile_change"],
+     enum: ["registration", "mobileChange", "passwordReset"],
       required: true,
       immutable: true,
     },

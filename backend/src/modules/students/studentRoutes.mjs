@@ -8,6 +8,9 @@ import { requireStudentProfileAccess } from "./studentAccessMiddleware.mjs";
 import { addStudentController } from "./addStudentController.mjs";
 
 import { receiveAndValidateStudentPhoto } from "./studentPhotoValidation.mjs";
+import wishlistRoutes from "../wishlist/wishlistRoutes.mjs";
+import { updateStudentController } from "./updateStudentController.mjs";
+import familyRoutes from "../family/familyRoutes.mjs";
 
 import {
   uploadStudentPhotoController,
@@ -20,6 +23,10 @@ import {
 import Student from "./studentModel.mjs";
 
 const router = Router();
+
+// Student-specific wishlist routes.
+router.use("/:studentId/wishlist", wishlistRoutes);
+router.use("/:studentId/family", familyRoutes);
 
 // Add a new student profile.
 router.post(
@@ -70,7 +77,7 @@ router.get("/", requireAuth, async (req, res, next) => {
       status: "active",
     })
       .select(
-        "fullName email dateOfBirth gender religion caste community motherTongue bloodGroup academic status createdAt"
+        "fullName email dateOfBirth gender religion caste community motherTongue bloodGroup parentRelationship academic status createdAt"
       )
       .sort({ createdAt: -1 })
       .lean();
@@ -81,6 +88,7 @@ router.get("/", requireAuth, async (req, res, next) => {
       count: students.length,
       students: students.map((student) => ({
         id: student._id.toString(),
+        parentRelationship: student.parentRelationship,
         fullName: student.fullName,
         email: student.email,
         dateOfBirth: student.dateOfBirth,
@@ -113,6 +121,7 @@ router.get(
       message: "Student profile retrieved successfully.",
       student: {
         id: student._id.toString(),
+        parentRelationship: student.parentRelationship,
         fullName: student.fullName,
         email: student.email,
         dateOfBirth: student.dateOfBirth,
@@ -127,6 +136,13 @@ router.get(
       },
     });
   }
+);
+// Update an existing student profile.
+router.patch(
+  "/:studentId",
+  requireAuth,
+  requireStudentProfileAccess,
+  updateStudentController
 );
 
 export default router;

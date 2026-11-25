@@ -47,10 +47,16 @@ export const registrationSchema = z
     mobileNumber: mobileSchema,
     mobileCountry: countrySchema,
 
-    // Page 2: parent/guardian mobile.
+    // Page 2: parent/guardian mobile and relationship.
     guardianMobile: mobileSchema,
     guardianCountry: countrySchema,
 
+    parentRelationship: z.enum(
+      ["father", "mother", "guardian"],
+      {
+        error: "Please select your relationship with the student.",
+      }
+    ),
     // Page 3: student details.
     fullName: z
       .string()

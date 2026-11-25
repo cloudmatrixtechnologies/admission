@@ -21,21 +21,21 @@ router.get("/:collegeId", getCollegeByIdController);
 router.post(
   "/",
   requireAuth,
-  allowRoles("college_admin"),
+  allowRoles("collegeAdmin"),
   createCollegeController
 );
 
 router.get(
   "/my-colleges",
   requireAuth,
-  allowRoles("college_admin"),
+  allowRoles("collegeAdmin"),
   getMyCollegesController
 );
 
 router.patch(
   "/:collegeId",
   requireAuth,
-  allowRoles("college_admin"),
+  allowRoles("collegeAdmin"),
   updateCollegeController
 );
 
