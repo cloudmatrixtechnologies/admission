@@ -15,6 +15,7 @@ const allowedCollegeFields = [
   "website",
   "establishedYear",
   "affiliation",
+  "placementRecords",
 ];
 
 export const createCollege = async (collegeData, userId) => {
@@ -91,4 +92,40 @@ export const updateCollege = async (
       runValidators: true,
     }
   );
+};
+// Add or Update Placement Details
+export const addOrUpdatePlacement = async (
+  collegeId,
+  userId,
+  placementData
+) => {
+  const { year, totalEligibleStudents, companies } = placementData;
+
+  const college = await College.findOne({
+    _id: collegeId,
+    collegeAdmin: userId,
+  });
+
+  if (!college) {
+    return null;
+  }
+
+  const existingRecord = college.placementRecords.find(
+    (record) => record.year === Number(year)
+  );
+
+  if (existingRecord) {
+    existingRecord.totalEligibleStudents = totalEligibleStudents;
+    existingRecord.companies = companies;
+  } else {
+    college.placementRecords.push({
+      year: Number(year),
+      totalEligibleStudents,
+      companies,
+    });
+  }
+
+  await college.save();
+
+  return college.placementRecords;
 };
