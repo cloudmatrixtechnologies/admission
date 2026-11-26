@@ -3,14 +3,41 @@
    Glassmorphic Floating Header with Full Visual Fidelity
    ========================================================================== */
 
+/* Lock Navbar Brand Logo Size */
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none !important;
+  flex-shrink: 0;
+}
+
+.navbar-brand-logo,
+.navbar-brand img {
+  height: 38px !important;
+  width: auto !important;
+  max-width: 48px !important;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1120px) {
+  .navbar-brand-logo,
+  .navbar-brand img {
+    height: 32px !important;
+    max-width: 40px !important;
+  }
+}
+
 /* 1. Translucent Floating Glass Header */
 .navbar-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 74px;
-  z-index: 100;
+  z-index: 900;
   /* Low-opacity white lets the sky and green trees show through clearly */
   background: rgba(255, 255, 255, 0.28);
   backdrop-filter: blur(16px);
@@ -72,10 +99,11 @@
 }
 
 .brand-title {
-  font-size: 20px;
-  font-weight: 900;
+  font-family: 'Prompt', sans-serif;
+  font-size: 30px;
+  font-weight: 750;
   color: #0e2a76;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
   line-height: 1.1;
 }
 
@@ -385,4 +413,170 @@ a[href*="/student/login"].btn-auth-register:visited {
   .nav-pill-capsule {
     display: none;
   }
+}
+
+/* ==========================================================================
+   Mobile & Tablet Drawer + Hamburger Button
+   ========================================================================== */
+.nav-hamburger-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #ffffff;
+  border: 1.5px solid rgba(226, 232, 240, 0.95);
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.navbar-mobile-drawer {
+  display: none;
+}
+
+@media (max-width: 1120px) {
+  .nav-hamburger-btn {
+    display: inline-flex;
+  }
+
+  .navbar-mobile-drawer {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+    padding: 12px 16px 16px;
+    gap: 6px;
+    z-index: 1001;
+  }
+
+  .mobile-nav-link {
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    color: #1e293b !important;
+    font-size: 14.5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-nav-link.active {
+    background: #eff6ff;
+    color: #2563eb !important;
+    font-weight: 700;
+  }
+
+  .mobile-drawer-auth {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .mobile-btn-signin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b !important;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none !important;
+  }
+
+  .mobile-btn-register {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none !important;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  }
+}
+
+/* Signed-In Student Session Badge & Logout Button */
+.student-session-capsule {
+  gap: 8px;
+  padding: 3px 4px 3px 8px;
+}
+
+.student-session-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 210px;
+}
+
+.student-avatar-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.student-session-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.student-id-chip {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 2px 6px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.btn-auth-logout {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  height: 30px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-auth-logout:hover {
+  background: #dc2626;
+  color: #ffffff;
 }

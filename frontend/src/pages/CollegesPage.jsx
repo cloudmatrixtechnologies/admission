@@ -1,8 +1,9 @@
 // src/pages/CollegesPage.jsx
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { searchCollegesSmart } from '../services/smartCollegeSearch';
 import CollegeCard from '../components/home/CollegeCard';
-import CollegeCardSlot from '../components/home/CollegeCardSlot';
-import { getHomeFeedColleges, toggleWishlist } from '../services/collegeService';
+import WishlistAuthModal from '../components/auth/WishlistAuthModal';
+import { getHomeFeedColleges } from '../services/collegeService';
 import './CollegesPage.css';
 
 const DICTIONARY = [
@@ -53,11 +54,11 @@ function getLevenshteinDistance(a, b) {
 }
 
 const STREAM_ITEMS = [
-  { id: 'Engineering', label: 'Engineering', count: '86 Colleges', icon: '⚙️' },
-  { id: 'Arts & Science', label: 'Arts & Science', count: '74 Colleges', icon: '🎓' },
-  { id: 'Diploma', label: 'Diploma', count: '48 Colleges', icon: '📜' },
-  { id: 'ITI', label: 'ITI', count: '36 Colleges', icon: '🔧' },
-  { id: 'Medical', label: 'Medical', count: '22 Colleges', icon: '🩺' },
+  { id: 'Engineering', label: 'Engineering', icon: '⚙️' },
+  { id: 'Arts & Science', label: 'Arts & Science', icon: '🎓' },
+  { id: 'Diploma', label: 'Diploma', icon: '📜' },
+  { id: 'ITI', label: 'ITI', icon: '🔧' },
+  { id: 'Medical', label: 'Medical', icon: '🩺' },
 ];
 
 const TEMPORARY_COLLEGES = [
@@ -284,6 +285,17 @@ const ITEMS_PER_PAGE = 9;
 export default function CollegesPage({ onWishlistUpdate }) {
   const [colleges, setColleges] = useState(TEMPORARY_COLLEGES);
 
+  // Wishlist Auth Interception State
+  const [pendingCollege, setPendingCollege] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('pendingWishlistCollege');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isWishlistAuthOpen, setIsWishlistAuthOpen] = useState(false);
+
   // Staged filter state (typing doesn't filter colleges immediately)
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestedWord, setSuggestedWord] = useState('');
@@ -334,6 +346,28 @@ export default function CollegesPage({ onWishlistUpdate }) {
     fetchColleges();
   }, [fetchColleges]);
 
+  // Sync saved wishlist hearts & navbar count on load
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('admizan_wishlist');
+      const saved = raw ? JSON.parse(raw) : [];
+      const savedIds = new Set(saved.map((item) => item.collegeId || item.id));
+
+      setColleges((prev) =>
+        prev.map((c) => ({
+          ...c,
+          isWishlisted: savedIds.has(c.collegeId || c.id),
+        }))
+      );
+
+      if (onWishlistUpdate) {
+        onWishlistUpdate(saved.length);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [onWishlistUpdate]);
+
   // Spell-check suggestion logic
   useEffect(() => {
     const trimmed = searchQuery.trim();
@@ -362,8 +396,6 @@ export default function CollegesPage({ onWishlistUpdate }) {
     const query = searchQuery.trim();
     const lowerQuery = query.toLowerCase();
 
-    // If searching specifically for a stream like ITI or Engineering,
-    // ensure conflicting type filters don't block the results
     const matchingStream = STREAM_ITEMS.find(
       (s) => s.id.toLowerCase() === lowerQuery
     );
@@ -390,29 +422,26 @@ export default function CollegesPage({ onWishlistUpdate }) {
   };
 
   const handleTypeToggle = (type) => {
-    setSelectedTypes((prev) => {
-      const next = prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type];
-      setAppliedFilters((current) => ({ ...current, types: next }));
-      return next;
-    });
-    setCurrentPage(1);
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
   };
 
   const handleLevelToggle = (level) => {
-    setSelectedLevels((prev) => {
-      const next = prev.includes(level) ? prev.filter((l) => l !== level) : [...prev, level];
-      setAppliedFilters((current) => ({ ...current, levels: next }));
-      return next;
-    });
-    setCurrentPage(1);
+    setSelectedLevels((prev) =>
+      prev.includes(level) ? prev.filter((l) => l !== level) : [...prev, level]
+    );
   };
 
   const handleQuickStreamClick = (streamId) => {
-    const nextTypes = selectedTypes.includes(streamId)
-      ? selectedTypes.filter((t) => t !== streamId)
-      : [streamId];
+    const isAlreadyActive =
+      appliedFilters.types.length === 1 && appliedFilters.types[0] === streamId;
+    const nextTypes = isAlreadyActive ? [] : [streamId];
     setSelectedTypes(nextTypes);
-    setAppliedFilters((prev) => ({ ...prev, types: nextTypes }));
+    setAppliedFilters((prev) => ({
+      ...prev,
+      types: nextTypes,
+    }));
     setCurrentPage(1);
   };
 
@@ -447,96 +476,155 @@ export default function CollegesPage({ onWishlistUpdate }) {
     setIsSortOpen(false);
   };
 
-  const handleToggleWishlist = (collegeId) => {
-  let currentList = [];
-  try {
-    const raw = localStorage.getItem('admizan_wishlist');
-    currentList = raw ? JSON.parse(raw) : [];
-  } catch {
-    currentList = [];
-  }
+  // Commits add/remove to wishlist without overwriting existing saved colleges
+  const commitWishlistToggle = (collegeId, forceAdd = false) => {
+    let currentList = [];
+    try {
+      const raw = localStorage.getItem('admizan_wishlist');
+      currentList = raw ? JSON.parse(raw) : [];
+    } catch {
+      currentList = [];
+    }
 
-  const isAlreadySaved = currentList.some(
-    (item) => (item.collegeId || item.id) === collegeId
-  );
-
-  let updatedList;
-  if (isAlreadySaved) {
-    // Remove if clicked again
-    updatedList = currentList.filter(
-      (item) => (item.collegeId || item.id) !== collegeId
-    );
-  } else {
-    // Add college with timestamp
-    const target = colleges.find(
+    const isAlreadySaved = currentList.some(
       (item) => (item.collegeId || item.id) === collegeId
     );
-    if (target) {
-      updatedList = [
-        ...currentList,
-        {
-          ...target,
-          isWishlisted: true,
-          savedAt: new Date().toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-          }),
-        },
-      ];
+
+    let updatedList;
+    if (isAlreadySaved && !forceAdd) {
+      updatedList = currentList.filter(
+        (item) => (item.collegeId || item.id) !== collegeId
+      );
+    } else if (!isAlreadySaved) {
+      const target = colleges.find(
+        (item) => (item.collegeId || item.id) === collegeId
+      );
+      if (target) {
+        updatedList = [
+          ...currentList,
+          {
+            ...target,
+            isWishlisted: true,
+            savedAt: new Date().toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            }),
+          },
+        ];
+      } else {
+        updatedList = currentList;
+      }
     } else {
       updatedList = currentList;
     }
-  }
 
-  // Save to browser memory
-  try {
-    localStorage.setItem('admizan_wishlist', JSON.stringify(updatedList));
-  } catch (e) {
-    console.error(e);
-  }
+    try {
+      localStorage.setItem('admizan_wishlist', JSON.stringify(updatedList));
+    } catch (e) {
+      console.error(e);
+    }
 
-  // Update visual heart state in card list
-  setColleges((prev) =>
-    prev.map((c) =>
-      (c.collegeId || c.id) === collegeId
-        ? { ...c, isWishlisted: !isAlreadySaved }
-        : c
-    )
-  );
+    const nextWishlistedState = forceAdd ? true : !isAlreadySaved;
 
-  // Update navbar badge count
-  if (onWishlistUpdate) {
-    onWishlistUpdate(updatedList.length);
-  }
-};
-  const filteredColleges = useMemo(() => {
-    return colleges
-      .filter((college) => {
-        // Multi-field text search matching (Name, Type, City, Accreditations)
-        if (appliedFilters.search) {
-          const q = appliedFilters.search.toLowerCase();
-          const matchName = college.collegeName?.toLowerCase().includes(q);
-          const matchType = college.collegeType?.toLowerCase().includes(q);
-          const matchCity = college.city?.toLowerCase().includes(q);
-          const matchAccreditation = college.accreditations?.some((acc) =>
-            acc.toLowerCase().includes(q)
+    setColleges((prev) =>
+      prev.map((c) =>
+        (c.collegeId || c.id) === collegeId
+          ? { ...c, isWishlisted: nextWishlistedState }
+          : c
+      )
+    );
+
+    if (onWishlistUpdate) {
+      onWishlistUpdate(updatedList.length);
+    }
+  };
+
+  // Heart Click Interception: opens WishlistAuthModal only if student hasn't registered/logged in yet
+  const handleToggleWishlist = (collegeId) => {
+    const isAuthenticatedOrRegistered = Boolean(
+      localStorage.getItem('auth_token') ||
+        localStorage.getItem('token') ||
+        localStorage.getItem('admizan_student_session')
+    );
+
+    let currentList = [];
+    try {
+      const raw = localStorage.getItem('admizan_wishlist');
+      currentList = raw ? JSON.parse(raw) : [];
+    } catch {
+      currentList = [];
+    }
+
+    const isAlreadySaved = currentList.some(
+      (item) => (item.collegeId || item.id) === collegeId
+    );
+
+    // Only intercept first-time guests who have not registered yet
+    if (!isAuthenticatedOrRegistered && !isAlreadySaved) {
+      const targetCollege = colleges.find(
+        (item) => (item.collegeId || item.id) === collegeId
+      );
+      if (targetCollege) {
+        try {
+          sessionStorage.setItem(
+            'pendingWishlistCollege',
+            JSON.stringify(targetCollege)
           );
-          const matchLevel = college.courseLevels?.some((lvl) =>
-            lvl.toLowerCase().includes(q)
-          );
-
-          if (!matchName && !matchType && !matchCity && !matchAccreditation && !matchLevel) {
-            return false;
-          }
+        } catch {
+          // Ignore storage quota errors
         }
+        setPendingCollege(targetCollege);
+        setIsWishlistAuthOpen(true);
+      }
+      return;
+    }
 
-        // College Type checkboxes
+    // Already registered or logged in -> toggle directly without repeating OTP/registration
+    commitWishlistToggle(collegeId);
+  };
+
+  // Triggered automatically once OTP + Registration completes in WishlistAuthModal
+  const handleWishlistRegistrationComplete = ({
+    college,
+    registrationResponse,
+    studentSummary,
+  }) => {
+    try {
+      sessionStorage.removeItem('pendingWishlistCollege');
+      // Save non-sensitive session flag (NO passwords, OTPs, or verification tokens)
+      localStorage.setItem(
+        'admizan_student_session',
+        JSON.stringify({
+          isRegistered: true,
+          fullName: studentSummary?.fullName || 'Student',
+          accountType: registrationResponse?.accountType || 'parentOnly',
+          registeredAt: new Date().toISOString(),
+        })
+      );
+    } catch {
+      // Ignore storage errors
+    }
+
+    const targetId = college?.collegeId || college?.id;
+    setPendingCollege(null);
+    if (targetId) {
+      commitWishlistToggle(targetId, true);
+    }
+  };
+
+  // Inside filteredColleges useMemo in src/pages/CollegesPage.jsx
+  const filteredColleges = useMemo(() => {
+    const baseList = appliedFilters.search
+      ? searchCollegesSmart(appliedFilters.search, colleges).results
+      : colleges;
+
+    return baseList
+      .filter((college) => {
         if (appliedFilters.types.length > 0) {
           if (!appliedFilters.types.includes(college.collegeType)) return false;
         }
 
-        // Course Level checkboxes
         if (appliedFilters.levels.length > 0) {
           const hasLevel = college.courseLevels?.some((lvl) =>
             appliedFilters.levels.includes(lvl)
@@ -544,7 +632,6 @@ export default function CollegesPage({ onWishlistUpdate }) {
           if (!hasLevel) return false;
         }
 
-        // Fee range slider
         if (college.feeRange?.minFee && college.feeRange.minFee > appliedFilters.fee) {
           return false;
         }
@@ -864,6 +951,14 @@ export default function CollegesPage({ onWishlistUpdate }) {
           )}
         </main>
       </div>
+
+      {/* Wishlist OTP & Registration Interception Modal */}
+      <WishlistAuthModal
+        isOpen={isWishlistAuthOpen}
+        onClose={() => setIsWishlistAuthOpen(false)}
+        pendingCollege={pendingCollege}
+        onRegistrationComplete={handleWishlistRegistrationComplete}
+      />
     </div>
   );
-} 
+}

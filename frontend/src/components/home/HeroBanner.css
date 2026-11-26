@@ -161,13 +161,6 @@
   flex-wrap: wrap;
 }
 
-.popular-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: #ffffff;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
 .popular-chip {
   display: inline-flex;
   align-items: center;

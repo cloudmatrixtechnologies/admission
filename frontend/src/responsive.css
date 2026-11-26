@@ -1,0 +1,491 @@
+/* ==========================================================================
+   ADMIZAN — Universal All-Device Responsive & Accessibility Stylesheet
+   Covers: Small Phones (320px+), Phones (480px+), Tablets (768px–1024px),
+           Laptops & Wide Monitors (1280px+) — Single Light Theme
+   ========================================================================== */
+
+/* 1. Global Box Model, Viewport Lock & Safe-Area Support (iPhone Notch/Bar) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100dvh;
+  overflow-x: clip;
+  margin: 0;
+  padding: 0;
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+/* 2. Mobile Accessibility & Touch Ergonomics */
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: rgba(37, 99, 235, 0.12);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@media (max-width: 1024px) {
+  /* Keeps inputs at 16px on iOS/Android so Safari/Chrome never auto-zoom */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Minimum 42–44px accessible touch targets for thumbs */
+  button,
+  .popular-chip,
+  .btn-card-details,
+  .btn-card-courses,
+  .mobile-nav-link,
+  .page-num,
+  .btn-page {
+    min-height: 42px;
+  }
+}
+
+/* ==========================================================================
+   3. Tablet & Laptop Breakpoint (<= 1120px)
+   ========================================================================== */
+@media (max-width: 1120px) {
+  /* Navbar switches to compact bar + hamburger drawer */
+  .navbar-container {
+    height: 64px !important;
+  }
+
+  .navbar-content {
+    padding: 0 18px !important;
+  }
+
+  .nav-pill-capsule,
+  .auth-capsule,
+  .nav-links,
+  .nav-search-wrapper {
+    display: none !important;
+  }
+
+  .nav-hamburger-btn {
+    display: inline-flex !important;
+  }
+
+  .wishlist-text-label {
+    display: none !important;
+  }
+
+  /* Home Grids: 3 Columns -> 2 Columns, 5 Streams -> 3 Columns */
+  .stream-cards-grid,
+  .streams-grid,
+  .stream-strip-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .colleges-grid-container,
+  .colleges-grid,
+  .catalog-grid,
+  .highlights-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+  }
+
+  /* Colleges Directory & Details Pages */
+  .colleges-top-banner::after {
+    width: 34% !important;
+    opacity: 0.45;
+  }
+
+  .classic-main-workspace {
+    flex-direction: column !important;
+  }
+
+  .classic-sidebar-col {
+    width: 100% !important;
+    position: static !important;
+  }
+}
+
+/* ==========================================================================
+   4. Mobile Phones & Small Tablets Breakpoint (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Navbar Mobile Spacing */
+  .navbar-content {
+    padding: 0 14px !important;
+  }
+
+  .navbar-brand {
+    gap: 8px !important;
+    min-width: 0;
+  }
+
+  .navbar-brand-logo {
+    height: 32px !important;
+  }
+
+  .brand-title {
+    font-size: 16px !important;
+  }
+
+  .brand-subtitle {
+    font-size: 10px !important;
+    max-width: 165px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Hero Section & Search Form */
+  .hero-banner {
+    padding: 86px 16px 40px !important;
+    min-height: auto !important;
+  }
+
+  .hero-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .hero-badge {
+    font-size: 11px !important;
+    padding: 5px 12px !important;
+  }
+
+  .hero-heading {
+    font-size: clamp(24px, 7vw, 32px) !important;
+    line-height: 1.25 !important;
+    word-break: break-word;
+  }
+
+  .hero-description {
+    font-size: 14px !important;
+    margin-bottom: 22px !important;
+  }
+
+  .hero-search-form {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    padding: 10px !important;
+    border-radius: 14px !important;
+    gap: 10px !important;
+  }
+
+  .search-input-group {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .search-input-group input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .hero-btn-submit {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+  }
+
+  .hero-popular-searches {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .popular-label {
+    width: 100%;
+    text-align: center;
+  }
+
+  .popular-chip {
+    padding: 6px 14px !important;
+    font-size: 12.5px !important;
+  }
+
+  /* Home Sections Padding & Grids */
+  .stream-section,
+  .featured-colleges-section,
+  .highlights-section {
+    padding: 36px 16px !important;
+  }
+
+  .section-title-wrap {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .section-title-wrap h2,
+  .highlights-intro h2 {
+    font-size: 22px !important;
+  }
+
+  .stream-cards-grid,
+  .streams-grid,
+  .stream-strip-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .stream-type-card,
+  .stream-strip-pill {
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+
+  /* Single-Column Cards on Mobile */
+  .colleges-grid-container,
+  .colleges-grid,
+  .catalog-grid,
+  .highlights-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .card-button-actions {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 14px 14px !important;
+  }
+
+  /* Colleges Catalog Page (/colleges) */
+  .colleges-top-banner {
+    padding: 84px 16px 28px !important;
+    min-height: auto !important;
+  }
+
+  .colleges-top-banner::after {
+    display: none !important;
+  }
+
+  .banner-title {
+    font-size: 26px !important;
+  }
+
+  .colleges-stream-strip-section {
+    padding: 12px 16px !important;
+  }
+
+  .catalog-fluid-layout {
+    flex-direction: column !important;
+    padding: 20px 16px 44px !important;
+    gap: 18px !important;
+  }
+
+  .catalog-sidebar {
+    width: 100% !important;
+    padding: 18px !important;
+  }
+
+  .catalog-toolbar {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .catalog-list .college-card {
+    flex-direction: column !important;
+    min-height: auto !important;
+  }
+
+  .catalog-list .card-top-media {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: 180px !important;
+  }
+
+  .catalog-list .card-button-actions {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-left: none !important;
+    border-top: 1px solid #f1f5f9 !important;
+    flex-direction: row !important;
+  }
+
+  /* College Details Page (/colleges/:id) */
+  .classic-wrapper {
+    padding: 0 14px !important;
+  }
+
+  .classic-identity-container {
+    padding: 0 16px 20px !important;
+  }
+
+  .classic-identity-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-top: -36px !important;
+    gap: 12px !important;
+  }
+
+  .classic-crest-box {
+    width: 82px !important;
+    height: 82px !important;
+  }
+
+  .classic-title-block {
+    padding-top: 0 !important;
+  }
+
+  .classic-college-name {
+    font-size: 21px !important;
+  }
+
+  .classic-card-box {
+    padding: 18px 16px !important;
+  }
+
+  .c-gallery-viewer {
+    height: 230px !important;
+  }
+
+  .c-table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Wishlist / Student Auth Modal */
+  .wl-modal-backdrop {
+    padding: 10px !important;
+  }
+
+  .wl-modal-shell {
+    grid-template-columns: 1fr !important;
+    max-height: 94dvh !important;
+    border-radius: 16px !important;
+  }
+
+  .wl-preview-pane {
+    display: none !important;
+  }
+
+  .wl-form-pane {
+    padding: 22px 18px !important;
+  }
+
+  .wl-grid-2,
+  .wl-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Footer Stack */
+  .footer-container {
+    padding: 40px 16px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .footer-bottom,
+  .footer-bottom-inner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    gap: 8px !important;
+  }
+}
+
+/* ==========================================================================
+   5. Extra-Small Phones (<= 380px — iPhone SE / Mini)
+   ========================================================================== */
+@media (max-width: 380px) {
+  .brand-subtitle {
+    display: none !important;
+  }
+
+  .stream-cards-grid,
+  .streams-grid,
+  .stream-strip-inner {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card-button-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero-heading {
+    font-size: 22px !important;
+  }
+}
+
+/* ==========================================================================
+   Ultra-Narrow Browser Window Guard (<= 319px)
+   ========================================================================== */
+@media (max-width: 319px) {
+  .navbar-content {
+    padding: 0 8px !important;
+    gap: 4px !important;
+  }
+
+  .navbar-brand {
+    gap: 5px !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  .navbar-brand-logo {
+    height: 24px !important;
+    max-width: 28px !important;
+  }
+
+  .brand-title {
+    font-size: 13px !important;
+  }
+
+  .brand-subtitle {
+    display: none !important;
+  }
+
+  .nav-controls {
+    gap: 4px !important;
+  }
+
+  .wishlist-btn-animated {
+    padding: 0 6px !important;
+    height: 32px !important;
+  }
+
+  .nav-hamburger-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 15px !important;
+  }
+}

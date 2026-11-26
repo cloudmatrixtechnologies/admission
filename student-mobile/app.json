@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Admizan",
+    "slug": "admizan-student",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.admizan.student",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Admizan needs camera access to scan and upload marksheets and certificates.",
+        "NSPhotoLibraryUsageDescription": "Admizan needs photo library access to select and upload saved marksheets and certificates."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "com.admizan.student",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
+  }
+}

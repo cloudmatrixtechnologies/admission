@@ -1,0 +1,619 @@
+﻿/* src/components/auth/WishlistAuthModal.css */
+.wl-brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.wl-brand-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wl-brand-logo {
+  height: 46px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+.wl-brand-heading {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.wl-brand-name {
+  font-family: 'Prompt', sans-serif;
+  text-transform: uppercase;
+   letter-spacing: 0.09em;
+  color: #1e3a8a;
+}
+
+.wl-single-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wl-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 99999;
+}
+
+.wl-modal-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.28);
+  padding: 28px 30px 34px 30px;
+  box-sizing: border-box;
+}
+.wl-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-size: 15px;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.wl-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+
+.wl-preview-badge {
+  display: inline-block;
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wl-preview-heading {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.wl-preview-subtext {
+  font-size: 12.5px;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.wl-college-mini-card {
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+.wl-college-thumb {
+  width: 100%;
+  height: 112px;
+  object-fit: cover;
+}
+
+.wl-college-info {
+  padding: 11px 14px;
+}
+
+.wl-college-type {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2563eb;
+  text-transform: uppercase;
+}
+
+.wl-college-info h4 {
+  margin: 3px 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.wl-college-loc {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0 0 8px;
+}
+
+.wl-college-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 7px;
+}
+
+.wl-stepper {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wl-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #94a3b8;
+}
+
+.wl-step-item span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.wl-step-item.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.wl-step-item.active span {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.wl-form-pane {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 26px 30px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.wl-auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  max-width: 340px;
+}
+
+.wl-tab {
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.wl-tab.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.wl-step-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+
+
+.wl-skip-link {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wl-skip-link:hover {
+  text-decoration: underline;
+}
+
+.wl-alert {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.wl-alert-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.wl-alert-info {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.wl-step-content h2 {
+  font-size: 20px;
+  margin: 0 0 6px;
+  color: #0f172a;
+}
+
+.wl-step-desc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 16px;
+  line-height: 1.45;
+}
+
+.wl-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 5px;
+}
+
+.wl-label-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.wl-phone-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-right: 10px;
+}
+
+.wl-country-code {
+  background: #f8fafc;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  border-right: 1px solid #cbd5e1;
+}
+
+.wl-phone-row input {
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.wl-input,
+select.wl-input {
+  width: 100%;
+  height: 42px;
+  padding: 9px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 13.5px;
+  color: #0f172a;
+  background-color: #ffffff;
+  margin-bottom: 11px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+select.wl-input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  cursor: pointer;
+}
+
+.wl-input:focus,
+select.wl-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.wl-otp-input {
+  letter-spacing: 6px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 18px;
+}
+
+.wl-case-badge {
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.wl-case-same {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.wl-case-diff {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.wl-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.wl-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.wl-pass-wrap {
+  position: relative;
+}
+
+.wl-eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+.wl-perm-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px 10px;
+  margin-top: 8px;
+}
+
+.wl-perm-card::-webkit-scrollbar {
+  display: none;
+}
+
+.wl-perm-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.wl-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #334155;
+  margin: 2px 0 10px;
+  cursor: pointer;
+}
+
+.wl-password-rules {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 6px 0 14px;
+}
+
+.wl-rules-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 6px;
+}
+
+.wl-password-rules ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.wl-btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.wl-primary-btn {
+  width: 100%;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.wl-primary-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.wl-primary-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.wl-secondary-btn {
+  padding: 11px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  white-space: nowrap;
+}
+
+.wl-secondary-btn:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.wl-text-link {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wl-timer {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.wl-success-view {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.wl-success-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.wl-account-pill {
+  display: inline-block;
+  background: #eff6ff;
+  color: #1e40af;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  margin: 10px 0 18px;
+}
+
+.wl-link-cta {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .wl-modal-shell {
+    flex-direction: column;
+  }
+  .wl-preview-pane {
+    display: none;
+  }
+  .wl-grid-2,
+  .wl-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wl-modal-shell {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wl-modal-shell::-webkit-scrollbar {
+  display: none;
+}
+
+.wl-form-pane {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wl-form-pane::-webkit-scrollbar {
+  display: none;
+}
+
+/* Remove browser focus outline & vertical blue lines across all 5 steps */
+.wl-modal-shell input:focus,
+.wl-modal-shell input:focus-visible,
+.wl-modal-shell input:active,
+.wl-modal-shell select:focus,
+.wl-modal-shell select:focus-visible,
+.wl-modal-shell select:active,
+.wl-input:focus,
+.wl-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.wl-phone-row input,
+.wl-phone-row input:focus,
+.wl-phone-row input:focus-visible,
+.wl-phone-row input:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.wl-modal-shell.wl-lock-scroll {
+  overflow-y: hidden;
+}
+
+.wl-modal-shell.wl-allow-scroll {
+  overflow-y: auto;
+}

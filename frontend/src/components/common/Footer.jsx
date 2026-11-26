@@ -15,7 +15,11 @@ export default function Footer() {
           {/* Brand Info Column */}
           <div className="footer-brand-column">
             <div className="footer-logo">
-              <span style={{ fontSize: '26px' }}>🎓</span>
+              <img
+      src="/brand_logo.png"
+      alt="Admizan Logo"
+      className="footer-logo-img"
+    />
               <span className="footer-brand-name">Admizan</span>
             </div>
             <p className="footer-tagline">

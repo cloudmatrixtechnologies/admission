@@ -1,4 +1,3 @@
-
 // src/App.jsx
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
@@ -8,7 +7,9 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import HomePage from './pages/HomePage';
 import CollegesPage from './pages/CollegesPage';
-
+import CoursesPage from './pages/CoursesPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import CollegeDetailsPage from './pages/CollegeDetailsPage'; // <-- Integrated College Details View
 import CollegeCoursesPage from './pages/CollegeCoursesPage';
 import WishlistPage from './pages/WishlistPage';
@@ -89,6 +90,48 @@ export default function App() {
           }
         />
 
+        {/* Global Explore Courses Route: Matches "/courses" */}
+        <Route
+          path="/courses"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <CoursesPage onWishlistUpdate={setWishlistCount} />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+
+        {/* About Us Route: Matches "/about" */}
+        <Route
+          path="/about"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <AboutPage />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+
+        {/* Contact Us Route: Matches "/contact" */}
+        <Route
+          path="/contact"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <ContactPage />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+
         {/* Dynamic Detail Route */}
         <Route
           path="/colleges/:id"
@@ -130,18 +173,19 @@ export default function App() {
             </div>
           }
         />
+
         <Route
-  path="/wishlist"
-  element={
-    <div className="app-shell">
-      <Navbar wishlistCount={wishlistCount} />
-      <main className="main-content">
-        <WishlistPage onWishlistUpdate={setWishlistCount} />
-      </main>
-      <Footer />
-    </div>
-  }
-/>
+          path="/wishlist"
+          element={
+            <div className="app-shell">
+              <Navbar wishlistCount={wishlistCount} />
+              <main className="main-content">
+                <WishlistPage onWishlistUpdate={setWishlistCount} />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
 
         {/* ======================================================== */}
         {/* 2. Dhanush: Admin Authentication (Login & Recovery)      */}

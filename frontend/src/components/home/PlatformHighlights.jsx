@@ -5,7 +5,9 @@ const PLATFORM_FEATURES = [
   {
     id: 'profiles',
     title: 'Comprehensive College Profiles',
-    description: 'Explore verified details, facilities, approvals and campus information.',
+    description:
+      'Explore detailed college profiles, institutional information, campus facilities, accreditations, and available academic programmes.',
+    tags: 'College Profiles · Campus Facilities · Institution Details',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 21H21" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" />
@@ -19,8 +21,10 @@ const PLATFORM_FEATURES = [
   },
   {
     id: 'courses',
-    title: 'Courses & Specializations',
-    description: 'Compare programs, branches, duration and career pathways.',
+    title: 'Courses & Specialisations',
+    description:
+      'Discover diverse academic programmes, course structures, specialisations, and emerging fields to find the right path for your future.',
+    tags: 'Course Catalogues · Specialisations · Academic Pathways',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M22 10L12 5L2 10L12 15L22 10Z" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" fill="#eff6ff" />
@@ -31,8 +35,10 @@ const PLATFORM_FEATURES = [
   },
   {
     id: 'fees',
-    title: 'Transparent Fee Details',
-    description: 'Understand tuition fees, additional charges and scholarships.',
+    title: 'Transparent Fee Information',
+    description:
+      'Understand available tuition fees, additional charges, and financial details to make informed education decisions.',
+    tags: 'Tuition Fees · Fee Comparison · Financial Planning',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="12" cy="7" rx="8" ry="3.5" stroke="#2563eb" strokeWidth="2" fill="#eff6ff" />
@@ -43,8 +49,10 @@ const PLATFORM_FEATURES = [
   },
   {
     id: 'eligibility',
-    title: 'Eligibility & Cut-off Insights',
-    description: 'Review admission criteria, cut-offs and eligibility requirements.',
+    title: 'Eligibility & Admission Insights',
+    description:
+      'Understand academic eligibility, admission requirements, qualification criteria, and available cut-off information.',
+    tags: 'Eligibility Criteria · Admission Requirements · Cut-off Insights',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="5" y="4" width="14" height="17" rx="2" stroke="#2563eb" strokeWidth="2" fill="#eff6ff" />
@@ -55,8 +63,10 @@ const PLATFORM_FEATURES = [
   },
   {
     id: 'comparison',
-    title: 'Side-by-Side Comparison',
-    description: 'Compare colleges by fees, courses, facilities and placements.',
+    title: 'Smart College Comparison',
+    description:
+      'Compare multiple colleges based on courses, fees, facilities, and other important factors before making your decision.',
+    tags: 'College Comparison · Course Comparison · Smart Shortlisting',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="3" y="5" width="8" height="14" rx="2" stroke="#2563eb" strokeWidth="2" fill="#eff6ff" />
@@ -67,31 +77,43 @@ const PLATFORM_FEATURES = [
     ),
   },
   {
-    id: 'verified',
-    title: 'Verified Information',
-    description: 'Make informed decisions with trusted institutional sources.',
+    id: 'application',
+    title: 'Simplified Application Process',
+    description:
+      'Create your student profile, submit application details, and manage your admission journey through one convenient platform.',
+    tags: 'Student Profiles · Online Applications · Application Management',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 22S4 18 4 11V5L12 2L20 5V11C20 18 12 22 12 22Z" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" fill="#eff6ff" />
-        <path d="M9 12L11 14L15 10" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V8L14 3Z" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" fill="#eff6ff" />
+        <path d="M14 3V8H19" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M9 13H15M9 17H13" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" />
       </svg>
     ),
   },
   {
-    id: 'network',
-    title: 'Tamil Nadu College Network',
-    description: 'Discover institutions across engineering and higher education.',
+    id: 'wishlist',
+    title: 'Personalised College Wishlist',
+    description:
+      'Save your preferred colleges, organise your choices, and revisit shortlisted institutions whenever you need.',
+    tags: 'Saved Colleges · Personal Wishlist · Easy Access',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 21C16 17 19 13.4 19 9.5C19 5.36 15.86 2 12 2C8.14 2 5 5.36 5 9.5C5 13.4 8 17 12 21Z" stroke="#2563eb" strokeWidth="2" fill="#eff6ff" />
-        <circle cx="12" cy="9.5" r="3" stroke="#2563eb" strokeWidth="2" fill="#ffffff" />
+        <path
+          d="M12 20.5C12 20.5 4 15.2 4 9.2C4 6.6 6.05 4.5 8.6 4.5C10.1 4.5 11.45 5.22 12 6.32C12.55 5.22 13.9 4.5 15.4 4.5C17.95 4.5 20 6.6 20 9.2C20 15.2 12 20.5 12 20.5Z"
+          stroke="#2563eb"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          fill="#eff6ff"
+        />
       </svg>
     ),
   },
   {
-    id: 'guidance',
-    title: 'Personalised Guidance',
-    description: 'Get support with shortlisting, applications and next steps.',
+    id: 'support',
+    title: 'Dedicated Student Support',
+    description:
+      'Get helpful guidance throughout your admission journey, from exploring colleges to understanding application requirements.',
+    tags: 'Student Assistance · Admission Guidance · Application Support',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 14V12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12V14" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" />
@@ -111,16 +133,17 @@ export default function PlatformHighlights() {
         <div className="platform-intro-block">
           <div className="platform-badge-wrapper">
             <span className="platform-badge-line" />
-            <span className="platform-badge-pill">WHY CHOOSE US</span>
+            <span className="platform-badge-pill">WHAT WE PROVIDE</span>
             <span className="platform-badge-line" />
           </div>
 
           <h2 className="platform-heading">
-            Everything You Need to <span className="text-royal-blue">Make the Right Choice</span>
+            Everything You Need for a <span className="text-royal-blue">Smarter Admission Journey</span>
           </h2>
 
           <p className="platform-subheading">
-            Verified college information, transparent comparisons, and guidance at every step.
+            Discover colleges, explore courses, understand eligibility, compare your options, and
+            take confident steps towards your academic future — all in one platform.
           </p>
         </div>
 
@@ -133,6 +156,7 @@ export default function PlatformHighlights() {
                 <h3 className="card-feature-title">{item.title}</h3>
               </div>
               <p className="card-feature-desc">{item.description}</p>
+              <div className="card-feature-tags">{item.tags}</div>
             </div>
           ))}
         </div>

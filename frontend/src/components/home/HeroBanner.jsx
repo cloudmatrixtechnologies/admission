@@ -1,8 +1,7 @@
-// src/components/home/HeroBanner.jsx
 import React, { useState } from 'react';
 import './HeroBanner.css';
 
-const POPULAR_SEARCHES = ['Engineering', 'Arts & Science', 'Diploma', 'ITI', 'Medical'];
+const POPULAR_SEARCHES = ['Engineering', 'Arts & Science', 'Medical', 'Diploma', 'ITI'];
 
 export default function HeroBanner({
   searchQuery = '',
@@ -19,8 +18,6 @@ export default function HeroBanner({
   };
 
   const handlePopularClick = (streamName) => {
-    setLocalInput(streamName);
-    onSearchSubmit(streamName);
     if (onSelectStream) {
       onSelectStream(streamName);
     }
@@ -68,7 +65,6 @@ export default function HeroBanner({
 
         {/* Popular Tags */}
         <div className="hero-popular-searches">
-          <span className="popular-label">Popular:</span>
           {POPULAR_SEARCHES.map((item) => (
             <button
               key={item}
