@@ -59,7 +59,7 @@ export default function TelecallerFollowups() {
     <div className="tcf-container">
       <div className="tcf-header">
         <h1 className="tcf-title">My Follow-ups</h1>
-        <p className="tcf-breadcrumb">Admission Panel / Telecaller / My Follow-ups</p>
+        <p className="tcf-breadcrumb">Admizan Panel / Telecaller / My Follow-ups</p>
       </div>
 
       {/* 4 Metric Summary Cards */}
@@ -170,56 +170,58 @@ export default function TelecallerFollowups() {
         </button>
       </div>
 
-      {/* Follow-ups Queue Table */}
+      {/* Follow-ups Queue Table (Horizontal Scroll Enabled) */}
       <div className="tcf-table-card">
-        <table className="tcf-table">
-          <thead>
-            <tr className="tcf-thead-row">
-              <th className="tcf-th id-col">Lead ID</th>
-              <th className="tcf-th">Student Name</th>
-              <th className="tcf-th">Mobile</th>
-              <th className="tcf-th">Scheduled Time</th>
-              <th className="tcf-th">Discussion Notes / Reason</th>
-              <th className="tcf-th">Status</th>
-              <th className="tcf-th action-col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredFollowups.map((item) => (
-              <tr key={item.id} className="tcf-tr">
-                <td className="tcf-td id-col">{item.leadId}</td>
-                <td className="tcf-td name-col">{item.studentName}</td>
-                <td className="tcf-td mobile-col">{item.mobile}</td>
-                <td className="tcf-td time-col">{item.scheduledTime}</td>
-                <td className="tcf-td notes-col">{item.notes}</td>
-                <td className="tcf-td">
-                  <span className={`tcf-badge ${getBadgeClass(item.status)}`}>
-                    {item.status}
-                  </span>
-                </td>
-                <td className="tcf-td action-col">
-                  <button
-                    type="button"
-                    onClick={() => alert(`Calling ${item.studentName} (${item.mobile})... Opening Requirement Capture screen.`)}
-                    className="tcf-dial-btn"
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                    </svg>
-                    <span>Dial</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleToggleStatus(item.id)}
-                    className="tcf-status-btn"
-                  >
-                    {item.status === 'Completed' ? 'Mark Pending' : 'Mark Done'}
-                  </button>
-                </td>
+        <div className="tcf-table-scroll">
+          <table className="tcf-table">
+            <thead>
+              <tr className="tcf-thead-row">
+                <th className="tcf-th id-col">Lead ID</th>
+                <th className="tcf-th">Student Name</th>
+                <th className="tcf-th">Mobile</th>
+                <th className="tcf-th">Scheduled Time</th>
+                <th className="tcf-th">Discussion Notes / Reason</th>
+                <th className="tcf-th">Status</th>
+                <th className="tcf-th action-col">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredFollowups.map((item) => (
+                <tr key={item.id} className="tcf-tr">
+                  <td className="tcf-td id-col">{item.leadId}</td>
+                  <td className="tcf-td name-col">{item.studentName}</td>
+                  <td className="tcf-td mobile-col">{item.mobile}</td>
+                  <td className="tcf-td time-col">{item.scheduledTime}</td>
+                  <td className="tcf-td notes-col">{item.notes}</td>
+                  <td className="tcf-td">
+                    <span className={`tcf-badge ${getBadgeClass(item.status)}`}>
+                      {item.status}
+                    </span>
+                  </td>
+                  <td className="tcf-td action-col">
+                    <button
+                      type="button"
+                      onClick={() => alert(`Calling ${item.studentName} (${item.mobile})... Opening Requirement Capture screen.`)}
+                      className="tcf-dial-btn"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
+                      <span>Dial</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleToggleStatus(item.id)}
+                      className="tcf-status-btn"
+                    >
+                      {item.status === 'Completed' ? 'Mark Pending' : 'Mark Done'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

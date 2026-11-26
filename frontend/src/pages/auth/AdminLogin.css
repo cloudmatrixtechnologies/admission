@@ -1,7 +1,7 @@
 /* Full Viewport Background */
 .login-viewport {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: #edf3fc;
   display: flex;
   align-items: center;
@@ -15,40 +15,58 @@
 /* Center White Card */
 .login-card {
   width: 100%;
-  max-width: 430px;
+  max-width: 420px;
   background-color: #ffffff;
-  border-radius: 26px;
-  padding: 44px 38px 40px 38px;
+  border-radius: 24px;
+  padding: 36px 34px;
   box-shadow: 0 12px 35px rgba(0, 102, 255, 0.06);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.85);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Royal Blue Cap Badge */
-.login-badge {
-  width: 64px;
-  height: 64px;
-  background-color: #0066ff;
-  border-radius: 18px;
+/* Image Container */
+.login-brand-container {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(0, 102, 255, 0.28);
-  margin-bottom: 50px;
+  margin-bottom: 14px;
+}
+
+/* Image Display Size */
+.login-brand-image {
+  height: 65px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  display: block;
 }
 
 /* Title */
 .login-title {
-  font-size: 25px;
-  font-weight: 770;
+  font-size: 23px;
+  font-weight: 800;
   color: #0b192c;
-  margin: 0 0 28px 0;
+  margin: 0 0 22px 0;
   letter-spacing: -0.4px;
   text-align: center;
-  margin-top: -28px;
+}
+
+/* Error Message */
+.login-error-msg {
+  color: #ef4444;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  text-align: center;
+  background-color: #fef2f2;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Form Layout */
@@ -56,7 +74,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 /* Field Container */
@@ -66,10 +84,10 @@
 }
 
 .login-label {
-  font-size: 13px;
-  font-weight: 750;
-  color: #3d369b;
-  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
   margin-left: 2px;
 }
 
@@ -91,7 +109,7 @@
 
 .login-input {
   width: 100%;
-  padding: 12px 14px 12px 42px;
+  padding: 11px 14px 11px 42px;
   font-size: 13px;
   border-radius: 12px;
   border: 1.5px solid #e2e8f0;
@@ -137,7 +155,7 @@
 .login-forgot-wrapper {
   display: flex;
   justify-content: flex-end;
-  margin-top: -4px;
+  margin-top: -3px;
 }
 
 .login-forgot-link {
@@ -155,7 +173,7 @@
 /* Submit Button */
 .login-submit-btn {
   width: 100%;
-  padding: 13px 0;
+  padding: 12px 0;
   margin-top: 4px;
   background-color: #0066ff;
   color: #ffffff;

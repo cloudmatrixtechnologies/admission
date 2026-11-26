@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ManagerDashboard.css';
 import CreateTelecallerPage from './CreateTelecallerPage';
 import ManageTelecallersPage from './ManageTelecallersPage';
-import AllLeadsPage from './AllLeadsPage'; 
+import AllLeadsPage from './AllLeadsPage';
 import AssignLeadsPage from './AssignLeadsPage';
 import FollowUpsPage from './FollowUpsPage';
 import CallActivityPage from './CallActivityPage';
@@ -40,6 +40,7 @@ const MOCK_FOLLOWUP_SUMMARY = [
 
 export default function ManagerDashboard({ onLogout }) {
   const [activeMenu, setActiveMenu] = useState('m-dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile toggle state
   const [metrics] = useState(MOCK_METRICS);
   const [leads] = useState(MOCK_RECENT_LEADS);
   const [telecallers] = useState(MOCK_TELECALLERS_ACTIVITY);
@@ -52,7 +53,6 @@ export default function ManagerDashboard({ onLogout }) {
     { id: 'm-assign-leads', label: 'Assign Leads' },
     { id: 'm-follow-ups', label: 'Follow-ups' },
     { id: 'm-call-activity', label: 'Call Activity' },
-    { id: 'm-reports', label: 'Reports' },
   ];
 
   const getStatusClass = (status) => {
@@ -66,19 +66,20 @@ export default function ManagerDashboard({ onLogout }) {
 
   return (
     <div className="md-container">
-      {/* Sidebar */}
-      <aside className="md-sidebar">
+      {/* Sidebar with Mobile Slide-in Drawer support */}
+      <aside className={`md-sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
         <div>
           <div className="md-sidebar-header">
-            <div className="md-logo-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                <path d="M6 12v5c3 3 9 3 12 0v-5" />
-              </svg>
+             <div className="md-logo-badge">
+              <img
+                src="/brand_logo.png"
+                alt="Admizan Logo"
+                className="sa-logo-img"
+              />
             </div>
             <div>
-              <h2 className="md-sidebar-title">Admission Panel</h2>
-              <p className="md-sidebar-sub">Manager Admin</p>
+              <h2 className="sa-sidebar-title">Admizan Panel</h2>
+              <p className="sa-sidebar-sub">Manager Admin</p>
             </div>
           </div>
 
@@ -88,7 +89,10 @@ export default function ManagerDashboard({ onLogout }) {
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setActiveMenu(item.id)}
+                onClick={() => {
+                  setActiveMenu(item.id);
+                  setSidebarOpen(false); // Close sidebar on mobile selection
+                }}
                 className={`md-nav-btn ${activeMenu === item.id ? 'active' : ''}`}
               >
                 <span>{item.label}</span>
@@ -103,21 +107,22 @@ export default function ManagerDashboard({ onLogout }) {
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* Main Content Workspace */}
       <div className="md-main">
+        {/* Top Header with Hamburger Toggle */}
         <header className="md-header">
-          <div className="md-date-pill">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0066ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-              <line x1="16" x2="16" y1="2" y2="6" />
-              <line x1="8" x2="8" y1="2" y2="6" />
-              <line x1="3" x2="21" y1="10" y2="10" />
+          <button
+            type="button"
+            className="md-mobile-toggle-btn"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label="Toggle Menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
-            <div>
-              <p style={{ fontSize: '9px', fontWeight: 800, color: '#94a3b8', lineHeight: 1, margin: 0 }}>CURRENT DATE</p>
-              <p style={{ fontSize: '11px', fontWeight: 800, color: '#334155', marginTop: '2px', margin: 0 }}>17 October 2026</p>
-            </div>
-          </div>
+          </button>
 
           <div className="md-profile-pill">
             <div className="md-profile-avatar">
@@ -148,10 +153,10 @@ export default function ManagerDashboard({ onLogout }) {
             <>
               <div>
                 <h1 className="md-title">Dashboard</h1>
-                <p className="md-breadcrumb">Admission Panel / Manager Admin / Dashboard</p>
+                <p className="md-breadcrumb">Admizan Panel / Manager Admin / Dashboard</p>
               </div>
 
-              {/* 4 Metrics */}
+              {/* 4 Metrics Cards */}
               <div className="md-metrics-grid">
                 <div className="md-metric-card">
                   <div>
@@ -207,7 +212,7 @@ export default function ManagerDashboard({ onLogout }) {
                 </div>
               </div>
 
-              {/* 2-Column Grid */}
+              {/* 2-Column Grid with Horizontal Table Scroll Support */}
               <div className="md-dashboard-layout">
                 <div className="md-card">
                   <div className="md-card-header">
@@ -216,7 +221,7 @@ export default function ManagerDashboard({ onLogout }) {
                       View All &gt;
                     </button>
                   </div>
-                  <div style={{ overflowX: 'auto' }}>
+                  <div className="md-table-wrapper">
                     <table className="md-table">
                       <thead>
                         <tr>
@@ -264,33 +269,35 @@ export default function ManagerDashboard({ onLogout }) {
                         View All &gt;
                       </button>
                     </div>
-                    <table className="md-table">
-                      <thead>
-                        <tr>
-                          <th style={{ paddingLeft: '20px' }}>Name</th>
-                          <th style={{ textAlign: 'center' }}>Assigned</th>
-                          <th style={{ textAlign: 'center' }}>Done</th>
-                          <th style={{ textAlign: 'right', paddingRight: '20px' }}>Pending</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {telecallers.map((t, idx) => (
-                          <tr key={idx}>
-                            <td style={{ paddingLeft: '20px', fontWeight: 700, color: '#0f172a' }}>{t.name}</td>
-                            <td style={{ textAlign: 'center', fontWeight: 600 }}>{t.assigned}</td>
-                            <td style={{ textAlign: 'center', color: '#16a34a', fontWeight: 800 }}>{t.completed}</td>
-                            <td style={{ textAlign: 'right', paddingRight: '20px', color: '#ea580c', fontWeight: 800 }}>{t.pending}</td>
+                    <div className="md-table-wrapper">
+                      <table className="md-table">
+                        <thead>
+                          <tr>
+                            <th style={{ paddingLeft: '20px' }}>Name</th>
+                            <th style={{ textAlign: 'center' }}>Assigned</th>
+                            <th style={{ textAlign: 'center' }}>Done</th>
+                            <th style={{ textAlign: 'right', paddingRight: '20px' }}>Pending</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {telecallers.map((t, idx) => (
+                            <tr key={idx}>
+                              <td style={{ paddingLeft: '20px', fontWeight: 700, color: '#0f172a' }}>{t.name}</td>
+                              <td style={{ textAlign: 'center', fontWeight: 600 }}>{t.assigned}</td>
+                              <td style={{ textAlign: 'center', color: '#16a34a', fontWeight: 800 }}>{t.completed}</td>
+                              <td style={{ textAlign: 'right', paddingRight: '20px', color: '#ea580c', fontWeight: 800 }}>{t.pending}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
                   <div className="md-card">
                     <div className="md-card-header">
                       <h2 className="md-card-title">Follow-up Summary</h2>
                     </div>
-                    <div className="md-summary-list">
+                    <div className="md-summary-scroll-box">
                       {MOCK_FOLLOWUP_SUMMARY.map((item, i) => (
                         <div key={i} className="md-summary-row">
                           <span>{item.label}</span>
@@ -317,16 +324,16 @@ export default function ManagerDashboard({ onLogout }) {
             <ManageTelecallersPage onNavigateCreate={() => setActiveMenu('m-create-telecaller')} />
           )}
 
-          {/* VIEW 4: ALL LEADS WITH DUMMY DATA (FIXED HERE) */}
+          {/* VIEW 4: ALL LEADS */}
           {activeMenu === 'm-all-leads' && <AllLeadsPage />}
 
-          {/* VIEW 5: ASSIGN LEADS (ADD THIS LINE) */}
+          {/* VIEW 5: ASSIGN LEADS */}
           {activeMenu === 'm-assign-leads' && <AssignLeadsPage />}
 
-          {/* VIEW 6: FOLLOW-UPS (ADD THIS LINE) */}
+          {/* VIEW 6: FOLLOW-UPS */}
           {activeMenu === 'm-follow-ups' && <FollowUpsPage />}
 
-          {/* VIEW 7: CALL ACTIVITY (ADD THIS LINE) */}
+          {/* VIEW 7: CALL ACTIVITY */}
           {activeMenu === 'm-call-activity' && <CallActivityPage />}
 
           {/* FALLBACK */}
@@ -336,7 +343,7 @@ export default function ManagerDashboard({ onLogout }) {
             activeMenu !== 'm-all-leads' && 
             activeMenu !== 'm-assign-leads' &&
             activeMenu !== 'm-follow-ups' &&
-            activeMenu !== 'm-call-activity' &&(
+            activeMenu !== 'm-call-activity' && (
               <div className="md-card" style={{ padding: '32px' }}>
                 <h2 className="md-title" style={{ textTransform: 'capitalize', fontSize: '18px' }}>
                   {activeMenu.replace('m-', '').replace('-', ' ')}

@@ -56,7 +56,7 @@ export default function TelecallerAssignedLeads() {
     <div className="tal-container">
       <div className="tal-header">
         <h1 className="tal-title">My Assigned Leads</h1>
-        <p className="tal-breadcrumb">Admission Panel / Telecaller / Assigned Leads</p>
+        <p className="tal-breadcrumb">Admizan Panel / Telecaller / Assigned Leads</p>
       </div>
 
       {/* 4 Stat Cards */}
@@ -160,64 +160,64 @@ export default function TelecallerAssignedLeads() {
         </button>
       </div>
 
-      {/* Leads Table Card */}
+      {/* Horizontal Scrollable Leads Table Card */}
       <div className="tal-table-card">
-        <table className="tal-table">
-          <thead>
-            <tr className="tal-thead-row">
-              <th className="tal-th id-col">Personal ID</th>
-              <th className="tal-th">Student Name</th>
-              <th className="tal-th">College</th>
-              <th className="tal-th">Course</th>
-              <th className="tal-th">10th / 12th (%)</th>
-              <th className="tal-th">Mobile</th>
-              <th className="tal-th">Call Status</th>
-              <th className="tal-th action-col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLeads.map((lead) => (
-              <tr key={lead.id} className="tal-tr">
-                <td className="tal-td id-col">{lead.id}</td>
-                <td className="tal-td name-col">{lead.name}</td>
-                <td className="tal-td college-col">{lead.college}</td>
-                <td className="tal-td course-col">{lead.course}</td>
-                <td className="tal-td marks-col">{lead.tenth}% / {lead.twelfth}%</td>
-                <td className="tal-td mobile-col">{lead.mobile}</td>
-                <td className="tal-td">
-                  <span className={`tal-badge ${getStatusClass(lead.status)}`}>
-                    {lead.status}
-                  </span>
-                </td>
-                <td className="tal-td action-col">
-                  {/* Dial Action */}
-                  <button
-                    type="button"
-                    onClick={() => alert(`Calling ${lead.name} (${lead.mobile})... Opening Requirement Capture screen.`)}
-                    className="tal-dial-btn"
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                    </svg>
-                    <span>Dial</span>
-                  </button>
-
-                  {/* Actions keezha ulla Status Dropdown Select */}
-                  <select
-                    value={lead.status}
-                    onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                    className="tal-action-status-select"
-                    title="Change status"
-                  >
-                    <option value="Connected">Connected</option>
-                    <option value="Follow-up">Follow-ups</option>
-                    <option value="Pending">Pending</option>
-                  </select>
-                </td>
+        <div className="tal-table-scroll">
+          <table className="tal-table">
+            <thead>
+              <tr className="tal-thead-row">
+                <th className="tal-th id-col">Personal ID</th>
+                <th className="tal-th">Student Name</th>
+                <th className="tal-th">College</th>
+                <th className="tal-th">Course</th>
+                <th className="tal-th">10th / 12th (%)</th>
+                <th className="tal-th">Mobile</th>
+                <th className="tal-th">Call Status</th>
+                <th className="tal-th action-col">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredLeads.map((lead) => (
+                <tr key={lead.id} className="tal-tr">
+                  <td className="tal-td id-col">{lead.id}</td>
+                  <td className="tal-td name-col">{lead.name}</td>
+                  <td className="tal-td college-col">{lead.college}</td>
+                  <td className="tal-td course-col">{lead.course}</td>
+                  <td className="tal-td marks-col">{lead.tenth}% / {lead.twelfth}%</td>
+                  <td className="tal-td mobile-col">{lead.mobile}</td>
+                  <td className="tal-td">
+                    <span className={`tal-badge ${getStatusClass(lead.status)}`}>
+                      {lead.status}
+                    </span>
+                  </td>
+                  <td className="tal-td action-col">
+                    <button
+                      type="button"
+                      onClick={() => alert(`Calling ${lead.name} (${lead.mobile})... Opening Requirement Capture screen.`)}
+                      className="tal-dial-btn"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
+                      <span>Dial</span>
+                    </button>
+
+                    <select
+                      value={lead.status}
+                      onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                      className="tal-action-status-select"
+                      title="Change status"
+                    >
+                      <option value="Connected">Connected</option>
+                      <option value="Follow-up">Follow-up</option>
+                      <option value="Pending">Pending</option>
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

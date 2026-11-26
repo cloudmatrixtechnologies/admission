@@ -280,3 +280,27 @@
 .tcf-status-btn:hover {
   background-color: #f1f5f9;
 }
+/* ================= HORIZONTAL SCROLL FOR FOLLOW-UPS TABLE ================= */
+.tcf-table-card {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.tcf-table-scroll {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  display: block !important;
+}
+
+.tcf-table {
+  width: 100% !important;
+  min-width: 850px !important;
+  table-layout: auto !important;
+  border-collapse: collapse;
+}
+
+.tcf-th,
+.tcf-td {
+  white-space: nowrap !important;
+}

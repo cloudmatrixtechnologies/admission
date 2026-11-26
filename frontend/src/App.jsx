@@ -14,7 +14,6 @@ import CollegeCoursesPage from './pages/CollegeCoursesPage';
 import WishlistPage from './pages/WishlistPage';
 import StudentSignInPage from './pages/auth/StudentSignInPage'; // <-- Added Student Sign-In Page
 
-import CollegeDetailsPage from './pages/CollegeDetailsPage';
 
 
 // 2. Dhanush: Admin Auth Components

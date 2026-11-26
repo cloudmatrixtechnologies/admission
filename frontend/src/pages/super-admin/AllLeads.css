@@ -1,4 +1,4 @@
-/* All Leads Page Main Wrapper */
+/* All Leads Page Styling */
 .al-container {
   display: flex;
   flex-direction: column;
@@ -11,16 +11,17 @@
   font-weight: 900;
   color: #0f172a;
   letter-spacing: -0.4px;
+  margin: 0;
 }
 
 .al-header-sub {
   font-size: 12px;
   font-weight: 600;
   color: #94a3b8;
-  margin-top: 4px;
+  margin: 4px 0 0 0;
 }
 
-/* 4 Metrics Cards Grid (Zero / Empty state) */
+/* 4 Metrics Cards Grid */
 .al-metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -48,13 +49,14 @@
   font-size: 12px;
   font-weight: 700;
   color: #64748b;
+  margin: 0;
 }
 
 .al-metric-val {
   font-size: 28px;
   font-weight: 900;
   color: #0f172a;
-  margin-top: 4px;
+  margin: 4px 0 0 0;
 }
 
 .al-metric-icon {
@@ -103,6 +105,7 @@
   outline: none;
   background-color: #ffffff;
   color: #1e293b;
+  box-sizing: border-box;
 }
 
 .al-search-input:focus {
@@ -121,6 +124,12 @@
   cursor: pointer;
 }
 
+/* Date Range Picker Wrapper & Button */
+.al-date-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .al-date-btn {
   display: flex;
   align-items: center;
@@ -129,13 +138,159 @@
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  color: #334155;
   background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.al-date-btn:hover {
+  border-color: #0066ff;
+  background-color: #f8fafc;
+}
+
+.al-date-btn.active {
+  border-color: #0066ff;
+  background-color: #eff6ff;
+  color: #0066ff;
+}
+
+/* Calendar Dropdown Popover */
+.al-date-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 310px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  z-index: 100;
+  box-sizing: border-box;
+  animation: fadeInDown 0.15s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.al-date-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f172a;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.al-date-close {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.al-date-close:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+.al-date-inputs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.al-date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.al-date-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.al-date-input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  background-color: #f8fafc;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
   cursor: pointer;
 }
 
-/* Table Card & Empty State */
+.al-date-input:focus {
+  border-color: #0066ff;
+  background-color: #ffffff;
+}
+
+.al-date-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.al-date-clear-btn {
+  padding: 7px 14px;
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #64748b;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.al-date-clear-btn:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.al-date-apply-btn {
+  padding: 7px 16px;
+  border: none;
+  background-color: #0066ff;
+  color: #ffffff;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 102, 255, 0.2);
+}
+
+.al-date-apply-btn:hover {
+  background-color: #0052cc;
+}
+
+/* Empty Table Container Card */
 .al-table-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -166,6 +321,7 @@
   letter-spacing: 0.5px;
 }
 
+/* Empty State Box */
 .al-empty-box {
   padding: 56px 20px;
   display: flex;
@@ -191,6 +347,7 @@
   font-size: 14px;
   font-weight: 800;
   color: #1e293b;
+  margin: 0;
 }
 
 .al-empty-desc {
@@ -198,39 +355,29 @@
   color: #94a3b8;
   max-width: 340px;
   line-height: 1.4;
+  margin: 0;
+}
+/* ================= HORIZONTAL SCROLL FOR ALL LEADS TABLE ================= */
+.al-table-card {
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
-/* Pagination Footer */
-.al-pagination {
-  padding: 14px 20px;
-  border-top: 1px solid #f1f5f9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
+.al-table-scroll {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  display: block !important;
 }
 
-.al-page-nav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.al-table {
+  width: 100% !important;
+  min-width: 880px !important;
+  table-layout: auto !important;
+  border-collapse: collapse;
 }
 
-.al-page-btn {
-  padding: 6px 12px;
-  border: 1px solid #e2e8f0;
-  background-color: #ffffff;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #475569;
-  cursor: pointer;
-}
-
-.al-page-btn.active {
-  background-color: #0066ff;
-  border-color: #0066ff;
-  color: #ffffff;
+.al-table th,
+.al-table td {
+  white-space: nowrap !important;
 }

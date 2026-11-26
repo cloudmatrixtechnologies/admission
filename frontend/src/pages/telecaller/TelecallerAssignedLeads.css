@@ -3,11 +3,7 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-.tal-header {
-  margin-bottom: 4px;
+  box-sizing: border-box;
 }
 
 .tal-title {
@@ -25,10 +21,10 @@
   margin: 4px 0 0 0;
 }
 
-/* 4 Metric Cards Grid */
+/* 4 Stat Cards */
 .tal-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
 
@@ -36,7 +32,7 @@
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 18px;
-  padding: 20px 24px;
+  padding: 20px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,7 +47,7 @@
 }
 
 .tal-metric-val {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 900;
   margin: 4px 0 0 0;
 }
@@ -62,8 +58,8 @@
 .tal-metric-val.purple { color: #8b5cf6; }
 
 .tal-metric-icon {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -80,7 +76,7 @@
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
-  padding: 12px 18px;
+  padding: 14px 18px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -90,7 +86,7 @@
 
 .tal-search-wrapper {
   flex: 1;
-  min-width: 240px;
+  min-width: 220px;
   position: relative;
   display: flex;
   align-items: center;
@@ -98,17 +94,23 @@
 
 .tal-search-icon {
   position: absolute;
-  left: 12px;
+  left: 13px;
   color: #94a3b8;
+  pointer-events: none;
 }
 
 .tal-search-input {
   width: 100%;
-  padding: 9px 12px 9px 36px;
+  padding: 9px 14px 9px 38px;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 12px;
   outline: none;
+  box-sizing: border-box;
+}
+
+.tal-search-input:focus {
+  border-color: #0066ff;
 }
 
 .tal-select {
@@ -116,10 +118,11 @@
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  color: #334155;
   background-color: #ffffff;
   outline: none;
+  cursor: pointer;
 }
 
 .tal-btn-reset {
@@ -133,17 +136,31 @@
   cursor: pointer;
 }
 
-/* Leads Table Card */
+.tal-btn-reset:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Horizontal Scrollable Table Card */
 .tal-table-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   overflow: hidden;
+  width: 100%;
+}
+
+.tal-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
 .tal-table {
   width: 100%;
+  min-width: 860px;
   border-collapse: collapse;
   text-align: left;
   font-size: 12px;
@@ -155,45 +172,47 @@
 }
 
 .tal-th {
-  padding: 14px 18px;
+  padding: 14px 16px;
   font-size: 11px;
   font-weight: 800;
   color: #64748b;
+  white-space: nowrap;
 }
 
-.tal-th.id-col { padding-left: 24px; }
-.tal-th.action-col { text-align: right; padding-right: 24px; }
-
-.tal-tr {
-  border-bottom: 1px solid #f8fafc;
-}
-
-.tal-td {
-  padding: 13px 18px;
-}
-
+.tal-th.id-col,
 .tal-td.id-col {
-  padding-left: 24px;
+  padding-left: 22px;
   font-weight: 800;
   color: #0f172a;
 }
 
-.tal-td.name-col {
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.tal-td.college-col { color: #64748b; }
-.tal-td.course-col { font-weight: 600; color: #334155; }
-.tal-td.marks-col { color: #334155; }
-.tal-td.mobile-col { font-family: monospace; }
+.tal-th.action-col,
 .tal-td.action-col {
+  padding-right: 22px;
   text-align: right;
-  padding-right: 24px;
-  white-space: nowrap;
 }
 
-/* Static Status Badge in Table */
+.tal-tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tal-tr:hover {
+  background-color: #f8fafc;
+}
+
+.tal-td {
+  padding: 13px 16px;
+  color: #334155;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.tal-td.name-col { font-weight: 700; color: #1e293b; }
+.tal-td.college-col { color: #64748b; }
+.tal-td.course-col { font-weight: 600; }
+.tal-td.mobile-col { font-family: monospace; }
+
+/* Status Badges */
 .tal-badge {
   display: inline-block;
   padding: 4px 10px;
@@ -202,22 +221,11 @@
   font-weight: 700;
 }
 
-.tal-badge.connected {
-  background-color: #dcfce7;
-  color: #15803d;
-}
+.tal-badge.pending { background-color: #fef3c7; color: #b45309; }
+.tal-badge.follow-up { background-color: #dbeafe; color: #1d4ed8; }
+.tal-badge.connected { background-color: #dcfce7; color: #15803d; }
 
-.tal-badge.follow-up {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-}
-
-.tal-badge.pending {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-/* Dial Button */
+/* Row Action Buttons */
 .tal-dial-btn {
   padding: 5px 12px;
   border: none;
@@ -230,14 +238,12 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
 }
 
 .tal-dial-btn:hover {
   background-color: #0052cc;
 }
 
-/* Actions Column Status Select Dropdown */
 .tal-action-status-select {
   padding: 5px 10px;
   border: 1px solid #cbd5e1;
@@ -246,18 +252,22 @@
   border-radius: 8px;
   font-size: 11px;
   font-weight: 700;
-  cursor: pointer;
   margin-left: 6px;
   outline: none;
-  transition: all 0.15s ease;
+  cursor: pointer;
 }
 
-.tal-action-status-select:hover {
-  background-color: #f8fafc;
-  border-color: #94a3b8;
+/* Responsive Cards & Filters */
+@media screen and (max-width: 1024px) {
+  .tal-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
 }
 
-.tal-action-status-select:focus {
-  border-color: #0066ff;
-  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.15);
+@media screen and (max-width: 768px) {
+  .tal-title { font-size: 20px; }
+  .tal-metrics-grid { grid-template-columns: 1fr; gap: 12px; }
+  .tal-filter-row { flex-direction: column; align-items: stretch; }
+  .tal-search-wrapper, .tal-select, .tal-btn-reset { width: 100%; min-width: 100%; }
 }

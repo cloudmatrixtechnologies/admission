@@ -1,3 +1,4 @@
+/* ================= BASE DESKTOP LAYOUT ================= */
 .cad-container {
   display: flex;
   min-height: 100vh;
@@ -6,9 +7,10 @@
   color: #1e293b;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
-/* ================= EXACT DEEP BLUE SIDEBAR ================= */
+/* Left Sidebar (Desktop Default) */
 .cad-sidebar {
   width: 260px;
   background: linear-gradient(180deg, #002b80 0%, #0044b3 50%, #005ce6 100%);
@@ -18,24 +20,40 @@
   justify-content: space-between;
   flex-shrink: 0;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 50;
 }
 
 .cad-sidebar-header {
-  padding: 22px 20px;
+  padding: 20px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.cad-sidebar-brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .cad-logo-badge {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.18);
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.cad-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
 }
 
 .cad-sidebar-title {
@@ -50,6 +68,19 @@
   color: #bfdbfe;
   margin: 2px 0 0 0;
   font-weight: 600;
+}
+
+.cad-drawer-close-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .cad-menu-label {
@@ -118,7 +149,7 @@
   line-height: 1.35;
 }
 
-/* ================= RIGHT WORKSPACE ================= */
+/* ================= RIGHT MAIN WORKSPACE ================= */
 .cad-main {
   flex: 1;
   display: flex;
@@ -131,14 +162,31 @@
   height: 64px;
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
-  padding: 0 32px;
+  padding: 0 28px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 18px;
+  gap: 16px;
   position: sticky;
   top: 0;
   z-index: 30;
+}
+
+.cad-hamburger-btn {
+  display: none;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 7px 9px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.cad-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .cad-preview-pill {
@@ -170,6 +218,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.cad-profile-name {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1;
+}
+
+.cad-profile-role {
+  font-size: 10px;
+  color: #94a3b8;
+  margin: 2px 0 0 0;
 }
 
 .cad-logout-btn {
@@ -191,8 +254,9 @@
   background-color: #fef2f2;
 }
 
+/* Workspace Body */
 .cad-body {
-  padding: 26px 32px;
+  padding: 24px 28px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -213,7 +277,7 @@
   margin: 4px 0 0 0;
 }
 
-/* College Highlights Banner */
+/* College Banner */
 .cad-college-banner {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -238,17 +302,51 @@
   margin-bottom: 4px;
 }
 
-/* 3 Top Metric Stat Cards */
+.cad-banner-heading {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 2px 0 0 0;
+}
+
+.cad-banner-sub {
+  font-size: 12px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+.cad-banner-metrics {
+  display: flex;
+  gap: 20px;
+}
+
+.cad-banner-metric-item {
+  text-align: center;
+}
+
+.cad-banner-metric-lbl {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.cad-banner-metric-val {
+  font-size: 14px;
+  font-weight: 900;
+  margin: 2px 0 0 0;
+}
+
+.cad-banner-metric-val.blue { color: #0066ff; }
+.cad-banner-metric-val.dark { color: #0f172a; }
+.cad-banner-metric-val.green { color: #10b981; }
+
+/* 3 Metric Stat Cards */
 .cad-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-}
-
-@media (max-width: 900px) {
-  .cad-stats-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .cad-stat-card {
@@ -272,10 +370,13 @@
 .cad-stat-val {
   font-size: 32px;
   font-weight: 900;
-  color: #0f172a;
   margin: 4px 0 0 0;
   line-height: 1.1;
 }
+
+.cad-stat-val.blue { color: #0066ff; }
+.cad-stat-val.amber { color: #f59e0b; }
+.cad-stat-val.green { color: #10b981; }
 
 .cad-stat-icon {
   width: 48px;
@@ -284,9 +385,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-/* Privacy Notice Callout (Screenshot 7) */
+.cad-stat-icon.blue { background-color: #eff6ff; color: #0066ff; }
+.cad-stat-icon.amber { background-color: #fffbeb; color: #f59e0b; }
+.cad-stat-icon.green { background-color: #ecfdf5; color: #10b981; }
+
+/* Privacy Callout */
 .cad-privacy-callout {
   background-color: #fffbeb;
   border: 1px solid #fef3c7;
@@ -294,8 +400,13 @@
   border-radius: 14px;
   padding: 14px 18px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
+}
+
+.cad-privacy-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .cad-privacy-title {
@@ -309,6 +420,7 @@
   font-size: 11px;
   color: #78350f;
   margin: 2px 0 0 0;
+  line-height: 1.4;
 }
 
 /* Table Card */
@@ -326,10 +438,32 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cad-table-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.cad-table-sub {
+  font-size: 11px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.cad-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cad-table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
   text-align: left;
   font-size: 12px;
@@ -346,6 +480,7 @@
   font-weight: 800;
   color: #64748b;
   letter-spacing: 0.4px;
+  white-space: nowrap;
 }
 
 .cad-table tbody tr {
@@ -361,7 +496,13 @@
   padding: 13px 20px;
   color: #334155;
   vertical-align: middle;
+  white-space: nowrap;
 }
+
+.cad-td-id { font-weight: 800; color: #0f172a; }
+.cad-td-name { font-weight: 700; color: #1e293b; }
+.cad-td-course { font-weight: 600; color: #0066ff; }
+.cad-td-date { color: #64748b; }
 
 .cad-badge {
   display: inline-block;
@@ -371,23 +512,12 @@
   font-weight: 700;
 }
 
-.cad-badge.pending {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-.cad-badge.approved {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.cad-badge.review {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-}
+.cad-badge.pending { background-color: #fef3c7; color: #b45309; }
+.cad-badge.approved { background-color: #dcfce7; color: #15803d; }
+.cad-badge.review { background-color: #dbeafe; color: #1d4ed8; }
 
 .cad-view-btn {
-  padding: 5px 12px;
+  padding: 6px 12px;
   border: 1px solid #bfdbfe;
   background-color: #eff6ff;
   color: #0066ff;
@@ -398,10 +528,134 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.15s ease;
 }
 
 .cad-view-btn:hover {
   background-color: #0066ff;
   color: #ffffff;
+}
+
+/* Fallback Section Card */
+.cad-fallback-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.cad-fallback-title {
+  font-size: 18px;
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.cad-fallback-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+/* ======================================================== */
+/* 1. TABLET RESPONSIVE VIEW (max-width: 1024px)            */
+/* ======================================================== */
+@media (max-width: 1024px) {
+  .cad-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+
+  .cad-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .cad-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 40;
+  }
+
+  .cad-drawer-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cad-header {
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  .cad-hamburger-btn {
+    display: flex;
+  }
+
+  .cad-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ======================================================== */
+/* 2. MOBILE RESPONSIVE VIEW (max-width: 640px)             */
+/* ======================================================== */
+@media (max-width: 640px) {
+  .cad-header {
+    padding: 0 14px;
+    height: 58px;
+  }
+
+  .cad-preview-pill,
+  .cad-profile-info {
+    display: none;
+  }
+
+  .cad-logout-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .cad-body {
+    padding: 16px 14px;
+    gap: 16px;
+  }
+
+  .cad-title {
+    font-size: 20px;
+  }
+
+  .cad-college-banner {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cad-banner-metrics {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .cad-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cad-stat-card {
+    padding: 16px 20px;
+  }
+
+  .cad-stat-val {
+    font-size: 26px;
+  }
+
+  .cad-table-header {
+    padding: 14px 16px;
+  }
 }
