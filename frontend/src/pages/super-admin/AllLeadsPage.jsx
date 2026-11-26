@@ -1,24 +1,109 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './AllLeads.css';
 
 export default function AllLeadsPage() {
+  const [leads] = useState([]); // Backend API connect aanadhum data inga varum
   const [searchTerm, setSearchTerm] = useState('');
   const [collegeFilter, setCollegeFilter] = useState('All Colleges');
   const [courseFilter, setCourseFilter] = useState('All Courses');
   const [statusFilter, setStatusFilter] = useState('All Status');
 
-  // Backend nunchi data vache varaku empty list
-  const leads = [];
+  // Date Range Picker States
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [appliedRange, setAppliedRange] = useState({ start: '', end: '' });
+
+  const datePickerRef = useRef(null);
+
+  // Outside click panna calendar popup close aaga
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+        setShowDatePicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // YYYY-MM-DD format-ai readable format-kku maatra (e.g., 19 Nov 2026)
+  const formatDisplayDate = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+
+  // Button label text
+  const getDateButtonLabel = () => {
+    if (appliedRange.start && appliedRange.end) {
+      return `${formatDisplayDate(appliedRange.start)} - ${formatDisplayDate(appliedRange.end)}`;
+    }
+    if (appliedRange.start) {
+      return `From ${formatDisplayDate(appliedRange.start)}`;
+    }
+    if (appliedRange.end) {
+      return `Until ${formatDisplayDate(appliedRange.end)}`;
+    }
+    return 'Select Date Range';
+  };
+
+  const handleApplyDate = () => {
+    setAppliedRange({ start: startDate, end: endDate });
+    setShowDatePicker(false);
+  };
+
+  const handleClearDate = () => {
+    setStartDate('');
+    setEndDate('');
+    setAppliedRange({ start: '', end: '' });
+    setShowDatePicker(false);
+  };
+
+  // Combined Filter Logic (Search + Dropdowns + Manual Date Range)
+  const filteredLeads = leads.filter((lead) => {
+    const matchesSearch =
+      lead.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.id?.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesCollege =
+      collegeFilter === 'All Colleges' || lead.college === collegeFilter;
+    const matchesCourse =
+      courseFilter === 'All Courses' || lead.course === courseFilter;
+    const matchesStatus =
+      statusFilter === 'All Status' || lead.status === statusFilter;
+
+    let matchesDate = true;
+    if (lead.createdAt && (appliedRange.start || appliedRange.end)) {
+      const leadDate = new Date(lead.createdAt).setHours(0, 0, 0, 0);
+      if (appliedRange.start) {
+        const start = new Date(appliedRange.start).setHours(0, 0, 0, 0);
+        if (leadDate < start) matchesDate = false;
+      }
+      if (appliedRange.end) {
+        const end = new Date(appliedRange.end).setHours(23, 59, 59, 999);
+        if (leadDate > end) matchesDate = false;
+      }
+    }
+
+    return matchesSearch && matchesCollege && matchesCourse && matchesStatus && matchesDate;
+  });
+
+  const hasActiveDate = Boolean(appliedRange.start || appliedRange.end);
 
   return (
     <div className="al-container">
-      {/* Title & Breadcrumb */}
+      {/* Page Title */}
       <div>
         <h1 className="al-header-title">All Leads</h1>
         <p className="al-header-sub">Admission Panel / Super Admin / All Leads</p>
       </div>
 
-      {/* 4 Metric Cards (Empty / Zero state) */}
+      {/* 4 Metrics Cards */}
       <div className="al-metrics-grid">
         <div className="al-metric-card">
           <div>
@@ -44,8 +129,8 @@ export default function AllLeadsPage() {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
-              <line x1="19" x2="19" y1="8" y2="14" />
-              <line x1="22" x2="16" y1="11" y2="11" />
+              <line x1="19" y1="8" x2="19" y2="14" />
+              <line x1="22" y1="11" x2="16" y2="11" />
             </svg>
           </div>
         </div>
@@ -76,7 +161,7 @@ export default function AllLeadsPage() {
         </div>
       </div>
 
-      {/* Filter Row */}
+      {/* Filter Bar */}
       <div className="al-filter-bar">
         <div className="al-search-box">
           <svg className="al-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -92,93 +177,162 @@ export default function AllLeadsPage() {
           />
         </div>
 
-        <select value={collegeFilter} onChange={(e) => setCollegeFilter(e.target.value)} className="al-select">
-          <option>All Colleges</option>
+        <select
+          value={collegeFilter}
+          onChange={(e) => setCollegeFilter(e.target.value)}
+          className="al-select"
+        >
+          <option value="All Colleges">All Colleges</option>
+          <option value="AVS Engineering College">AVS Engineering College</option>
+          <option value="KSR Engineering College">KSR Engineering College</option>
         </select>
 
-        <select value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)} className="al-select">
-          <option>All Courses</option>
+        <select
+          value={courseFilter}
+          onChange={(e) => setCourseFilter(e.target.value)}
+          className="al-select"
+        >
+          <option value="All Courses">All Courses</option>
+          <option value="B.E. CSE">B.E. CSE</option>
+          <option value="B.E. AI & DS">B.E. AI & DS</option>
+          <option value="B.Sc. CS">B.Sc. CS</option>
         </select>
 
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="al-select">
-          <option>All Status</option>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="al-select"
+        >
+          <option value="All Status">All Status</option>
+          <option value="Pending">Pending</option>
+          <option value="Accepted">Accepted</option>
+          <option value="Rejected">Rejected</option>
         </select>
 
-        <button type="button" className="al-date-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0066ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-            <line x1="16" x2="16" y1="2" y2="6" />
-            <line x1="8" x2="8" y1="2" y2="6" />
-            <line x1="3" x2="21" y1="10" y2="10" />
-          </svg>
-          <span>Select Date Range</span>
-        </button>
+        {/* Manual Date Range Picker Wrapper */}
+        <div className="al-date-wrapper" ref={datePickerRef}>
+          <button
+            type="button"
+            onClick={() => setShowDatePicker((prev) => !prev)}
+            className={`al-date-btn ${hasActiveDate ? 'active' : ''}`}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0066ff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+              <line x1="16" x2="16" y1="2" y2="6" />
+              <line x1="8" x2="8" y1="2" y2="6" />
+              <line x1="3" x2="21" y1="10" y2="10" />
+            </svg>
+            <span>{getDateButtonLabel()}</span>
+          </button>
+
+          {/* Calendar Dropdown Popover */}
+          {showDatePicker && (
+            <div className="al-date-popover">
+              <div className="al-date-popover-header">
+                <span>Select Custom Date Range</span>
+                <button
+                  type="button"
+                  className="al-date-close"
+                  onClick={() => setShowDatePicker(false)}
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="al-date-inputs-grid">
+                <div className="al-date-field">
+                  <label className="al-date-label">From Date</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    max={endDate || undefined}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="al-date-input"
+                  />
+                </div>
+
+                <div className="al-date-field">
+                  <label className="al-date-label">To Date</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    min={startDate || undefined}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="al-date-input"
+                  />
+                </div>
+              </div>
+
+              <div className="al-date-actions">
+                <button
+                  type="button"
+                  onClick={handleClearDate}
+                  className="al-date-clear-btn"
+                >
+                  Clear
+                </button>
+                <button
+                  type="button"
+                  onClick={handleApplyDate}
+                  className="al-date-apply-btn"
+                >
+                  Apply Range
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Leads Table Container with Empty Placeholder */}
+      {/* Leads Table Card (Horizontal Scroll Enabled) */}
       <div className="al-table-card">
-        <table className="al-table">
-          <thead>
-            <tr>
-              <th style={{ paddingLeft: '24px' }}>Personal ID</th>
-              <th>Student Name</th>
-              <th>Selected College</th>
-              <th>Course</th>
-              <th>10th (%)</th>
-              <th>12th (%)</th>
-              <th>Status</th>
-              <th style={{ textAlign: 'right', paddingRight: '24px' }}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leads.length > 0 ? (
-              leads.map((lead) => (
-                <tr key={lead.id}>
-                  <td style={{ paddingLeft: '24px', fontWeight: 'bold' }}>{lead.id}</td>
-                  <td>{lead.name}</td>
-                  <td>{lead.college}</td>
-                  <td>{lead.course}</td>
-                  <td>{lead.tenth}</td>
-                  <td>{lead.twelfth}</td>
-                  <td>{lead.status}</td>
-                  <td style={{ textAlign: 'right', paddingRight: '24px' }}>
-                    <button style={{ padding: '4px 10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff' }}>
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div className="al-table-scroll">
+          <table className="al-table">
+            <thead>
               <tr>
-                <td colSpan="8">
-                  <div className="al-empty-box">
-                    <div className="al-empty-circle">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="12" x2="12" y1="8" y2="12" />
-                        <line x1="12" x2="12.01" y1="16" y2="16" />
-                      </svg>
-                    </div>
-                    <p className="al-empty-title">No leads recorded yet</p>
-                    <p className="al-empty-desc">
-                      Incoming student intake leads will appear here once connected to backend APIs.
-                    </p>
-                  </div>
-                </td>
+                <th>Personal ID</th>
+                <th>Student Name</th>
+                <th>Selected College</th>
+                <th>Course</th>
+                <th>10th (%)</th>
+                <th>12th (%)</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-
-        {/* Pagination Section */}
-        <div className="al-pagination">
-          <span>Showing 0 to 0 of 0 leads</span>
-          <div className="al-page-nav">
-            <button className="al-page-btn" disabled>Prev</button>
-            <button className="al-page-btn active">1</button>
-            <button className="al-page-btn" disabled>Next</button>
-          </div>
+            </thead>
+            <tbody>
+              {filteredLeads.length > 0 &&
+                filteredLeads.map((lead) => (
+                  <tr key={lead.id}>
+                    <td>{lead.id}</td>
+                    <td>{lead.name}</td>
+                    <td>{lead.college}</td>
+                    <td>{lead.course}</td>
+                    <td>{lead.tenth}</td>
+                    <td>{lead.twelfth}</td>
+                    <td>{lead.status}</td>
+                    <td>View</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
+
+        {filteredLeads.length === 0 && (
+          <div className="al-empty-box">
+            <div className="al-empty-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <p className="al-empty-title">No leads recorded yet</p>
+            <p className="al-empty-desc">
+              Incoming student intake leads will appear here once connected to backend APIs.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

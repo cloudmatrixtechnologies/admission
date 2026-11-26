@@ -51,8 +51,8 @@ export default function AdminLoginPage({ onLoginSuccess }) {
       } else if (foundUser.role === 'TELECALLER') {
         navigate('/telecaller/dashboard');
       } else if (foundUser.role === 'COLLEGE_ADMIN') {
-        navigate('/college-admin/dashboard'); 
-      }else {
+        navigate('/college-admin/dashboard');
+      } else {
         alert(`Logged in as ${foundUser.role}`);
       }
     } else {
@@ -63,21 +63,13 @@ export default function AdminLoginPage({ onLoginSuccess }) {
   return (
     <div className="login-viewport">
       <div className="login-card">
-        {/* Top Royal Blue Squircle Badge */}
-        <div className="login-badge">
-          <svg
-            width="34"
-            height="34"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#ffffff"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-          </svg>
+        {/* Direct Image from Public Folder */}
+        <div className="login-brand-container">
+          <img
+            src="/brand_logo.png"
+            alt="Admission Brand Logo"
+            className="login-brand-image"
+          />
         </div>
 
         {/* Title */}
@@ -85,7 +77,7 @@ export default function AdminLoginPage({ onLoginSuccess }) {
 
         {/* Error message */}
         {errorMsg && (
-          <div style={{ color: '#448eef', fontSize: '11px', fontWeight: 'bold', marginBottom: '12px', textAlign: 'center' }}>
+          <div className="login-error-msg">
             {errorMsg}
           </div>
         )}

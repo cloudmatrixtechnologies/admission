@@ -1,0 +1,412 @@
+.sfd-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+.sfd-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sfd-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sfd-back-btn:hover {
+  border-color: #0066ff;
+  color: #0066ff;
+  background-color: #eff6ff;
+}
+
+.sfd-accepted-pill {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Main Card */
+.sfd-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.sfd-card-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sfd-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #eff6ff;
+  color: #0066ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sfd-header-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sfd-header-sub {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.sfd-body {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Student Profile & Contact Box */
+.sfd-profile-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 22px;
+}
+
+.sfd-profile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sfd-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sfd-initials {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  font-size: 17px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sfd-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sfd-id {
+  font-size: 12px;
+  color: #64748b;
+  margin: 3px 0 0 0;
+}
+
+.sfd-date-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  padding: 8px 14px;
+  border-radius: 12px;
+}
+
+.sfd-date-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 0;
+}
+
+.sfd-date-val {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 1px 0 0 0;
+}
+
+/* 4 Contact Info Fields */
+.sfd-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  padding-top: 16px;
+}
+
+@media (max-width: 850px) {
+  .sfd-contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sfd-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sfd-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.sfd-contact-icon {
+  color: #0066ff;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.sfd-contact-lbl {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+}
+
+.sfd-contact-val {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 2px 0 0 0;
+  word-break: break-word;
+}
+
+/* 10th & 12th Marks Side-by-Side */
+.sfd-marks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 720px) {
+  .sfd-marks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sfd-mark-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  background-color: #ffffff;
+}
+
+.sfd-mark-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sfd-mark-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #1d4ed8;
+  margin: 0;
+}
+
+.sfd-mark-total {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0066ff;
+}
+
+.sfd-mark-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.sfd-mark-table th {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sfd-mark-table td {
+  padding: 8px 0;
+  border-bottom: 1px solid #f8fafc;
+  color: #334155;
+  font-weight: 600;
+}
+
+.sfd-mark-table td.score {
+  text-align: right;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Interested Courses & Certificates */
+.sfd-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 20px;
+  background-color: #ffffff;
+}
+
+.sfd-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sfd-box-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sfd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sfd-chip {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: #eff6ff;
+  color: #1e40af;
+}
+
+.sfd-chip.primary {
+  background-color: #0066ff;
+  color: #ffffff;
+}
+
+.sfd-cert-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background-color: #eff6ff;
+  color: #0066ff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sfd-certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 780px) {
+  .sfd-certs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sfd-cert-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.sfd-cert-thumb {
+  width: 50px;
+  height: 64px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fcd34d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 7.5px;
+  font-weight: 800;
+  color: #92400e;
+  text-align: center;
+  padding: 2px;
+}
+
+.sfd-cert-name {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sfd-cert-sub {
+  font-size: 10.5px;
+  color: #475569;
+  margin: 2px 0;
+}
+
+.sfd-cert-meta {
+  font-size: 10px;
+  color: #64748b;
+  margin: 1px 0;
+}
+
+.sfd-cert-eye {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  color: #0066ff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

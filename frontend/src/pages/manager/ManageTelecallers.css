@@ -1,16 +1,19 @@
+/* Manage Telecallers Page Styling */
 .mt-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
   width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
 }
 
-.mt-header-row {
+/* Top Header Row */
+.mt-top-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .mt-title {
@@ -29,41 +32,51 @@
 }
 
 .mt-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
   background-color: #0066ff;
   color: #ffffff;
   border: none;
   border-radius: 12px;
-  padding: 10px 18px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 102, 255, 0.25);
-  transition: background-color 0.15s ease;
+  box-shadow: 0 6px 16px rgba(0, 102, 255, 0.25);
+  transition: background-color 0.15s ease, transform 0.05s ease;
 }
 
 .mt-create-btn:hover {
   background-color: #0052cc;
 }
 
-/* Filter Card Row */
-.mt-filter-card {
+.mt-create-btn:active {
+  transform: scale(0.99);
+}
+
+.mt-plus-icon {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Filter Bar */
+.mt-filter-bar {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 14px 18px;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
   align-items: center;
+  gap: 14px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
 .mt-search-box {
   flex: 1;
-  min-width: 260px;
+  min-width: 220px;
   position: relative;
   display: flex;
   align-items: center;
@@ -71,18 +84,19 @@
 
 .mt-search-icon {
   position: absolute;
-  left: 12px;
+  left: 13px;
   color: #94a3b8;
   pointer-events: none;
 }
 
 .mt-search-input {
   width: 100%;
-  padding: 9px 12px 9px 38px;
+  padding: 9px 14px 9px 38px;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 12px;
   outline: none;
+  background-color: #ffffff;
   color: #1e293b;
   box-sizing: border-box;
 }
@@ -98,61 +112,281 @@
 }
 
 .mt-filter-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #64748b;
+  white-space: nowrap;
 }
 
 .mt-select {
-  padding: 9px 14px;
+  padding: 8px 14px;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  color: #1e293b;
   background-color: #ffffff;
   outline: none;
   cursor: pointer;
+}
+
+.mt-select:focus {
+  border-color: #0066ff;
+}
+
+/* Joining Date Picker & Calendar Popover */
+.mt-date-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .mt-date-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 14px;
+  padding: 8px 14px;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  color: #1e293b;
   background-color: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.mt-date-btn:hover {
+  border-color: #0066ff;
+  background-color: #f8fafc;
+}
+
+.mt-date-btn.active {
+  border-color: #0066ff;
+  background-color: #eff6ff;
+  color: #0066ff;
+}
+
+/* Calendar Popover */
+.mt-calendar-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 280px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+  z-index: 100;
+  box-sizing: border-box;
+  animation: mtCalFadeIn 0.15s ease-out;
+}
+
+@keyframes mtCalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mt-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.mt-cal-month-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.mt-cal-nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
-.mt-btn-apply {
+.mt-cal-nav-btn:hover {
+  background-color: #f1f5f9;
+  color: #0066ff;
+}
+
+.mt-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.mt-cal-weekday {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.mt-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.mt-cal-empty {
+  height: 32px;
+}
+
+.mt-cal-day {
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #1e293b;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+
+.mt-cal-day:hover {
+  background-color: #eff6ff;
+  color: #0066ff;
+}
+
+.mt-cal-day.today {
+  border: 1.5px solid #bfdbfe;
+  color: #0066ff;
+}
+
+.mt-cal-day.selected {
+  background-color: #0066ff;
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(0, 102, 255, 0.3);
+}
+
+/* Calendar Footer */
+.mt-cal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.mt-cal-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mt-cal-today-btn {
+  padding: 5px 10px;
+  border: none;
+  background-color: #eff6ff;
+  color: #0066ff;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mt-cal-today-btn:hover {
+  background-color: #dbeafe;
+}
+
+.mt-cal-clear-btn {
+  padding: 5px 9px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #64748b;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mt-cal-clear-btn:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.mt-cal-apply-btn {
+  padding: 6px 14px;
+  border: none;
+  background-color: #0066ff;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 102, 255, 0.25);
+}
+
+.mt-cal-apply-btn:hover {
+  background-color: #0052cc;
+}
+
+/* Main Filter Bar Apply & Reset Buttons */
+.mt-filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mt-apply-btn {
+  padding: 8px 20px;
   background-color: #0066ff;
   color: #ffffff;
   border: none;
   border-radius: 12px;
-  padding: 9px 20px;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.22);
+  transition: background-color 0.15s ease;
 }
 
-.mt-btn-reset {
+.mt-apply-btn:hover {
+  background-color: #0052cc;
+}
+
+.mt-reset-btn {
+  padding: 8px 18px;
   background-color: #ffffff;
   color: #475569;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
-  padding: 9px 16px;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
 
-/* Table Card Shell */
+.mt-reset-btn:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Table Container Card */
 .mt-table-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -164,20 +398,24 @@
 }
 
 .mt-table-header {
-  padding: 16px 24px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 18px 22px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.mt-table-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .mt-table-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: #0f172a;
+  margin: 0;
 }
 
 .mt-export-btn {
@@ -185,13 +423,23 @@
   align-items: center;
   gap: 6px;
   padding: 7px 14px;
+  background-color: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 10px;
-  background-color: #ffffff;
   font-size: 12px;
   font-weight: 700;
   color: #0066ff;
   cursor: pointer;
+}
+
+.mt-export-btn:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.mt-table-scroll {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .mt-table {
@@ -211,46 +459,124 @@
   font-size: 11px;
   font-weight: 800;
   color: #64748b;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
 }
 
-.mt-pagination {
-  padding: 14px 24px;
-  border-top: 1px solid #f1f5f9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
+.mt-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
   font-weight: 600;
-  color: #64748b;
+  white-space: nowrap;
 }
 
-.mt-action-icon {
+.mt-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.mt-td-sno {
+  color: #94a3b8 !important;
+}
+
+.mt-td-name {
+  font-weight: 800 !important;
+  color: #0f172a !important;
+}
+
+.mt-td-email,
+.mt-td-mobile,
+.mt-td-user,
+.mt-td-date {
+  color: #64748b !important;
+}
+
+.mt-td-leads {
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  text-align: center;
+}
+
+/* Status Pill Badges */
+.mt-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mt-status-badge.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.mt-status-badge.inactive {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+/* Row Action Icons */
+.mt-action-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.mt-icon-btn {
   background: none;
   border: none;
+  padding: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
-.mt-action-icon.view,
-.mt-action-icon.edit {
+.mt-icon-btn.blue {
   color: #0066ff;
 }
 
-.mt-action-icon.view:hover,
-.mt-action-icon.edit:hover {
+.mt-icon-btn.blue:hover {
   background-color: #eff6ff;
 }
 
-.mt-action-icon.delete {
+.mt-icon-btn.red {
   color: #ef4444;
 }
 
-.mt-action-icon.delete:hover {
+.mt-icon-btn.red:hover {
   background-color: #fef2f2;
+}
+
+/* Empty State */
+.mt-empty-box {
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.mt-empty-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0066ff;
+}
+
+.mt-empty-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
 }

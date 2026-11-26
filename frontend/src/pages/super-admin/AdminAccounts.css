@@ -282,3 +282,27 @@
   transition: all 0.15s ease;
   box-sizing: border-box;
 }
+/* ================= HORIZONTAL SCROLL FOR ADMIN ACCOUNTS TABLE ================= */
+.aa-table-card {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.aa-table-scroll {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  display: block !important;
+}
+
+.aa-table {
+  width: 100% !important;
+  min-width: 880px !important;
+  table-layout: auto !important;
+  border-collapse: collapse;
+}
+
+.aa-table th,
+.aa-table td {
+  white-space: nowrap !important;
+}

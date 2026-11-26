@@ -6,6 +6,8 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: #1e293b;
   width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* Sidebar Styles */
@@ -18,6 +20,7 @@
   justify-content: space-between;
   flex-shrink: 0;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+  transition: left 0.3s ease-in-out;
 }
 
 .md-sidebar-header {
@@ -31,28 +34,39 @@
 .md-logo-badge {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
+  background-color: #ffffff; /* Blue logo clear-aa theriya white background */
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.md-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .md-sidebar-title {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
   line-height: 1.2;
+  color: #ffffff;
   margin: 0;
 }
 
 .md-sidebar-sub {
-  font-size: 11px;
+  font-size: 14px;
   color: #bfdbfe;
   margin: 2px 0 0 0;
 }
 
 .md-menu-label {
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.8px;
   color: rgba(191, 219, 254, 0.8);
@@ -74,7 +88,7 @@
   gap: 12px;
   padding: 10px 14px;
   border-radius: 12px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: #dbeafe;
   background: transparent;
@@ -85,7 +99,7 @@
 }
 
 .md-nav-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgb(12, 12, 12);
   color: #ffffff;
 }
 
@@ -117,7 +131,7 @@
   line-height: 1.3;
 }
 
-/* Header Bar */
+/* Header & Workspace */
 .md-main {
   flex: 1;
   display: flex;
@@ -138,6 +152,18 @@
   position: sticky;
   top: 0;
   z-index: 30;
+}
+
+.md-mobile-toggle-btn {
+  display: none;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto;
 }
 
 .md-date-pill {
@@ -187,7 +213,7 @@
   background-color: #fef2f2;
 }
 
-/* Page Workspace */
+/* Page Body */
 .md-body {
   padding: 28px 32px;
   display: flex;
@@ -210,7 +236,7 @@
   margin: 4px 0 0 0;
 }
 
-/* Top 4 Metrics Grid */
+/* Metrics Grid */
 .md-metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -258,7 +284,7 @@
   justify-content: center;
 }
 
-/* Main Dashboard 2-Column Balanced Grid */
+/* Dashboard Layout */
 .md-dashboard-layout {
   display: grid;
   grid-template-columns: 1.8fr 1.2fr;
@@ -278,7 +304,7 @@
   gap: 20px;
 }
 
-/* Card Shell */
+/* Cards & Tables */
 .md-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -314,16 +340,18 @@
   padding: 0;
 }
 
-.md-card-action:hover {
-  text-decoration: underline;
+.md-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Tables Styling */
 .md-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
   font-size: 12px;
+  min-width: 580px;
 }
 
 .md-table thead {
@@ -338,24 +366,21 @@
   color: #64748b;
   letter-spacing: 0.4px;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 
 .md-table tbody tr {
   border-bottom: 1px solid #f8fafc;
-  transition: background-color 0.15s ease;
-}
-
-.md-table tbody tr:hover {
-  background-color: #f8fafc;
 }
 
 .md-table td {
   padding: 13px 18px;
   color: #334155;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
-/* Status Badges */
+/* Badges */
 .md-badge {
   display: inline-block;
   padding: 4px 10px;
@@ -365,27 +390,11 @@
   line-height: 1;
 }
 
-.md-badge.in-progress {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-}
+.md-badge.in-progress { background-color: #dbeafe; color: #1d4ed8; }
+.md-badge.pending { background-color: #fef3c7; color: #b45309; }
+.md-badge.accepted { background-color: #dcfce7; color: #15803d; }
+.md-badge.rejected { background-color: #fee2e2; color: #b91c1c; }
 
-.md-badge.pending {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-.md-badge.accepted {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.md-badge.rejected {
-  background-color: #fee2e2;
-  color: #b91c1c;
-}
-
-/* Assign Action Button */
 .md-assign-btn {
   padding: 5px 12px;
   border: 1px solid #bfdbfe;
@@ -395,21 +404,16 @@
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
 }
 
-.md-assign-btn:hover {
-  background-color: #0066ff;
-  color: #ffffff;
-  border-color: #0066ff;
-}
-
-/* Follow-up Summary Rows */
-.md-summary-list {
+/* Follow-up Summary Scroll Box */
+.md-summary-scroll-box {
   padding: 18px 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  max-height: 220px;
+  overflow-y: auto;
 }
 
 .md-summary-row {
@@ -426,4 +430,45 @@
   border-radius: 999px;
   font-weight: 800;
   font-size: 11px;
+}
+
+/* ================= MOBILE & TABLET RESPONSIVE STYLES ================= */
+@media screen and (max-width: 768px) {
+  .md-mobile-toggle-btn {
+    display: flex !important;
+  }
+
+  .md-sidebar {
+    position: fixed !important;
+    top: 0;
+    left: -280px !important;
+    width: 260px !important;
+    height: 100vh !important;
+    z-index: 1000 !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .md-sidebar.mobile-open {
+    left: 0 !important;
+  }
+
+  .md-header {
+    padding: 0 16px !important;
+    gap: 10px !important;
+  }
+
+  .md-body {
+    padding: 16px !important;
+    gap: 16px !important;
+  }
+
+  .md-metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .md-dashboard-layout {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
 }

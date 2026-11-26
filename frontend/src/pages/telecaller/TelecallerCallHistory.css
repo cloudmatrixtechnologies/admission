@@ -275,3 +275,27 @@
   color: #ffffff;
   border-color: #0066ff;
 }
+/* ================= HORIZONTAL SCROLL FOR CALL HISTORY TABLE ================= */
+.tch-table-card {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.tch-table-scroll {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  display: block !important;
+}
+
+.tch-table {
+  width: 100% !important;
+  min-width: 920px !important;
+  table-layout: auto !important;
+  border-collapse: collapse;
+}
+
+.tch-th,
+.tch-td {
+  white-space: nowrap !important;
+}

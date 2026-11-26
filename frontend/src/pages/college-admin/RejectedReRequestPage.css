@@ -1,0 +1,247 @@
+.rrp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+.rrp-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.rrp-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rrp-back-btn:hover {
+  border-color: #0066ff;
+  color: #0066ff;
+  background-color: #eff6ff;
+}
+
+.rrp-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.rrp-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.rrp-subtitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+.rrp-search-box {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  display: flex;
+  align-items: center;
+}
+
+.rrp-search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.rrp-search-input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  font-size: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.rrp-search-input:focus {
+  border-color: #0066ff;
+}
+
+/* Table Card Matching Image */
+.rrp-table-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+
+.rrp-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rrp-table {
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12.5px;
+}
+
+.rrp-table thead tr {
+  background-color: #eef4ff;
+  border-bottom: 1px solid #dbeafe;
+}
+
+.rrp-table th {
+  padding: 13px 18px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+.rrp-table th.first {
+  padding-left: 22px;
+  width: 48px;
+}
+
+.rrp-table th.center {
+  text-align: center;
+  width: 140px;
+}
+
+.rrp-table th.right {
+  text-align: center;
+  padding-right: 22px;
+  width: 120px;
+}
+
+.rrp-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.15s ease;
+}
+
+.rrp-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.rrp-table td {
+  padding: 14px 18px;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.rrp-table td.first {
+  padding-left: 22px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.rrp-table td.id-cell {
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.rrp-mark-main {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 12.5px;
+}
+
+.rrp-mark-sub {
+  font-size: 11.5px;
+  color: #475569;
+  margin-top: 2px;
+}
+
+.rrp-course-text {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.rrp-table td.center {
+  text-align: center;
+}
+
+.rrp-table td.right {
+  text-align: center;
+  padding-right: 22px;
+}
+
+/* Amber Re-request Button Matching Screenshot */
+.rrp-btn-rerequest {
+  height: 32px;
+  min-width: 92px;
+  padding: 0 14px;
+  border-radius: 7px;
+  border: none;
+  background-color: #f59e0b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25);
+}
+
+.rrp-btn-rerequest:hover {
+  background-color: #d97706;
+}
+
+.rrp-btn-rerequest.done {
+  background-color: #059669;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+}
+
+/* Soft Blue View Button Matching Screenshot */
+.rrp-btn-view {
+  height: 32px;
+  min-width: 74px;
+  padding: 0 16px;
+  border-radius: 7px;
+  border: none;
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.rrp-btn-view:hover {
+  background-color: #0066ff;
+  color: #ffffff;
+}
